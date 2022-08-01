@@ -1,7 +1,7 @@
 using Intel8080.Emulator;
 using Xunit;
 
-namespace Intel8080.Tests
+namespace Intel8080.Emulator.Tests
 {
     public class FlagTests
     {
@@ -24,7 +24,7 @@ namespace Intel8080.Tests
 
             // Assert
             Assert.True(_flags.Sign);
-            Assert.Equal(0x82, _registers.F);
+            Assert.Equal(0x80, _registers.F);
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace Intel8080.Tests
 
             // Assert
             Assert.False(_flags.Sign);
-            Assert.Equal(0x02, _registers.F);
+            Assert.Equal(0x00, _registers.F);
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace Intel8080.Tests
 
             // Assert
             Assert.True(_flags.Zero);
-            Assert.Equal(0x42, _registers.F);
+            Assert.Equal(0x40, _registers.F);
         }
 
         [Fact]
@@ -57,29 +57,29 @@ namespace Intel8080.Tests
 
             // Assert
             Assert.False(_flags.Zero);
-            Assert.Equal(0x02, _registers.F);
+            Assert.Equal(0x00, _registers.F);
         }
-        
+
         [Fact]
         public void AuxiliaryCarry_ValueGreaterThan0x0F_SetAuxCarryFlagTrue()
         {
             // Act
-            _flags.CalcAuxCarryFlag(0x10);
+            _flags.CalcAuxCarryFlag(0x0F, 1);
 
             // Assert
             Assert.True(_flags.AuxiliaryCarry);
-            Assert.Equal(0x12, _registers.F);
+            Assert.Equal(0x10, _registers.F);
         }
 
         [Fact]
-        public void AuxiliaryCarry_Value0x0F_SetAuxCarryFlagFalse()
+        public void AuxiliaryCarry_ValueLessThan0x0F_SetAuxCarryFlagFalse()
         {
             // Act
-            _flags.CalcAuxCarryFlag(0x0F);
+            _flags.CalcAuxCarryFlag(0x00, 1);
 
             // Assert
             Assert.False(_flags.AuxiliaryCarry);
-            Assert.Equal(0x02, _registers.F);
+            Assert.Equal(0x00, _registers.F);
         }
 
         [Fact]
@@ -90,18 +90,18 @@ namespace Intel8080.Tests
 
             // Assert
             Assert.True(_flags.Parity);
-            Assert.Equal(0x06, _registers.F);
+            Assert.Equal(0x04, _registers.F);
         }
 
         [Fact]
         public void Parity_Zero_SetParityFlagTrue()
         {
             // Act
-            _flags.CalcParityFlag(0x00);
+            _flags.CalcParityFlag(0x3F);
 
             // Assert
             Assert.True(_flags.Parity);
-            Assert.Equal(0x06, _registers.F);
+            Assert.Equal(0x04, _registers.F);
         }
 
         [Fact]
@@ -112,7 +112,7 @@ namespace Intel8080.Tests
 
             // Assert
             Assert.False(_flags.Parity);
-            Assert.Equal(0x02, _registers.F);
+            Assert.Equal(0x00, _registers.F);
         }
 
         [Fact]
@@ -123,7 +123,7 @@ namespace Intel8080.Tests
 
             // Assert
             Assert.True(_flags.Carry);
-            Assert.Equal(0x03, _registers.F);
+            Assert.Equal(0x01, _registers.F);
         }
 
         [Fact]
@@ -134,7 +134,29 @@ namespace Intel8080.Tests
 
             // Assert
             Assert.False(_flags.Carry);
-            Assert.Equal(0x02, _registers.F);
+            Assert.Equal(0x00, _registers.F);
+        }
+
+        [Fact]
+        public void Carry_ValueGreaterThan0xFFFF_SetCarryFlagTrue()
+        {
+            // Act
+            _flags.CalcCarryFlagRegisterPair(0x010000);
+
+            // Assert
+            Assert.True(_flags.Carry);
+            Assert.Equal(0x01, _registers.F);
+        }
+
+        [Fact]
+        public void Carry_ValueEqual0xFFFFF_SetCarryFlagFalse()
+        {
+            // Act
+            _flags.CalcCarryFlagRegisterPair(0xFFFF);
+
+            // Assert
+            Assert.False(_flags.Carry);
+            Assert.Equal(0x00, _registers.F);
         }
 
         [Fact]
@@ -148,7 +170,7 @@ namespace Intel8080.Tests
             _flags.Clear();
 
             // Assert
-            Assert.Equal(0x02, _registers.F);
+            Assert.Equal(0x00, _registers.F);
         }
     }
 }

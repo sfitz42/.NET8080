@@ -5,7 +5,7 @@ namespace Intel8080.Emulator
         public byte A { get; set; } = 0x00;
 
         // Flag register default value - Bit position 2 is always 1
-        public byte F { get; set; } = 0x02;
+        public byte F { get; set; } = 0x00;
 
         public ushort BC { get; set; } = 0x00;
         public byte B { get { return (byte)((BC & 0xFF00) >> 8); } set { BC &= 0x00FF; BC |= (ushort)(value << 8); } }

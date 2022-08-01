@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Intel8080.Emulator;
 using Xunit;
@@ -6,9 +7,9 @@ namespace Intel8080.Emulator.Tests.Instructions
 {
     public class InstructionMetaDataTests
     {
-        private Instruction[] _instructions;
+        private Opcode[] _opcodes;
 
-        public static IEnumerable<object[]> InstructionData => new List<object[]>
+        public static IEnumerable<object[]> OpcodeData => new List<object[]>
         {
             new object[] { 0x00, "NOP", 1, 4, null },
             new object[] { 0x01, "LXI B, d16", 3, 10, null },
@@ -27,12 +28,12 @@ namespace Intel8080.Emulator.Tests.Instructions
             new object[] { 0x0E, "MVI C, d8", 2, 7, null },
             new object[] { 0x0F, "RRC", 1, 4, null },
             new object[] { 0x10, "*NOP", 1, 4, null },
-            new object[] { 0x11, "LXI D,d16", 3, 10, null },
+            new object[] { 0x11, "LXI D, d16", 3, 10, null },
             new object[] { 0x12, "STAX D", 1, 7, null },
             new object[] { 0x13, "INX D", 1, 5, null },
             new object[] { 0x14, "INR D", 1, 5, null },
             new object[] { 0x15, "DCR D", 1, 5, null },
-            new object[] { 0x16, "MVI D,d8", 2, 7, null },
+            new object[] { 0x16, "MVI D, d8", 2, 7, null },
             new object[] { 0x17, "RAL", 1, 4, null },
             new object[] { 0x18, "*NOP", 1, 4, null },
             new object[] { 0x19, "DAD D", 1, 10, null },
@@ -40,7 +41,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             new object[] { 0x1B, "DCX D", 1, 5, null },
             new object[] { 0x1C, "INR E", 1, 5, null },
             new object[] { 0x1D, "DCR E", 1, 5, null },
-            new object[] { 0x1E, "MVI E,d8", 2, 7, null },
+            new object[] { 0x1E, "MVI E, d8", 2, 7, null },
             new object[] { 0x1F, "RAR", 1, 4, null },
             new object[] { 0x20, "*NOP", 1, 4, null },
             new object[] { 0x21, "LXI H,d16", 3, 10, null },
@@ -270,15 +271,15 @@ namespace Intel8080.Emulator.Tests.Instructions
 
         public InstructionMetaDataTests()
         {
-            _instructions = InstructionSet.InstructionTable;
+            _opcodes = InstructionSet.OpcodeTable;
         }
 
         [Theory]
-        [MemberData(nameof(InstructionData))]
-        public void InstructionMetaDataShouldMatch(int index, string mnenomic, ushort length, int cycles, int? cyclesBranch)
+        [MemberData(nameof(OpcodeData))]
+        public void OpcodeMetaDataShouldMatch(int index, string mnenomic, ushort length, int cycles, int? cyclesBranch)
         {
             // Act
-            var op = _instructions[index];
+            var op = _opcodes[index];
 
             // Assert
             Assert.Equal(mnenomic, op.Mnenomic);

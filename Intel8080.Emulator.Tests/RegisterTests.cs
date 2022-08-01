@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Intel8080.Emulator;
 using Xunit;
 
-namespace Intel8080.Tests
+namespace Intel8080.Emulator.Tests
 {
     public class RegisterTests
     {

@@ -2,7 +2,7 @@ using System;
 
 namespace Intel8080.Emulator
 {
-    public class Instruction
+    public class Opcode
     {
         public string Mnenomic { get; set; } = null!;
 
@@ -12,15 +12,12 @@ namespace Intel8080.Emulator
 
         public int? CyclesBranch { get; set; }
 
-        public Action<CPU, Instruction> Execute;
-
-        public Instruction(string mnenomic, ushort length, int cycles, int? cyclesBranch, Action<CPU, Instruction> execute)
+        public Opcode(string mnenomic, ushort length, int cycles, int? cyclesBranch)
         {
             Mnenomic = mnenomic;
             Length = length;
             Cycles = cycles;
             CyclesBranch = cyclesBranch;
-            Execute = execute;
         }
     }
 }
