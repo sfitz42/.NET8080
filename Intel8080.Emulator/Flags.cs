@@ -12,11 +12,11 @@ namespace Intel8080.Emulator
 
         private readonly Registers _registers;
 
-        public bool Sign { get => GetFlag(SignMask); internal set => SetFlag(value, SignMask); }
-        public bool Zero { get => GetFlag(ZeroMask); internal set => SetFlag(value, ZeroMask); }
-        public bool AuxiliaryCarry { get => GetFlag(AuxCarryMask); internal set => SetFlag(value, AuxCarryMask); }
-        public bool Parity { get => GetFlag(ParityMask); internal set => SetFlag(value, ParityMask); }
-        public bool Carry { get => GetFlag(CarryMask); internal set => SetFlag(value, CarryMask); }
+        public bool Sign { get => GetFlag(SignMask); set => SetFlag(value, SignMask); }
+        public bool Zero { get => GetFlag(ZeroMask); set => SetFlag(value, ZeroMask); }
+        public bool AuxiliaryCarry { get => GetFlag(AuxCarryMask); set => SetFlag(value, AuxCarryMask); }
+        public bool Parity { get => GetFlag(ParityMask); set => SetFlag(value, ParityMask); }
+        public bool Carry { get => GetFlag(CarryMask); set => SetFlag(value, CarryMask); }
 
         public Flags(Registers registers)
         {

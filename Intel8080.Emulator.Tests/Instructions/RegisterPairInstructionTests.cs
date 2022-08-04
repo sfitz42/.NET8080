@@ -56,6 +56,46 @@ namespace Intel8080.Emulator.Tests.Instructions
         }
 
         [Fact]
+        public void INX_D_ShouldIncrementByOne()
+        {
+            // Arrange
+            _cpu.Registers.DE = 0x1234;
+
+            // Act
+            InstructionSet.INX_D(_cpu);
+
+            // Assert
+            Assert.Equal(0x00, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x1235, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void INX_D_ShouldBeSetToZeroIfOverflow()
+        {
+            // Arrange
+            _cpu.Registers.DE = 0xFFFF;
+
+            // Act
+            InstructionSet.INX_D(_cpu);
+
+            // Assert
+            Assert.Equal(0x00, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
         public void DCX_B_ShouldIncrementByOne()
         {
             // Arrange
@@ -88,6 +128,46 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x00, _cpu.Registers.A);
             Assert.Equal(0xFFFF, _cpu.Registers.BC);
             Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void DCX_D_ShouldIncrementByOne()
+        {
+            // Arrange
+            _cpu.Registers.DE = 0x1234;
+
+            // Act
+            InstructionSet.DCX_D(_cpu);
+
+            // Assert
+            Assert.Equal(0x00, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x1233, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void DCX_D_ShouldBeSetToMaxIfUnderflow()
+        {
+            // Arrange
+            _cpu.Registers.DE = 0x0000;
+
+            // Act
+            InstructionSet.DCX_D(_cpu);
+
+            // Assert
+            Assert.Equal(0x00, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0xFFFF, _cpu.Registers.DE);
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
@@ -132,6 +212,52 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x00, _cpu.Registers.A);
             Assert.Equal(0x0001, _cpu.Registers.BC);
             Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Registers.Flags.Carry);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void DAD_D_ShouldAddBCToHL()
+        {
+            // Arrange
+            _cpu.Registers.DE = 0x339F;
+            _cpu.Registers.HL = 0xA17B;
+
+            // Act
+            InstructionSet.DAD_D(_cpu);
+
+            // Assert
+            Assert.Equal(0x00, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x339F, _cpu.Registers.DE);
+            Assert.Equal(0xD51A, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Registers.Flags.Carry);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void DAD_D_ShouldSetCarryFlag()
+        {
+            // Arrange
+            _cpu.Registers.DE = 0x0001;
+            _cpu.Registers.HL = 0xFFFF;
+
+            // Act
+            InstructionSet.DAD_D(_cpu);
+
+            // Assert
+            Assert.Equal(0x00, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0001, _cpu.Registers.DE);
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
