@@ -149,13 +149,13 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x04];
 
-            cpu.Registers.Flags.CalcAuxCarryFlag(cpu.Registers.B, 1);
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.B, 1);
 
             cpu.Registers.B += 1;
 
-            cpu.Registers.Flags.CalcSignFlag(cpu.Registers.B);
-            cpu.Registers.Flags.CalcZeroFlag(cpu.Registers.B);
-            cpu.Registers.Flags.CalcParityFlag(cpu.Registers.B);
+            cpu.Flags.CalcSignFlag(cpu.Registers.B);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.B);
+            cpu.Flags.CalcParityFlag(cpu.Registers.B);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -169,13 +169,13 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x05];
 
-            cpu.Registers.Flags.CalcAuxCarryFlagSub(cpu.Registers.B, 1);
+            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.B, 1);
 
             cpu.Registers.B -= 1;
 
-            cpu.Registers.Flags.CalcSignFlag(cpu.Registers.B);
-            cpu.Registers.Flags.CalcZeroFlag(cpu.Registers.B);
-            cpu.Registers.Flags.CalcParityFlag(cpu.Registers.B);
+            cpu.Flags.CalcSignFlag(cpu.Registers.B);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.B);
+            cpu.Flags.CalcParityFlag(cpu.Registers.B);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -203,7 +203,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x07];
 
-            cpu.Registers.Flags.Carry = ((cpu.Registers.A & 0x80) >> 7) == 1;
+            cpu.Flags.Carry = ((cpu.Registers.A & 0x80) >> 7) == 1;
             cpu.Registers.A = (byte) (((cpu.Registers.A & 0x80) >> 7) | (cpu.Registers.A << 1));
 
             cpu.Registers.PC += opcode.Length;
@@ -227,7 +227,7 @@ namespace Intel8080.Emulator
 
             cpu.Registers.HL = (ushort) (result & 0xFFFFFFFF);
 
-            cpu.Registers.Flags.CalcCarryFlagRegisterPair(result);
+            cpu.Flags.CalcCarryFlagRegisterPair(result);
             
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -270,13 +270,13 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x0C];
 
-            cpu.Registers.Flags.CalcAuxCarryFlag(cpu.Registers.C, 1);
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.C, 1);
 
             cpu.Registers.C += 1;
 
-            cpu.Registers.Flags.CalcSignFlag(cpu.Registers.C);
-            cpu.Registers.Flags.CalcZeroFlag(cpu.Registers.C);
-            cpu.Registers.Flags.CalcParityFlag(cpu.Registers.C);
+            cpu.Flags.CalcSignFlag(cpu.Registers.C);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.C);
+            cpu.Flags.CalcParityFlag(cpu.Registers.C);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -290,13 +290,13 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x0D];
 
-            cpu.Registers.Flags.CalcAuxCarryFlagSub(cpu.Registers.C, 1);
+            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.C, 1);
 
             cpu.Registers.C -= 1;
 
-            cpu.Registers.Flags.CalcSignFlag(cpu.Registers.C);
-            cpu.Registers.Flags.CalcZeroFlag(cpu.Registers.C);
-            cpu.Registers.Flags.CalcParityFlag(cpu.Registers.C);
+            cpu.Flags.CalcSignFlag(cpu.Registers.C);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.C);
+            cpu.Flags.CalcParityFlag(cpu.Registers.C);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -324,7 +324,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x0F];
 
-            cpu.Registers.Flags.Carry = (cpu.Registers.A & 0x01) == 1;
+            cpu.Flags.Carry = (cpu.Registers.A & 0x01) == 1;
             cpu.Registers.A = (byte) (((cpu.Registers.A & 0x01) << 7) | (cpu.Registers.A >> 1));
 
             cpu.Registers.PC += opcode.Length;
@@ -387,13 +387,13 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x14];
 
-            cpu.Registers.Flags.CalcAuxCarryFlag(cpu.Registers.D, 1);
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.D, 1);
 
             cpu.Registers.D += 1;
 
-            cpu.Registers.Flags.CalcSignFlag(cpu.Registers.D);
-            cpu.Registers.Flags.CalcZeroFlag(cpu.Registers.D);
-            cpu.Registers.Flags.CalcParityFlag(cpu.Registers.D);
+            cpu.Flags.CalcSignFlag(cpu.Registers.D);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.D);
+            cpu.Flags.CalcParityFlag(cpu.Registers.D);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -407,13 +407,13 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x15];
 
-            cpu.Registers.Flags.CalcAuxCarryFlagSub(cpu.Registers.D, 1);
+            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.D, 1);
 
             cpu.Registers.D -= 1;
 
-            cpu.Registers.Flags.CalcSignFlag(cpu.Registers.D);
-            cpu.Registers.Flags.CalcZeroFlag(cpu.Registers.D);
-            cpu.Registers.Flags.CalcParityFlag(cpu.Registers.D);
+            cpu.Flags.CalcSignFlag(cpu.Registers.D);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.D);
+            cpu.Flags.CalcParityFlag(cpu.Registers.D);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -441,9 +441,9 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x17];
 
-            bool carry = cpu.Registers.Flags.Carry;
+            bool carry = cpu.Flags.Carry;
 
-            cpu.Registers.Flags.Carry = ((cpu.Registers.A & 0x80) >> 7) == 1;
+            cpu.Flags.Carry = ((cpu.Registers.A & 0x80) >> 7) == 1;
 
             cpu.Registers.A <<= 1;
 
@@ -470,7 +470,7 @@ namespace Intel8080.Emulator
 
             cpu.Registers.HL = (ushort) (result & 0xFFFFFFFF);
 
-            cpu.Registers.Flags.CalcCarryFlagRegisterPair(result);
+            cpu.Flags.CalcCarryFlagRegisterPair(result);
             
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -512,13 +512,13 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x1C];
 
-            cpu.Registers.Flags.CalcAuxCarryFlag(cpu.Registers.E, 1);
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.E, 1);
 
             cpu.Registers.E += 1;
 
-            cpu.Registers.Flags.CalcSignFlag(cpu.Registers.E);
-            cpu.Registers.Flags.CalcZeroFlag(cpu.Registers.E);
-            cpu.Registers.Flags.CalcParityFlag(cpu.Registers.E);
+            cpu.Flags.CalcSignFlag(cpu.Registers.E);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.E);
+            cpu.Flags.CalcParityFlag(cpu.Registers.E);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -532,13 +532,13 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x1D];
 
-            cpu.Registers.Flags.CalcAuxCarryFlagSub(cpu.Registers.E, 1);
+            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.E, 1);
 
             cpu.Registers.E -= 1;
 
-            cpu.Registers.Flags.CalcSignFlag(cpu.Registers.E);
-            cpu.Registers.Flags.CalcZeroFlag(cpu.Registers.E);
-            cpu.Registers.Flags.CalcParityFlag(cpu.Registers.E);
+            cpu.Flags.CalcSignFlag(cpu.Registers.E);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.E);
+            cpu.Flags.CalcParityFlag(cpu.Registers.E);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -566,9 +566,9 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x1F];
 
-            bool carry = cpu.Registers.Flags.Carry;
+            bool carry = cpu.Flags.Carry;
 
-            cpu.Registers.Flags.Carry = (cpu.Registers.A & 0x01) == 1;
+            cpu.Flags.Carry = (cpu.Registers.A & 0x01) == 1;
 
             cpu.Registers.A >>= 1;
 

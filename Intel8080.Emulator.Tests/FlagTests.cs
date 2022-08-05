@@ -5,13 +5,11 @@ namespace Intel8080.Emulator.Tests
 {
     public class FlagTests
     {
-        private Registers _registers;
         private Flags _flags;
 
         public FlagTests()
         {
-            _registers = new Registers();
-            _flags = new Flags(_registers);
+            _flags = new Flags();
 
             _flags.Clear();
         }
@@ -24,7 +22,7 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             Assert.True(_flags.Sign);
-            Assert.Equal(0x80, _registers.F);
+            Assert.Equal(0x80, _flags.F);
         }
 
         [Fact]
@@ -35,7 +33,7 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             Assert.False(_flags.Sign);
-            Assert.Equal(0x00, _registers.F);
+            Assert.Equal(0x00, _flags.F);
         }
 
         [Fact]
@@ -46,7 +44,7 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             Assert.True(_flags.Zero);
-            Assert.Equal(0x40, _registers.F);
+            Assert.Equal(0x40, _flags.F);
         }
 
         [Fact]
@@ -57,7 +55,7 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             Assert.False(_flags.Zero);
-            Assert.Equal(0x00, _registers.F);
+            Assert.Equal(0x00, _flags.F);
         }
 
         [Fact]
@@ -68,7 +66,7 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             Assert.True(_flags.AuxiliaryCarry);
-            Assert.Equal(0x10, _registers.F);
+            Assert.Equal(0x10, _flags.F);
         }
 
         [Fact]
@@ -79,7 +77,7 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             Assert.False(_flags.AuxiliaryCarry);
-            Assert.Equal(0x00, _registers.F);
+            Assert.Equal(0x00, _flags.F);
         }
 
         [Fact]
@@ -90,7 +88,7 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             Assert.True(_flags.Parity);
-            Assert.Equal(0x04, _registers.F);
+            Assert.Equal(0x04, _flags.F);
         }
 
         [Fact]
@@ -101,7 +99,7 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             Assert.True(_flags.Parity);
-            Assert.Equal(0x04, _registers.F);
+            Assert.Equal(0x04, _flags.F);
         }
 
         [Fact]
@@ -112,7 +110,7 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             Assert.False(_flags.Parity);
-            Assert.Equal(0x00, _registers.F);
+            Assert.Equal(0x00, _flags.F);
         }
 
         [Fact]
@@ -123,7 +121,7 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             Assert.True(_flags.Carry);
-            Assert.Equal(0x01, _registers.F);
+            Assert.Equal(0x01, _flags.F);
         }
 
         [Fact]
@@ -134,7 +132,7 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             Assert.False(_flags.Carry);
-            Assert.Equal(0x00, _registers.F);
+            Assert.Equal(0x00, _flags.F);
         }
 
         [Fact]
@@ -145,7 +143,7 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             Assert.True(_flags.Carry);
-            Assert.Equal(0x01, _registers.F);
+            Assert.Equal(0x01, _flags.F);
         }
 
         [Fact]
@@ -156,7 +154,7 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             Assert.False(_flags.Carry);
-            Assert.Equal(0x00, _registers.F);
+            Assert.Equal(0x00, _flags.F);
         }
 
         [Fact]
@@ -170,7 +168,7 @@ namespace Intel8080.Emulator.Tests
             _flags.Clear();
 
             // Assert
-            Assert.Equal(0x00, _registers.F);
+            Assert.Equal(0x00, _flags.F);
         }
     }
 }

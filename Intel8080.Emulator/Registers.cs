@@ -4,9 +4,6 @@ namespace Intel8080.Emulator
     {
         public byte A { get; set; } = 0x00;
 
-        // Flag register default value - Bit position 2 is always 1
-        public byte F { get; set; } = 0x00;
-
         public ushort BC { get; set; } = 0x00;
         public byte B { get { return (byte)((BC & 0xFF00) >> 8); } set { BC &= 0x00FF; BC |= (ushort)(value << 8); } }
         public byte C { get { return (byte)(BC & 0x00FF); } set { BC &= 0xFF00; BC |= value; } }
@@ -21,12 +18,5 @@ namespace Intel8080.Emulator
 
         public ushort SP { get; set; } = 0x00;
         public ushort PC { get; set; } = 0x00;
-
-        public readonly Flags Flags;
-
-        public Registers()
-        {
-            Flags = new Flags(this);    
-        }
     }
 }

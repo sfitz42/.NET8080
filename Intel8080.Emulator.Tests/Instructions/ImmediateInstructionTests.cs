@@ -27,7 +27,6 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             // Assert
             Assert.Equal(0x0000, _cpu.Registers.A);
-            Assert.Equal(0x0000, _cpu.Registers.F);
             Assert.Equal(0x0103, _cpu.Registers.BC);
             Assert.Equal(0x0000, _cpu.Registers.DE);
             Assert.Equal(0x0000, _cpu.Registers.HL);
@@ -49,7 +48,6 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             // Assert
             Assert.Equal(0x0000, _cpu.Registers.A);
-            Assert.Equal(0x0000, _cpu.Registers.F);
             Assert.Equal(0x0000, _cpu.Registers.BC);
             Assert.Equal(0x0103, _cpu.Registers.DE);
             Assert.Equal(0x0000, _cpu.Registers.HL);

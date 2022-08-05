@@ -31,10 +31,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.True(_cpu.Registers.Flags.Sign);
-            Assert.False(_cpu.Registers.Flags.Zero);
-            Assert.False(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.True(_cpu.Registers.Flags.Parity);
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -56,10 +56,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.False(_cpu.Registers.Flags.Sign);
-            Assert.True(_cpu.Registers.Flags.Zero);
-            Assert.True(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.True(_cpu.Registers.Flags.Parity);
+            Assert.False(_cpu.Flags.Sign);
+            Assert.True(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -81,10 +81,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.True(_cpu.Registers.Flags.Sign);
-            Assert.False(_cpu.Registers.Flags.Zero);
-            Assert.False(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.True(_cpu.Registers.Flags.Parity);
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -106,10 +106,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.False(_cpu.Registers.Flags.Sign);
-            Assert.True(_cpu.Registers.Flags.Zero);
-            Assert.True(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.True(_cpu.Registers.Flags.Parity);
+            Assert.False(_cpu.Flags.Sign);
+            Assert.True(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -131,10 +131,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.True(_cpu.Registers.Flags.Sign);
-            Assert.False(_cpu.Registers.Flags.Zero);
-            Assert.False(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.True(_cpu.Registers.Flags.Parity);
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -156,10 +156,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.False(_cpu.Registers.Flags.Sign);
-            Assert.True(_cpu.Registers.Flags.Zero);
-            Assert.True(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.True(_cpu.Registers.Flags.Parity);
+            Assert.False(_cpu.Flags.Sign);
+            Assert.True(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -181,10 +181,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.True(_cpu.Registers.Flags.Sign);
-            Assert.False(_cpu.Registers.Flags.Zero);
-            Assert.False(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.False(_cpu.Registers.Flags.Parity);
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -206,10 +206,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.True(_cpu.Registers.Flags.Sign);
-            Assert.False(_cpu.Registers.Flags.Zero);
-            Assert.True(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.True(_cpu.Registers.Flags.Parity);
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -231,10 +231,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.True(_cpu.Registers.Flags.Sign);
-            Assert.False(_cpu.Registers.Flags.Zero);
-            Assert.False(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.False(_cpu.Registers.Flags.Parity);
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -256,10 +256,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.True(_cpu.Registers.Flags.Sign);
-            Assert.False(_cpu.Registers.Flags.Zero);
-            Assert.True(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.True(_cpu.Registers.Flags.Parity);
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -281,10 +281,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.True(_cpu.Registers.Flags.Sign);
-            Assert.False(_cpu.Registers.Flags.Zero);
-            Assert.False(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.False(_cpu.Registers.Flags.Parity);
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -306,10 +306,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.True(_cpu.Registers.Flags.Sign);
-            Assert.False(_cpu.Registers.Flags.Zero);
-            Assert.True(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.True(_cpu.Registers.Flags.Parity);
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -331,10 +331,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.True(_cpu.Registers.Flags.Sign);
-            Assert.False(_cpu.Registers.Flags.Zero);
-            Assert.False(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.True(_cpu.Registers.Flags.Parity);
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -356,10 +356,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.False(_cpu.Registers.Flags.Sign);
-            Assert.True(_cpu.Registers.Flags.Zero);
-            Assert.True(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.True(_cpu.Registers.Flags.Parity);
+            Assert.False(_cpu.Flags.Sign);
+            Assert.True(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -381,10 +381,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.True(_cpu.Registers.Flags.Sign);
-            Assert.False(_cpu.Registers.Flags.Zero);
-            Assert.False(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.False(_cpu.Registers.Flags.Parity);
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
@@ -406,10 +406,10 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
-            Assert.True(_cpu.Registers.Flags.Sign);
-            Assert.False(_cpu.Registers.Flags.Zero);
-            Assert.True(_cpu.Registers.Flags.AuxiliaryCarry);
-            Assert.True(_cpu.Registers.Flags.Parity);
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
 
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
