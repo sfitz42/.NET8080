@@ -1,22 +1,38 @@
+using System.Runtime.InteropServices;
+
 namespace Intel8080.Emulator
 {
+    [StructLayout(LayoutKind.Explicit)]
     public class Registers
     {
-        public byte A { get; set; } = 0x00;
+        [FieldOffset(0)]
+        public byte A = 0x00;
 
-        public ushort BC { get; set; } = 0x00;
-        public byte B { get { return (byte)((BC & 0xFF00) >> 8); } set { BC &= 0x00FF; BC |= (ushort)(value << 8); } }
-        public byte C { get { return (byte)(BC & 0x00FF); } set { BC &= 0xFF00; BC |= value; } }
+        [FieldOffset(1)]
+        public ushort BC = 0x0000;
+        [FieldOffset(2)]
+        public byte B;
+        [FieldOffset(1)]
+        public byte C;
 
-        public ushort DE { get; set; } = 0x00;
-        public byte D { get { return (byte)((DE & 0xFF00) >> 8); } set { DE &= 0x00FF; DE |= (ushort)(value << 8); } }
-        public byte E { get { return (byte)(DE & 0x00FF); } set { DE &= 0xFF00; DE |= value; } }
+        [FieldOffset(3)]
+        public ushort DE = 0x0000;
+        [FieldOffset(4)]
+        public byte D;
+        [FieldOffset(3)]
+        public byte E;
 
-        public ushort HL { get; set; } = 0x00;
-        public byte H { get { return (byte)((HL & 0xFF00) >> 8); } set { HL &= 0x00FF; HL |= (ushort)(value << 8); } }
-        public byte L { get { return (byte)(HL & 0x00FF); } set { HL &= 0xFF00; HL |= value; } }
+        [FieldOffset(5)]
+        public ushort HL = 0x0000;
+        [FieldOffset(6)]
+        public byte H;
+        [FieldOffset(5)]
+        public byte L;
 
-        public ushort SP { get; set; } = 0x00;
-        public ushort PC { get; set; } = 0x00;
+        [FieldOffset(7)]
+        public ushort SP = 0x0000;
+        
+        [FieldOffset(9)]
+        public ushort PC = 0x0000;
     }
 }
