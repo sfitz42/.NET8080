@@ -65,6 +65,24 @@ namespace Intel8080.Emulator
             OpcodeTable[0x2E] = new Opcode("MVI L, d8",  2, 7,  null);
             OpcodeTable[0x2F] = new Opcode("CMA",        1, 4,  null);
 
+            // 0x3X
+            OpcodeTable[0x30] = new Opcode("*NOP",        1, 4,  null);
+            OpcodeTable[0x31] = new Opcode("LXI SP, d16", 3, 10, null);
+            OpcodeTable[0x32] = new Opcode("STA a16",     3, 13, null);
+            OpcodeTable[0x33] = new Opcode("INX SP",      1, 5,  null);
+            OpcodeTable[0x34] = new Opcode("INR M",       1, 10, null);
+            OpcodeTable[0x35] = new Opcode("DCR M",       1, 10, null);
+            OpcodeTable[0x36] = new Opcode("MVI M, d8",   2, 10, null);
+            OpcodeTable[0x37] = new Opcode("STC",         1, 4,  null);
+            OpcodeTable[0x38] = new Opcode("*NOP",        1, 4,  null);
+            OpcodeTable[0x39] = new Opcode("DAD SP",      1, 10, null);
+            OpcodeTable[0x3A] = new Opcode("LDA a16",     3, 13, null);
+            OpcodeTable[0x3B] = new Opcode("DCX SP",      1, 5,  null);
+            OpcodeTable[0x3C] = new Opcode("INR A",       1, 5,  null);
+            OpcodeTable[0x3D] = new Opcode("DCR A",       1, 5,  null);
+            OpcodeTable[0x3E] = new Opcode("MVI A, d8",   2, 7,  null);
+            OpcodeTable[0x3F] = new Opcode("CMC",         1, 4,  null);
+
             OpcodeActions = new Action<CPU>[0xFF];
 
             // 0x0X
@@ -80,8 +98,8 @@ namespace Intel8080.Emulator
             OpcodeActions[0x09] = DAD_B;
             OpcodeActions[0x0A] = LDAX_B;
             OpcodeActions[0x0B] = DCX_B;
-            OpcodeActions[0x0C] = INR_B;
-            OpcodeActions[0x0D] = DCR_B;
+            OpcodeActions[0x0C] = INR_C;
+            OpcodeActions[0x0D] = DCR_C;
             OpcodeActions[0x0E] = MVI_C;
             OpcodeActions[0x0F] = RRC;
 
@@ -89,19 +107,19 @@ namespace Intel8080.Emulator
             OpcodeActions[0x10] = NOP;
             OpcodeActions[0x11] = LXI_D;
             OpcodeActions[0x12] = STAX_D;
-            OpcodeActions[0x13] = INX_B;
-            OpcodeActions[0x14] = INR_B;
-            OpcodeActions[0x15] = DCR_B;
-            OpcodeActions[0x16] = MVI_B;
+            OpcodeActions[0x13] = INX_D;
+            OpcodeActions[0x14] = INR_D;
+            OpcodeActions[0x15] = DCR_D;
+            OpcodeActions[0x16] = MVI_D;
             OpcodeActions[0x17] = RLC;
             OpcodeActions[0x18] = NOP;
-            OpcodeActions[0x19] = DAD_B;
-            OpcodeActions[0x1A] = LDAX_B;
-            OpcodeActions[0x1B] = DCX_B;
-            OpcodeActions[0x1C] = INR_B;
-            OpcodeActions[0x1D] = DCR_B;
-            OpcodeActions[0x1E] = MVI_C;
-            OpcodeActions[0x1F] = RRC;
+            OpcodeActions[0x19] = DAD_D;
+            OpcodeActions[0x1A] = LDAX_D;
+            OpcodeActions[0x1B] = DCX_D;
+            OpcodeActions[0x1C] = INR_E;
+            OpcodeActions[0x1D] = DCR_E;
+            OpcodeActions[0x1E] = MVI_E;
+            OpcodeActions[0x1F] = RAR;
 
             // 0x2X
             OpcodeActions[0x20] = NOP;
@@ -120,6 +138,24 @@ namespace Intel8080.Emulator
             OpcodeActions[0x2D] = DCR_L;
             OpcodeActions[0x2E] = MVI_L;
             OpcodeActions[0x2F] = CMA;
+
+            // 0x3X
+            OpcodeActions[0x30] = NOP;
+            OpcodeActions[0x31] = NOP;
+            OpcodeActions[0x32] = NOP;
+            OpcodeActions[0x33] = NOP;
+            OpcodeActions[0x34] = NOP;
+            OpcodeActions[0x35] = NOP;
+            OpcodeActions[0x36] = NOP;
+            OpcodeActions[0x37] = NOP;
+            OpcodeActions[0x38] = NOP;
+            OpcodeActions[0x39] = NOP;
+            OpcodeActions[0x3A] = NOP;
+            OpcodeActions[0x3B] = NOP;
+            OpcodeActions[0x3C] = NOP;
+            OpcodeActions[0x3D] = NOP;
+            OpcodeActions[0x3E] = NOP;
+            OpcodeActions[0x3F] = NOP;
         }
 
         // 0x00   - NOP
