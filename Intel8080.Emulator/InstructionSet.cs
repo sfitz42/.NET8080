@@ -141,21 +141,21 @@ namespace Intel8080.Emulator
 
             // 0x3X
             OpcodeActions[0x30] = NOP;
-            OpcodeActions[0x31] = NOP;
-            OpcodeActions[0x32] = NOP;
-            OpcodeActions[0x33] = NOP;
-            OpcodeActions[0x34] = NOP;
-            OpcodeActions[0x35] = NOP;
-            OpcodeActions[0x36] = NOP;
-            OpcodeActions[0x37] = NOP;
+            OpcodeActions[0x31] = LXI_SP;
+            OpcodeActions[0x32] = STA;
+            OpcodeActions[0x33] = INX_SP;
+            OpcodeActions[0x34] = INR_M;
+            OpcodeActions[0x35] = DCR_M;
+            OpcodeActions[0x36] = MVI_M;
+            OpcodeActions[0x37] = STC;
             OpcodeActions[0x38] = NOP;
-            OpcodeActions[0x39] = NOP;
-            OpcodeActions[0x3A] = NOP;
-            OpcodeActions[0x3B] = NOP;
-            OpcodeActions[0x3C] = NOP;
-            OpcodeActions[0x3D] = NOP;
-            OpcodeActions[0x3E] = NOP;
-            OpcodeActions[0x3F] = NOP;
+            OpcodeActions[0x39] = DAD_SP;
+            OpcodeActions[0x3A] = LDA;
+            OpcodeActions[0x3B] = DCX_SP;
+            OpcodeActions[0x3C] = INR_A;
+            OpcodeActions[0x3D] = DCR_A;
+            OpcodeActions[0x3E] = MVI_A;
+            OpcodeActions[0x3F] = CMC;
         }
 
         // 0x00   - NOP
@@ -909,6 +909,250 @@ namespace Intel8080.Emulator
             var opcode = OpcodeTable[0x2F];
 
             cpu.Registers.A = (byte) ~cpu.Registers.A;
+
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x30   - *NOP
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+
+        // 0x31   - LXI SP, d16
+        // Bytes  - 3
+        // Cycles - 10
+        // Flags  - None
+        public static void LXI_SP(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x31];
+
+            cpu.Registers.SP = (ushort) (cpu.Memory[cpu.Registers.PC + 2] << 8 | cpu.Memory[cpu.Registers.PC + 1]);
+
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x32   - STA a16
+        // Bytes  - 3
+        // Cycles - 13
+        // Flags  - None
+        public static void STA(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x32];
+
+            var location = cpu.Memory[cpu.Registers.PC + 2] << 8 | cpu.Memory[cpu.Registers.PC + 1];
+
+            cpu.Memory[location] = cpu.Registers.A;
+
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x33   - INX SP
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public static void INX_SP(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x33];
+
+            cpu.Registers.SP += 1;
+
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x34   - INR M
+        // Bytes  - 1
+        // Cycles - 10
+        // Flags  - S, Z, A, P
+        public static void INR_M(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x34];
+
+            var location = cpu.Registers.H << 8 | cpu.Registers.L;
+
+            cpu.Flags.CalcAuxCarryFlag(cpu.Memory[location], 1);
+
+            cpu.Memory[location] += 1;
+
+            cpu.Flags.CalcSignFlag(cpu.Memory[location]);
+            cpu.Flags.CalcZeroFlag(cpu.Memory[location]);
+            cpu.Flags.CalcParityFlag(cpu.Memory[location]);
+
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x35   - DCR M
+        // Bytes  - 1
+        // Cycles - 10
+        // Flags  - S, Z, A, P
+        public static void DCR_M(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x35];
+
+            var location = cpu.Registers.H << 8 | cpu.Registers.L;
+
+            cpu.Flags.CalcAuxCarryFlagSub(cpu.Memory[location], 1);
+
+            cpu.Memory[location] -= 1;
+
+            cpu.Flags.CalcSignFlag(cpu.Memory[location]);
+            cpu.Flags.CalcZeroFlag(cpu.Memory[location]);
+            cpu.Flags.CalcParityFlag(cpu.Memory[location]);
+
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x36   - MVI M
+        // Bytes  - 2
+        // Cycles - 10
+        // Flags  - None
+        public static void MVI_M(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x36];
+
+            var location = cpu.Registers.H << 8 | cpu.Registers.L;
+
+            cpu.Memory[location] = cpu.Memory[cpu.Registers.PC + 1];
+
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x37   - STC
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - C
+        public static void STC(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x37];
+
+            cpu.Flags.Carry = true;
+
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x38   - *NOP
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+
+        // 0x39   - DAD SP
+        // Bytes  - 1
+        // Cycles - 10
+        // Flags  - C
+        public static void DAD_SP(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x39];
+
+            int result = cpu.Registers.HL + cpu.Registers.SP;
+
+            cpu.Registers.HL = (ushort) (result & 0xFFFFFFFF);
+
+            cpu.Flags.CalcCarryFlagRegisterPair(result);
+            
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x3A   - LDA a16
+        // Bytes  - 3
+        // Cycles - 13
+        // Flags  - C
+        public static void LDA(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x3A];
+
+            var location = cpu.Memory[cpu.Registers.PC + 2] << 8 | cpu.Memory[cpu.Registers.PC + 1];
+
+            cpu.Registers.A = cpu.Memory[location];
+            
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x3B   - DCX SP
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public static void DCX_SP(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x3B];
+
+            cpu.Registers.SP -= 1;
+
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x3C   - INR A
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - S, Z, A, P
+        public static void INR_A(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x3C];
+
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, 1);
+
+            cpu.Registers.A += 1;
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x3D   - DCR A
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - S, Z, A, P
+        public static void DCR_A(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x3D];
+
+            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.A, 1);
+
+            cpu.Registers.A -= 1;
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x3E   - MVI A, d8
+        // Bytes  - 2
+        // Cycles - 7
+        // Flags  - None
+        public static void MVI_A(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x3E];
+
+            cpu.Registers.A = cpu.Memory[cpu.Registers.PC + 1];
+
+            cpu.Registers.PC += opcode.Length;
+            cpu.Cycles += opcode.Cycles;
+        }
+
+        // 0x3F   - CMC
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - C
+        public static void CMC(CPU cpu)
+        {
+            var opcode = OpcodeTable[0x3F];
+
+            cpu.Flags.Carry = !cpu.Flags.Carry;
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;

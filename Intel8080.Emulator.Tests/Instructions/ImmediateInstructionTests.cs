@@ -58,7 +58,7 @@ namespace Intel8080.Emulator.Tests.Instructions
         }
 
         [Fact]
-        public void LXI_H_ShouldStoreImmediateDataInDE()
+        public void LXI_H_ShouldStoreImmediateDataInHL()
         {
             // Arrange
             _memory[0x0001] = 0x03;
@@ -73,6 +73,27 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.DE);
             Assert.Equal(0x0103, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.Equal(3, _cpu.Registers.PC);
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void LXI_SP_ShouldStoreImmediateDataInSP()
+        {
+            // Arrange
+            _memory[0x0001] = 0x03;
+            _memory[0x0002] = 0x01;
+
+            // Act
+            InstructionSet.LXI_SP(_cpu);
+
+            // Assert
+            Assert.Equal(0x0000, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0103, _cpu.Registers.SP);
 
             Assert.Equal(3, _cpu.Registers.PC);
             Assert.Equal(10, _cpu.Cycles);
@@ -192,6 +213,49 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.BC);
             Assert.Equal(0x0000, _cpu.Registers.DE);
             Assert.Equal(0x00FF, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.Equal(2, _cpu.Registers.PC);
+            Assert.Equal(7, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void MVI_M_ShouldStoreImmediateDataInMemoryLocation()
+        {
+            // Arrange
+            _cpu.Registers.HL = 0x0050;
+            _memory[0x0001] = 0xFF;
+
+            // Act
+            InstructionSet.MVI_M(_cpu);
+
+            // Assert
+            Assert.Equal(0x0000, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0050, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.Equal(0xFF, _cpu.Memory[0x0050]);
+
+            Assert.Equal(2, _cpu.Registers.PC);
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void MVI_A_ShouldStoreImmediateDataInAccumulator()
+        {
+            // Arrange
+            _memory[0x0001] = 0xFF;
+
+            // Act
+            InstructionSet.MVI_A(_cpu);
+
+            // Assert
+            Assert.Equal(0x00FF, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
             Assert.Equal(2, _cpu.Registers.PC);

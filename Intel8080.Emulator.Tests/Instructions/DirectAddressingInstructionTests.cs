@@ -16,6 +16,29 @@ namespace Intel8080.Emulator.Tests.Instructions
         }
 
         [Fact]
+        public void STA_ShouldStoreAccumulatorInMemory()
+        {
+            // Arrange
+            _memory[0x0001] = 0x0A;
+            _memory[0x0002] = 0x01;
+            _cpu.Registers.A = 0x42;
+
+            // Act
+            InstructionSet.STA(_cpu);
+
+            // Assert
+            Assert.Equal(0x42, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.Equal(0x42, _memory[0x10A]);
+
+            Assert.Equal(3, _cpu.Registers.PC);
+            Assert.Equal(13, _cpu.Cycles);
+        }
+        [Fact]
         public void SHLD_ShouldStoreHLInMemory()
         {
             // Arrange
@@ -27,7 +50,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             InstructionSet.SHLD(_cpu);
 
             // Assert
-            Assert.Equal(0x0000, _cpu.Registers.A);
+            Assert.Equal(0x00, _cpu.Registers.A);
             Assert.Equal(0x0000, _cpu.Registers.BC);
             Assert.Equal(0x0000, _cpu.Registers.DE);
             Assert.Equal(0xAE29, _cpu.Registers.HL);
@@ -54,7 +77,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             InstructionSet.LHLD(_cpu);
 
             // Assert
-            Assert.Equal(0x0000, _cpu.Registers.A);
+            Assert.Equal(0x00, _cpu.Registers.A);
             Assert.Equal(0x0000, _cpu.Registers.BC);
             Assert.Equal(0x0000, _cpu.Registers.DE);
             Assert.Equal(0x03FF, _cpu.Registers.HL);
@@ -62,6 +85,29 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.Equal(3, _cpu.Registers.PC);
             Assert.Equal(16, _cpu.Cycles);
+        }
+        
+        [Fact]
+        public void LDA_ShouldStoreMemoryInAccumulator()
+        {
+            // Arrange
+            _memory[0x0001] = 0x5B;
+            _memory[0x0002] = 0x02;
+
+            _memory[0x25B] = 0x42;
+
+            // Act
+            InstructionSet.LDA(_cpu);
+
+            // Assert
+            Assert.Equal(0x42, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.Equal(3, _cpu.Registers.PC);
+            Assert.Equal(13, _cpu.Cycles);
         }
     }
 }

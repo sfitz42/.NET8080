@@ -6,13 +6,13 @@ namespace Intel8080.Emulator.Tests.Instructions
     public class SingleRegisterInstructionTests
     {
         private readonly CPU _cpu;
-        private readonly Mock<IMemory> _memory;
+        private readonly IMemory _memory;
 
         public SingleRegisterInstructionTests()
         {
-            _memory = new Mock<IMemory>();
+            _memory = new DefaultMemory(0x100);
 
-            _cpu = new CPU(_memory.Object);
+            _cpu = new CPU(_memory);
         }
 
         [Fact]
@@ -298,6 +298,84 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             // Act
             InstructionSet.INR_L(_cpu);
+
+            // Assert
+            Assert.Equal(0x00, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.True(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void INR_M_ShouldIncrementByOne()
+        {
+            // Arrange
+            _cpu.Registers.HL = 0x99;
+            _cpu.Memory[0x99] = 0x40;
+
+            // Act
+            InstructionSet.INR_M(_cpu);
+
+            // Assert
+            Assert.Equal(0x00, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0099, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.Equal(0x41, _cpu.Memory[0x99]);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void INR_A_ShouldIncrementByOne()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x99;
+
+            // Act
+            InstructionSet.INR_A(_cpu);
+
+            // Assert
+            Assert.Equal(0x9A, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void INR_A_ShouldSetAuxCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xFF;
+
+            // Act
+            InstructionSet.INR_A(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -604,6 +682,112 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.BC);
             Assert.Equal(0x0000, _cpu.Registers.DE);
             Assert.Equal(0x00FF, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void DCR_M_ShouldDecrementByOne()
+        {
+            // Arrange
+            _cpu.Registers.HL = 0x99;
+            _cpu.Memory[0x99] = 0xFF;
+
+            // Act
+            InstructionSet.DCR_M(_cpu);
+
+            // Assert
+            Assert.Equal(0x00, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0099, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.Equal(0xFE, _cpu.Memory[0x99]);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void DCR_M_ShouldSetAuxCarry()
+        {
+            // Arrange
+            _cpu.Registers.HL = 0x99;
+            _cpu.Memory[0x99] = 0x00;
+
+            // Act
+            InstructionSet.DCR_M(_cpu);
+
+            // Assert
+            Assert.Equal(0x00, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0099, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.Equal(0xFF, _cpu.Memory[0x99]);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void DCR_A_ShouldDecrementByOne()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xFF;
+
+            // Act
+            InstructionSet.DCR_A(_cpu);
+
+            // Assert
+            Assert.Equal(0xFE, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void DCR_A_ShouldSetAuxCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x00;
+
+            // Act
+            InstructionSet.DCR_A(_cpu);
+
+            // Assert
+            Assert.Equal(0xFF, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
             Assert.True(_cpu.Flags.Sign);
