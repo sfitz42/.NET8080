@@ -158,6 +158,77 @@ namespace Intel8080.Emulator
             OpcodeActions[0x3F] = CMC;
         }
 
+        private static void INX(CPU cpu, ref ushort reg)
+        {
+            reg += 1;
+        }
+
+        private static void DCX(CPU cpu, ref ushort reg)
+        {
+            reg -= 1;
+        }
+
+        private static void INR(CPU cpu, ref byte reg)
+        {
+            cpu.Flags.CalcAuxCarryFlag(reg, 1);
+
+            reg += 1;
+
+            cpu.Flags.CalcSignFlag(reg);
+            cpu.Flags.CalcZeroFlag(reg);
+            cpu.Flags.CalcParityFlag(reg);
+        }
+
+        private static void DCR(CPU cpu, ref byte reg)
+        {
+            cpu.Flags.CalcAuxCarryFlagSub(reg, 1);
+
+            reg -= 1;
+
+            cpu.Flags.CalcSignFlag(reg);
+            cpu.Flags.CalcZeroFlag(reg);
+            cpu.Flags.CalcParityFlag(reg);
+        }
+
+        private static void STAX(CPU cpu, ushort reg)
+        {
+            cpu.Memory[reg] = cpu.Registers.A;
+        }
+
+        private static void LDAX(CPU cpu, ushort reg)
+        {
+            cpu.Registers.A = cpu.Memory[reg];
+        }
+
+        private static void LXI(CPU cpu, ref ushort reg)
+        {
+            ushort data = GetUshort(
+                cpu.Memory[cpu.Registers.PC + 2],
+                cpu.Memory[cpu.Registers.PC + 1]
+            );
+
+            reg = data;
+        }
+
+        private static void MVI(CPU cpu, ref byte reg)
+        {
+            reg = cpu.Memory[cpu.Registers.PC + 1];
+        }
+
+        private static void DAD(CPU cpu, ref ushort reg)
+        {
+            int result = cpu.Registers.HL + reg;
+
+            cpu.Registers.HL = (ushort) (result & 0xFFFFFFFF);
+
+            cpu.Flags.CalcCarryFlagRegisterPair(result);
+        }
+
+        private static ushort GetUshort(byte a, byte b)
+        {
+            return (ushort) ((a << 8) | b);
+        }
+
         // 0x00   - NOP
         // Bytes  - 1
         // Cycles - 4
@@ -178,8 +249,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x01];
 
-            cpu.Registers.B = cpu.Memory[cpu.Registers.PC + 2];
-            cpu.Registers.C = cpu.Memory[cpu.Registers.PC + 1];
+            LXI(cpu, ref cpu.Registers.BC);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -193,7 +263,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x02];
 
-            cpu.Memory[cpu.Registers.BC] = cpu.Registers.A;
+            STAX(cpu, cpu.Registers.BC);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -207,7 +277,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x03];
 
-            cpu.Registers.BC += 1;
+            INX(cpu, ref cpu.Registers.BC);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -221,13 +291,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x04];
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.B, 1);
-
-            cpu.Registers.B += 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.B);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.B);
-            cpu.Flags.CalcParityFlag(cpu.Registers.B);
+            INR(cpu, ref cpu.Registers.B);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -241,13 +305,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x05];
 
-            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.B, 1);
-
-            cpu.Registers.B -= 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.B);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.B);
-            cpu.Flags.CalcParityFlag(cpu.Registers.B);
+            DCR(cpu, ref cpu.Registers.B);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -261,7 +319,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x06];
 
-            cpu.Registers.B = cpu.Memory[cpu.Registers.PC + 1];
+            MVI(cpu, ref cpu.Registers.B);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -295,11 +353,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x09];
 
-            int result = cpu.Registers.HL + cpu.Registers.BC;
-
-            cpu.Registers.HL = (ushort) (result & 0xFFFFFFFF);
-
-            cpu.Flags.CalcCarryFlagRegisterPair(result);
+            DAD(cpu, ref cpu.Registers.BC);
             
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -313,7 +367,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x0A];
 
-            cpu.Registers.A = cpu.Memory[cpu.Registers.BC];
+            LDAX(cpu, cpu.Registers.BC);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -327,7 +381,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x0B];
 
-            cpu.Registers.BC -= 1;
+            DCX(cpu, ref cpu.Registers.BC);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -342,13 +396,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x0C];
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.C, 1);
-
-            cpu.Registers.C += 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.C);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.C);
-            cpu.Flags.CalcParityFlag(cpu.Registers.C);
+            INR(cpu, ref cpu.Registers.C);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -362,13 +410,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x0D];
 
-            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.C, 1);
-
-            cpu.Registers.C -= 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.C);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.C);
-            cpu.Flags.CalcParityFlag(cpu.Registers.C);
+            DCR(cpu, ref cpu.Registers.C);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -382,7 +424,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x0E];
 
-            cpu.Registers.C = cpu.Memory[cpu.Registers.PC + 1];
+            MVI(cpu, ref cpu.Registers.C);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -416,8 +458,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x11];
 
-            cpu.Registers.D = cpu.Memory[cpu.Registers.PC + 2];
-            cpu.Registers.E = cpu.Memory[cpu.Registers.PC + 1];
+            LXI(cpu, ref cpu.Registers.DE);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -431,7 +472,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x12];
 
-            cpu.Memory[cpu.Registers.DE] = cpu.Registers.A;
+            STAX(cpu, cpu.Registers.DE);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -445,7 +486,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x13];
 
-            cpu.Registers.DE += 1;
+            INX(cpu, ref cpu.Registers.DE);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -459,13 +500,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x14];
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.D, 1);
-
-            cpu.Registers.D += 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.D);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.D);
-            cpu.Flags.CalcParityFlag(cpu.Registers.D);
+            INR(cpu, ref cpu.Registers.D);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -479,13 +514,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x15];
 
-            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.D, 1);
-
-            cpu.Registers.D -= 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.D);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.D);
-            cpu.Flags.CalcParityFlag(cpu.Registers.D);
+            DCR(cpu, ref cpu.Registers.D);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -499,7 +528,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x16];
 
-            cpu.Registers.D = cpu.Memory[cpu.Registers.PC + 1];
+            MVI(cpu, ref cpu.Registers.D);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -538,11 +567,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x19];
 
-            int result = cpu.Registers.HL + cpu.Registers.DE;
-
-            cpu.Registers.HL = (ushort) (result & 0xFFFFFFFF);
-
-            cpu.Flags.CalcCarryFlagRegisterPair(result);
+            DAD(cpu, ref cpu.Registers.DE);
             
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -556,7 +581,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x1A];
 
-            cpu.Registers.A = cpu.Memory[cpu.Registers.DE];
+            LDAX(cpu, cpu.Registers.DE);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -570,7 +595,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x1B];
 
-            cpu.Registers.DE -= 1;
+            DCX(cpu, ref cpu.Registers.DE);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -584,13 +609,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x1C];
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.E, 1);
-
-            cpu.Registers.E += 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.E);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.E);
-            cpu.Flags.CalcParityFlag(cpu.Registers.E);
+            INR(cpu, ref cpu.Registers.E);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -604,13 +623,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x1D];
 
-            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.E, 1);
-
-            cpu.Registers.E -= 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.E);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.E);
-            cpu.Flags.CalcParityFlag(cpu.Registers.E);
+            DCR(cpu, ref cpu.Registers.E);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -624,7 +637,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x1E];
 
-            cpu.Registers.E = cpu.Memory[cpu.Registers.PC + 1];
+            MVI(cpu, ref cpu.Registers.E);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -663,8 +676,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x21];
 
-            cpu.Registers.H = cpu.Memory[cpu.Registers.PC + 2];
-            cpu.Registers.L = cpu.Memory[cpu.Registers.PC + 1];
+            LXI(cpu, ref cpu.Registers.HL);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -678,7 +690,10 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x22];
 
-            var location = cpu.Memory[cpu.Registers.PC + 2] << 8 | cpu.Memory[cpu.Registers.PC + 1];
+            var location = GetUshort(
+                cpu.Memory[cpu.Registers.PC + 2],
+                cpu.Memory[cpu.Registers.PC + 1]
+            );
 
             cpu.Memory[location] = cpu.Registers.L;
             cpu.Memory[location + 1] = cpu.Registers.H;
@@ -695,7 +710,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x23];
 
-            cpu.Registers.HL += 1;
+            INX(cpu, ref cpu.Registers.HL);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -709,13 +724,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x24];
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.H, 1);
-
-            cpu.Registers.H += 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.H);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.H);
-            cpu.Flags.CalcParityFlag(cpu.Registers.H);
+            INR(cpu, ref cpu.Registers.H);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -729,13 +738,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x25];
 
-            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.H, 1);
-
-            cpu.Registers.H -= 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.H);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.H);
-            cpu.Flags.CalcParityFlag(cpu.Registers.H);
+            DCR(cpu, ref cpu.Registers.H);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -749,7 +752,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x26];
 
-            cpu.Registers.H = cpu.Memory[cpu.Registers.PC + 1];
+            MVI(cpu, ref cpu.Registers.H);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -805,11 +808,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x29];
 
-            int result = cpu.Registers.HL + cpu.Registers.HL;
-
-            cpu.Registers.HL = (ushort) (result & 0xFFFFFFFF);
-
-            cpu.Flags.CalcCarryFlagRegisterPair(result);
+            DAD(cpu, ref cpu.Registers.HL);
             
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -823,7 +822,10 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x2A];
 
-            var location = cpu.Memory[cpu.Registers.PC + 2] << 8 | cpu.Memory[cpu.Registers.PC + 1];
+            var location = GetUshort(
+                cpu.Memory[cpu.Registers.PC + 2],
+                cpu.Memory[cpu.Registers.PC + 1]
+            );
 
             cpu.Registers.L = cpu.Memory[location];
             cpu.Registers.H = cpu.Memory[location + 1];
@@ -840,7 +842,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x2B];
 
-            cpu.Registers.HL -= 1;
+            DCX(cpu, ref cpu.Registers.HL);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -854,13 +856,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x2C];
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.L, 1);
-
-            cpu.Registers.L += 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.L);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.L);
-            cpu.Flags.CalcParityFlag(cpu.Registers.L);
+            INR(cpu, ref cpu.Registers.L);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -874,13 +870,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x2D];
 
-            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.L, 1);
-
-            cpu.Registers.L -= 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.L);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.L);
-            cpu.Flags.CalcParityFlag(cpu.Registers.L);
+            DCR(cpu, ref cpu.Registers.L);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -894,7 +884,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x2E];
 
-            cpu.Registers.L = cpu.Memory[cpu.Registers.PC + 1];
+            MVI(cpu, ref cpu.Registers.L);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -927,7 +917,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x31];
 
-            cpu.Registers.SP = (ushort) (cpu.Memory[cpu.Registers.PC + 2] << 8 | cpu.Memory[cpu.Registers.PC + 1]);
+            LXI(cpu, ref cpu.Registers.SP);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -941,7 +931,10 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x32];
 
-            var location = cpu.Memory[cpu.Registers.PC + 2] << 8 | cpu.Memory[cpu.Registers.PC + 1];
+            var location = GetUshort(
+                cpu.Memory[cpu.Registers.PC + 2],
+                cpu.Memory[cpu.Registers.PC + 1]
+            );
 
             cpu.Memory[location] = cpu.Registers.A;
 
@@ -957,7 +950,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x33];
 
-            cpu.Registers.SP += 1;
+            INX(cpu, ref cpu.Registers.SP);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -971,7 +964,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x34];
 
-            var location = cpu.Registers.H << 8 | cpu.Registers.L;
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
             cpu.Flags.CalcAuxCarryFlag(cpu.Memory[location], 1);
 
@@ -993,7 +986,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x35];
 
-            var location = cpu.Registers.H << 8 | cpu.Registers.L;
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
             cpu.Flags.CalcAuxCarryFlagSub(cpu.Memory[location], 1);
 
@@ -1015,7 +1008,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x36];
 
-            var location = cpu.Registers.H << 8 | cpu.Registers.L;
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
             cpu.Memory[location] = cpu.Memory[cpu.Registers.PC + 1];
 
@@ -1050,11 +1043,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x39];
 
-            int result = cpu.Registers.HL + cpu.Registers.SP;
-
-            cpu.Registers.HL = (ushort) (result & 0xFFFFFFFF);
-
-            cpu.Flags.CalcCarryFlagRegisterPair(result);
+            DAD(cpu, ref cpu.Registers.SP);
             
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -1068,7 +1057,10 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x3A];
 
-            var location = cpu.Memory[cpu.Registers.PC + 2] << 8 | cpu.Memory[cpu.Registers.PC + 1];
+            var location = GetUshort(
+                cpu.Memory[cpu.Registers.PC + 2],
+                cpu.Memory[cpu.Registers.PC + 1]
+            );
 
             cpu.Registers.A = cpu.Memory[location];
             
@@ -1084,7 +1076,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x3B];
 
-            cpu.Registers.SP -= 1;
+            DCX(cpu, ref cpu.Registers.SP);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -1098,13 +1090,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x3C];
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, 1);
-
-            cpu.Registers.A += 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            INR(cpu, ref cpu.Registers.A);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -1118,13 +1104,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x3D];
 
-            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.A, 1);
-
-            cpu.Registers.A -= 1;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            DCR(cpu, ref cpu.Registers.A);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
@@ -1138,7 +1118,7 @@ namespace Intel8080.Emulator
         {
             var opcode = OpcodeTable[0x3E];
 
-            cpu.Registers.A = cpu.Memory[cpu.Registers.PC + 1];
+            MVI(cpu, ref cpu.Registers.A);
 
             cpu.Registers.PC += opcode.Length;
             cpu.Cycles += opcode.Cycles;
