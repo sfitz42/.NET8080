@@ -20,6 +20,14 @@ namespace Intel8080.Emulator
             Flags = new Flags();
         }
 
+        public CPU(IMemory memory)
+        {
+            Memory = memory;
+            InstructionSet = new DefaultInstructionSet();
+            Registers = new Registers();
+            Flags = new Flags();
+        }
+        
         public void Run()
         {
             var opcode = Memory[Registers.PC];

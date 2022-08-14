@@ -42,7 +42,7 @@ namespace Intel8080.Emulator
             _actions[0x14] = INR_D;
             _actions[0x15] = DCR_D;
             _actions[0x16] = MVI_D;
-            _actions[0x17] = RLC;
+            _actions[0x17] = RAL;
             _actions[0x18] = NOP;
             _actions[0x19] = DAD_D;
             _actions[0x1A] = LDAX_D;

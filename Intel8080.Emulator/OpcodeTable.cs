@@ -6,7 +6,7 @@ namespace Intel8080.Emulator
 
         static OpcodeTable()
         {
-            Opcodes = new Opcode[0xFF];
+            Opcodes = new Opcode[0x100];
 
             // 0x0X
             Opcodes[0x00] = new Opcode("NOP",        1, 4,  null);
