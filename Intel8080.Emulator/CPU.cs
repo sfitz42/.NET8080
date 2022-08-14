@@ -6,20 +6,28 @@ namespace Intel8080.Emulator
 
         public Registers Registers { get; }
 
+        public IInstructionSet InstructionSet { get; }
+
         public Flags Flags { get; }
 
         public int Cycles { get; set; } = 0;
 
-        public CPU(IMemory memory)
+        public CPU(IMemory memory, IInstructionSet instructionSet)
         {
             Memory = memory;
+            InstructionSet = instructionSet;
             Registers = new Registers();
             Flags = new Flags();
         }
 
         public void Run()
         {
-            InstructionSet.OpcodeActions[Memory[Registers.PC]](this);
+            var opcode = Memory[Registers.PC];
+
+            InstructionSet[Memory[Registers.PC]](this);
+
+            Registers.PC += OpcodeTable.Opcodes[opcode].Length;
+            Cycles += OpcodeTable.Opcodes[opcode].Cycles;
         }
     }
 }

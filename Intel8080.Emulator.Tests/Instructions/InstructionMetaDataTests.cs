@@ -271,7 +271,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
         public InstructionMetaDataTests()
         {
-            _opcodes = InstructionSet.OpcodeTable;
+            _opcodes = OpcodeTable.Opcodes;
         }
 
         [Theory]

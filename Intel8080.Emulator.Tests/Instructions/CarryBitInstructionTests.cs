@@ -7,19 +7,21 @@ namespace Intel8080.Emulator.Tests.Instructions
     {
         private readonly CPU _cpu;
         private readonly Mock<IMemory> _memory;
+        private readonly IInstructionSet _instructionSet;
 
         public CarryBitInstructionTests()
         {
             _memory = new Mock<IMemory>();
 
-            _cpu = new CPU(_memory.Object);
+            _instructionSet = new DefaultInstructionSet();
+            _cpu = new CPU(_memory.Object, _instructionSet);
         }
 
         [Fact]
         public void NOP_ShouldAffectOnlyPCAndCycles()
         {
             // Act
-            InstructionSet.NOP(_cpu);
+            _instructionSet.NOP(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -27,9 +29,6 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.DE);
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
-
-            Assert.Equal(1, _cpu.Registers.PC);
-            Assert.Equal(4, _cpu.Cycles);
         }
 
         [Fact]
@@ -39,7 +38,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = false;
 
             // Act
-            InstructionSet.STC(_cpu);
+            _instructionSet.STC(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -49,9 +48,6 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
             Assert.True(_cpu.Flags.Carry);
-
-            Assert.Equal(1, _cpu.Registers.PC);
-            Assert.Equal(4, _cpu.Cycles);
         }
 
         [Fact]
@@ -61,7 +57,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = false;
 
             // Act
-            InstructionSet.CMC(_cpu);
+            _instructionSet.CMC(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -71,9 +67,6 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
             Assert.True(_cpu.Flags.Carry);
-
-            Assert.Equal(1, _cpu.Registers.PC);
-            Assert.Equal(4, _cpu.Cycles);
         }
 
         [Fact]
@@ -83,7 +76,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = true;
 
             // Act
-            InstructionSet.CMC(_cpu);
+            _instructionSet.CMC(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -93,9 +86,6 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.SP);
 
             Assert.False(_cpu.Flags.Carry);
-
-            Assert.Equal(1, _cpu.Registers.PC);
-            Assert.Equal(4, _cpu.Cycles);
         }
     }
 }
