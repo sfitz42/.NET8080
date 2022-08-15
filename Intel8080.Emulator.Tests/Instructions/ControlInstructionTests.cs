@@ -30,5 +30,15 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.HL);
             Assert.Equal(0x0000, _cpu.Registers.SP);
         }
+
+        [Fact]
+        public void HLT_ShouldHaltCPU()
+        {
+            // Act
+            _instructionSet.HLT(_cpu);
+
+            // Assert
+            Assert.True(_cpu.Halted);
+        }
     }
 }

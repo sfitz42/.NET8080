@@ -87,6 +87,78 @@ namespace Intel8080.Emulator
             _actions[0x3D] = DCR_A;
             _actions[0x3E] = MVI_A;
             _actions[0x3F] = CMC;
+
+            // 0x4X
+            _actions[0x40] = MOV_B_B;
+            _actions[0x41] = MOV_B_C;
+            _actions[0x42] = MOV_B_D;
+            _actions[0x43] = MOV_B_E;
+            _actions[0x44] = MOV_B_H;
+            _actions[0x45] = MOV_B_L;
+            _actions[0x46] = MOV_B_M;
+            _actions[0x47] = MOV_B_A;
+            _actions[0x48] = MOV_C_B;
+            _actions[0x49] = MOV_C_C;
+            _actions[0x4A] = MOV_C_D;
+            _actions[0x4B] = MOV_C_E;
+            _actions[0x4C] = MOV_C_H;
+            _actions[0x4D] = MOV_C_L;
+            _actions[0x4E] = MOV_C_M;
+            _actions[0x4F] = MOV_C_A;
+
+            // 0x5X
+            _actions[0x50] = MOV_D_B;
+            _actions[0x51] = MOV_D_C;
+            _actions[0x52] = MOV_D_D;
+            _actions[0x53] = MOV_D_E;
+            _actions[0x54] = MOV_D_H;
+            _actions[0x55] = MOV_D_L;
+            _actions[0x56] = MOV_D_M;
+            _actions[0x57] = MOV_D_A;
+            _actions[0x58] = MOV_E_B;
+            _actions[0x59] = MOV_E_C;
+            _actions[0x5A] = MOV_E_D;
+            _actions[0x5B] = MOV_E_E;
+            _actions[0x5C] = MOV_E_H;
+            _actions[0x5D] = MOV_E_L;
+            _actions[0x5E] = MOV_E_M;
+            _actions[0x5F] = MOV_E_A;
+
+            // 0x6x
+            _actions[0x60] = MOV_H_B;
+            _actions[0x61] = MOV_H_C;
+            _actions[0x62] = MOV_H_D;
+            _actions[0x63] = MOV_H_E;
+            _actions[0x64] = MOV_H_H;
+            _actions[0x65] = MOV_H_L;
+            _actions[0x66] = MOV_H_M;
+            _actions[0x67] = MOV_H_A;
+            _actions[0x68] = MOV_L_B;
+            _actions[0x69] = MOV_L_C;
+            _actions[0x6A] = MOV_L_D;
+            _actions[0x6B] = MOV_L_E;
+            _actions[0x6C] = MOV_L_H;
+            _actions[0x6D] = MOV_L_L;
+            _actions[0x6E] = MOV_L_M;
+            _actions[0x6F] = MOV_L_A;
+
+            // 0x7x
+            _actions[0x70] = MOV_M_B;
+            _actions[0x71] = MOV_M_C;
+            _actions[0x72] = MOV_M_D;
+            _actions[0x73] = MOV_M_E;
+            _actions[0x74] = MOV_M_H;
+            _actions[0x75] = MOV_M_L;
+            _actions[0x76] = HLT;
+            _actions[0x77] = MOV_M_A;
+            _actions[0x78] = MOV_A_B;
+            _actions[0x79] = MOV_A_C;
+            _actions[0x7A] = MOV_A_D;
+            _actions[0x7B] = MOV_A_E;
+            _actions[0x7C] = MOV_A_H;
+            _actions[0x7D] = MOV_A_L;
+            _actions[0x7E] = MOV_A_M;
+            _actions[0x7F] = MOV_A_A;
         }
 
         private void INX(CPU cpu, ref ushort reg)
@@ -153,6 +225,11 @@ namespace Intel8080.Emulator
             cpu.Registers.HL = (ushort) (result & 0xFFFFFFFF);
 
             cpu.Flags.CalcCarryFlagRegisterPair(result);
+        }
+
+        private void MOV(ref byte targetReg, ref byte sourceReg)
+        {
+            targetReg = sourceReg;
         }
 
         private ushort GetUshort(byte a, byte b)
@@ -784,6 +861,610 @@ namespace Intel8080.Emulator
         public virtual void CMC(CPU cpu)
         {
             cpu.Flags.Carry = !cpu.Flags.Carry;
+        }
+
+        // 0x40   - MOV B, B
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_B_B(CPU cpu)
+        {
+            MOV(ref cpu.Registers.B, ref cpu.Registers.B);
+        }
+
+        // 0x41   - MOV B, C
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_B_C(CPU cpu)
+        {
+            MOV(ref cpu.Registers.B, ref cpu.Registers.C);
+        }
+
+        // 0x42   - MOV B, D
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_B_D(CPU cpu)
+        {
+            MOV(ref cpu.Registers.B, ref cpu.Registers.D);
+        }
+
+        // 0x43   - MOV B, E
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_B_E(CPU cpu)
+        {
+            MOV(ref cpu.Registers.B, ref cpu.Registers.E);
+        }
+
+        // 0x44   - MOV B, H
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_B_H(CPU cpu)
+        {
+            MOV(ref cpu.Registers.B, ref cpu.Registers.H);
+        }
+
+        // 0x45   - MOV B, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_B_L(CPU cpu)
+        {
+            MOV(ref cpu.Registers.B, ref cpu.Registers.L);
+        }
+
+        // 0x46   - MOV B, M
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_B_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Registers.B = cpu.Memory[location];
+        }
+
+        // 0x47   - MOV B, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_B_A(CPU cpu)
+        {
+            MOV(ref cpu.Registers.B, ref cpu.Registers.A);
+        }
+        
+        // 0x48   - MOV C, B
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_C_B(CPU cpu)
+        {
+            MOV(ref cpu.Registers.C, ref cpu.Registers.B);
+        }
+
+        // 0x49   - MOV C, C
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_C_C(CPU cpu)
+        {
+            MOV(ref cpu.Registers.C, ref cpu.Registers.C);
+        }
+
+        // 0x4A   - MOV C, D
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_C_D(CPU cpu)
+        {
+            MOV(ref cpu.Registers.C, ref cpu.Registers.D);
+        }
+
+        // 0x4B   - MOV C, E
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_C_E(CPU cpu)
+        {
+            MOV(ref cpu.Registers.C, ref cpu.Registers.E);
+        }
+
+        // 0x4C   - MOV C, H
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_C_H(CPU cpu)
+        {
+            MOV(ref cpu.Registers.C, ref cpu.Registers.H);
+        }
+
+        // 0x4D   - MOV C, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_C_L(CPU cpu)
+        {
+            MOV(ref cpu.Registers.C, ref cpu.Registers.L);
+        }
+
+        // 0x4E   - MOV C, M
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_C_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Registers.C = cpu.Memory[location];
+        }
+
+        // 0x4F   - MOV C, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_C_A(CPU cpu)
+        {
+            MOV(ref cpu.Registers.C, ref cpu.Registers.A);
+        }
+        
+        // 0x50   - MOV D, B
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_D_B(CPU cpu)
+        {
+            MOV(ref cpu.Registers.D, ref cpu.Registers.B);
+        }
+
+        // 0x51   - MOV D, C
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_D_C(CPU cpu)
+        {
+            MOV(ref cpu.Registers.D, ref cpu.Registers.C);
+        }
+
+        // 0x52   - MOV D, D
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_D_D(CPU cpu)
+        {
+            MOV(ref cpu.Registers.D, ref cpu.Registers.D);
+        }
+
+        // 0x53   - MOV D, E
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_D_E(CPU cpu)
+        {
+            MOV(ref cpu.Registers.D, ref cpu.Registers.E);
+        }
+
+        // 0x54   - MOV D, H
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_D_H(CPU cpu)
+        {
+            MOV(ref cpu.Registers.D, ref cpu.Registers.H);
+        }
+
+        // 0x55   - MOV D, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_D_L(CPU cpu)
+        {
+            MOV(ref cpu.Registers.D, ref cpu.Registers.L);
+        }
+
+        // 0x56   - MOV D, M
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_D_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Registers.D = cpu.Memory[location];
+        }
+
+        // 0x57   - MOV D, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_D_A(CPU cpu)
+        {
+            MOV(ref cpu.Registers.D, ref cpu.Registers.A);
+        }
+
+        // 0x58   - MOV E, B
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_E_B(CPU cpu)
+        {
+            MOV(ref cpu.Registers.E, ref cpu.Registers.B);
+        }
+
+        // 0x59   - MOV E, C
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_E_C(CPU cpu)
+        {
+            MOV(ref cpu.Registers.E, ref cpu.Registers.C);
+        }
+
+        // 0x5A   - MOV E, D
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_E_D(CPU cpu)
+        {
+            MOV(ref cpu.Registers.E, ref cpu.Registers.D);
+        }
+
+        // 0x5B   - MOV E, E
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_E_E(CPU cpu)
+        {
+            MOV(ref cpu.Registers.E, ref cpu.Registers.E);
+        }
+
+        // 0x5C   - MOV E, H
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_E_H(CPU cpu)
+        {
+            MOV(ref cpu.Registers.E, ref cpu.Registers.H);
+        }
+
+        // 0x5D   - MOV E, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_E_L(CPU cpu)
+        {
+            MOV(ref cpu.Registers.E, ref cpu.Registers.L);
+        }
+
+        // 0x5E   - MOV E, M
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_E_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Registers.E = cpu.Memory[location];
+        }
+
+        // 0x5F   - MOV E, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_E_A(CPU cpu)
+        {
+            MOV(ref cpu.Registers.E, ref cpu.Registers.A);
+        }
+
+        // 0x60   - MOV H, B
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_H_B(CPU cpu)
+        {
+            MOV(ref cpu.Registers.H, ref cpu.Registers.B);
+        }
+
+        // 0x61   - MOV H, C
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_H_C(CPU cpu)
+        {
+            MOV(ref cpu.Registers.H, ref cpu.Registers.C);
+        }
+
+        // 0x62   - MOV H, D
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_H_D(CPU cpu)
+        {
+            MOV(ref cpu.Registers.H, ref cpu.Registers.D);
+        }
+
+        // 0x63   - MOV H, E
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_H_E(CPU cpu)
+        {
+            MOV(ref cpu.Registers.H, ref cpu.Registers.E);
+        }
+
+        // 0x64   - MOV H, H
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_H_H(CPU cpu)
+        {
+            MOV(ref cpu.Registers.H, ref cpu.Registers.H);
+        }
+
+        // 0x65   - MOV H, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_H_L(CPU cpu)
+        {
+            MOV(ref cpu.Registers.H, ref cpu.Registers.L);
+        }
+
+        // 0x66   - MOV H, M
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_H_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Registers.H = cpu.Memory[location];
+        }
+
+        // 0x67   - MOV H, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_H_A(CPU cpu)
+        {
+            MOV(ref cpu.Registers.H, ref cpu.Registers.A);
+        }
+
+        // 0x68   - MOV L, B
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_L_B(CPU cpu)
+        {
+            MOV(ref cpu.Registers.L, ref cpu.Registers.B);
+        }
+
+        // 0x69   - MOV L, C
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_L_C(CPU cpu)
+        {
+            MOV(ref cpu.Registers.L, ref cpu.Registers.C);
+        }
+
+        // 0x6A   - MOV L, D
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_L_D(CPU cpu)
+        {
+            MOV(ref cpu.Registers.L, ref cpu.Registers.D);
+        }
+
+        // 0x6B   - MOV L, E
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_L_E(CPU cpu)
+        {
+            MOV(ref cpu.Registers.L, ref cpu.Registers.E);
+        }
+
+        // 0x6C   - MOV L, H
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_L_H(CPU cpu)
+        {
+            MOV(ref cpu.Registers.L, ref cpu.Registers.H);
+        }
+
+        // 0x6D   - MOV L, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_L_L(CPU cpu)
+        {
+            MOV(ref cpu.Registers.L, ref cpu.Registers.L);
+        }
+
+        // 0x6E   - MOV L, M
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_L_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Registers.L = cpu.Memory[location];
+        }
+
+        // 0x6F   - MOV L, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_L_A(CPU cpu)
+        {
+            MOV(ref cpu.Registers.L, ref cpu.Registers.A);
+        }
+
+        // 0x70   - MOV M, B
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_M_B(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Memory[location] = cpu.Registers.B;
+        }
+
+        // 0x71   - MOV M, C
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_M_C(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Memory[location] = cpu.Registers.C;
+        }
+
+        // 0x72   - MOV M, D
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_M_D(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Memory[location] = cpu.Registers.D;
+        }
+
+        // 0x73   - MOV M, E
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_M_E(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Memory[location] = cpu.Registers.E;
+        }
+
+        // 0x74   - MOV M, H
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_M_H(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Memory[location] = cpu.Registers.H;
+        }
+
+        // 0x75   - MOV M, L
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_M_L(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Memory[location] = cpu.Registers.L;
+        }
+
+        // 0x76   - HLT
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void HLT(CPU cpu)
+        {
+            cpu.Halted = true;
+        }
+
+        // 0x77   - MOV M, A
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_M_A(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Memory[location] = cpu.Registers.A;
+        }
+
+        // 0x68   - MOV L, B
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_A_B(CPU cpu)
+        {
+            MOV(ref cpu.Registers.A, ref cpu.Registers.B);
+        }
+
+        // 0x69   - MOV L, C
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_A_C(CPU cpu)
+        {
+            MOV(ref cpu.Registers.A, ref cpu.Registers.C);
+        }
+
+        // 0x6A   - MOV L, D
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_A_D(CPU cpu)
+        {
+            MOV(ref cpu.Registers.A, ref cpu.Registers.D);
+        }
+
+        // 0x6B   - MOV L, E
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_A_E(CPU cpu)
+        {
+            MOV(ref cpu.Registers.A, ref cpu.Registers.E);
+        }
+
+        // 0x6C   - MOV L, H
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_A_H(CPU cpu)
+        {
+            MOV(ref cpu.Registers.A, ref cpu.Registers.H);
+        }
+
+        // 0x6D   - MOV L, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_A_L(CPU cpu)
+        {
+            MOV(ref cpu.Registers.A, ref cpu.Registers.L);
+        }
+
+        // 0x6E   - MOV L, M
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void MOV_A_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            cpu.Registers.A = cpu.Memory[location];
+        }
+
+        // 0x6F   - MOV L, L
+        // Bytes  - 1
+        // Cycles - 5
+        // Flags  - None
+        public virtual void MOV_A_A(CPU cpu)
+        {
+            MOV(ref cpu.Registers.A, ref cpu.Registers.A);
         }
     }
 }

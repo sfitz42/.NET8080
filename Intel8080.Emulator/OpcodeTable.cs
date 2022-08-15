@@ -79,6 +79,78 @@ namespace Intel8080.Emulator
             Opcodes[0x3D] = new Opcode("DCR A",       1, 5,  null);
             Opcodes[0x3E] = new Opcode("MVI A, d8",   2, 7,  null);
             Opcodes[0x3F] = new Opcode("CMC",         1, 4,  null);
+
+            // 0x4X
+            Opcodes[0x40] = new Opcode("MOV B, B",    1, 5,  null);
+            Opcodes[0x41] = new Opcode("MOV B, C",    1, 5,  null);
+            Opcodes[0x42] = new Opcode("MOV B, D",    1, 5,  null);
+            Opcodes[0x43] = new Opcode("MOV B, E",    1, 5,  null);
+            Opcodes[0x44] = new Opcode("MOV B, H",    1, 5,  null);
+            Opcodes[0x45] = new Opcode("MOV B, L",    1, 5,  null);
+            Opcodes[0x46] = new Opcode("MOV B, M",    1, 7,  null);
+            Opcodes[0x47] = new Opcode("MOV B, A",    1, 5,  null);
+            Opcodes[0x48] = new Opcode("MOV C, B",    1, 5,  null);
+            Opcodes[0x49] = new Opcode("MOV C, C",    1, 5,  null);
+            Opcodes[0x4A] = new Opcode("MOV C, D",    1, 5,  null);
+            Opcodes[0x4B] = new Opcode("MOV C, E",    1, 5,  null);
+            Opcodes[0x4C] = new Opcode("MOV C, H",    1, 5,  null);
+            Opcodes[0x4D] = new Opcode("MOV C, L",    1, 5,  null);
+            Opcodes[0x4E] = new Opcode("MOV C, M",    1, 7,  null);
+            Opcodes[0x4F] = new Opcode("MOV C, A",    1, 5,  null);
+
+            // 0x5X
+            Opcodes[0x50] = new Opcode("MOV D, B",    1, 5,  null);
+            Opcodes[0x51] = new Opcode("MOV D, C",    1, 5,  null);
+            Opcodes[0x52] = new Opcode("MOV D, D",    1, 5,  null);
+            Opcodes[0x53] = new Opcode("MOV D, E",    1, 5,  null);
+            Opcodes[0x54] = new Opcode("MOV D, H",    1, 5,  null);
+            Opcodes[0x55] = new Opcode("MOV D, L",    1, 5,  null);
+            Opcodes[0x56] = new Opcode("MOV D, M",    1, 7,  null);
+            Opcodes[0x57] = new Opcode("MOV D, A",    1, 5,  null);
+            Opcodes[0x58] = new Opcode("MOV E, B",    1, 5,  null);
+            Opcodes[0x59] = new Opcode("MOV E, C",    1, 5,  null);
+            Opcodes[0x5A] = new Opcode("MOV E, D",    1, 5,  null);
+            Opcodes[0x5B] = new Opcode("MOV E, E",    1, 5,  null);
+            Opcodes[0x5C] = new Opcode("MOV E, H",    1, 5,  null);
+            Opcodes[0x5D] = new Opcode("MOV E, L",    1, 5,  null);
+            Opcodes[0x5E] = new Opcode("MOV E, M",    1, 7,  null);
+            Opcodes[0x5F] = new Opcode("MOV E, A",    1, 5,  null);
+
+            // 0x6X
+            Opcodes[0x60] = new Opcode("MOV H, B",    1, 5,  null);
+            Opcodes[0x61] = new Opcode("MOV H, C",    1, 5,  null);
+            Opcodes[0x62] = new Opcode("MOV H, D",    1, 5,  null);
+            Opcodes[0x63] = new Opcode("MOV H, E",    1, 5,  null);
+            Opcodes[0x64] = new Opcode("MOV H, H",    1, 5,  null);
+            Opcodes[0x65] = new Opcode("MOV H, L",    1, 5,  null);
+            Opcodes[0x66] = new Opcode("MOV H, M",    1, 7,  null);
+            Opcodes[0x67] = new Opcode("MOV H, A",    1, 5,  null);
+            Opcodes[0x68] = new Opcode("MOV L, B",    1, 5,  null);
+            Opcodes[0x69] = new Opcode("MOV L, C",    1, 5,  null);
+            Opcodes[0x6A] = new Opcode("MOV L, D",    1, 5,  null);
+            Opcodes[0x6B] = new Opcode("MOV L, E",    1, 5,  null);
+            Opcodes[0x6C] = new Opcode("MOV L, H",    1, 5,  null);
+            Opcodes[0x6D] = new Opcode("MOV L, L",    1, 5,  null);
+            Opcodes[0x6E] = new Opcode("MOV L, M",    1, 7,  null);
+            Opcodes[0x6F] = new Opcode("MOV L, A",    1, 5,  null);
+            
+            // 0x7X
+            Opcodes[0x70] = new Opcode("MOV M, B",    1, 7,  null);
+            Opcodes[0x71] = new Opcode("MOV M, C",    1, 7,  null);
+            Opcodes[0x72] = new Opcode("MOV M, D",    1, 7,  null);
+            Opcodes[0x73] = new Opcode("MOV M, E",    1, 7,  null);
+            Opcodes[0x74] = new Opcode("MOV M, H",    1, 7,  null);
+            Opcodes[0x75] = new Opcode("MOV M, L",    1, 7,  null);
+            Opcodes[0x76] = new Opcode("HLT",         1, 7,  null);
+            Opcodes[0x77] = new Opcode("MOV M, L",    1, 7,  null);
+            Opcodes[0x78] = new Opcode("MOV L, B",    1, 5,  null);
+            Opcodes[0x79] = new Opcode("MOV L, C",    1, 5,  null);
+            Opcodes[0x7A] = new Opcode("MOV L, D",    1, 5,  null);
+            Opcodes[0x7B] = new Opcode("MOV L, E",    1, 5,  null);
+            Opcodes[0x7C] = new Opcode("MOV L, H",    1, 5,  null);
+            Opcodes[0x7D] = new Opcode("MOV L, L",    1, 5,  null);
+            Opcodes[0x7E] = new Opcode("MOV L, M",    1, 7,  null);
+            Opcodes[0x7F] = new Opcode("MOV L, A",    1, 5,  null);
         }
     }
 }

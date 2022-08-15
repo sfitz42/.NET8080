@@ -119,5 +119,133 @@ namespace Intel8080.Emulator
         public void MVI_A(CPU cpu);
 
         public void CMC(CPU cpu);
+
+        public void MOV_B_B(CPU cpu);
+
+        public void MOV_B_C(CPU cpu);
+
+        public void MOV_B_D(CPU cpu);
+
+        public void MOV_B_E(CPU cpu);
+
+        public void MOV_B_H(CPU cpu);
+
+        public void MOV_B_L(CPU cpu);
+
+        public void MOV_B_M(CPU cpu);
+
+        public void MOV_B_A(CPU cpu);
+
+        public void MOV_C_B(CPU cpu);
+
+        public void MOV_C_C(CPU cpu);
+
+        public void MOV_C_D(CPU cpu);
+
+        public void MOV_C_E(CPU cpu);
+
+        public void MOV_C_H(CPU cpu);
+
+        public void MOV_C_L(CPU cpu);
+
+        public void MOV_C_M(CPU cpu);
+
+        public void MOV_C_A(CPU cpu);
+
+        public void MOV_D_B(CPU cpu);
+
+        public void MOV_D_C(CPU cpu);
+
+        public void MOV_D_D(CPU cpu);
+
+        public void MOV_D_E(CPU cpu);
+
+        public void MOV_D_H(CPU cpu);
+
+        public void MOV_D_L(CPU cpu);
+
+        public void MOV_D_M(CPU cpu);
+
+        public void MOV_D_A(CPU cpu);
+
+        public void MOV_E_B(CPU cpu);
+
+        public void MOV_E_C(CPU cpu);
+
+        public void MOV_E_D(CPU cpu);
+
+        public void MOV_E_E(CPU cpu);
+
+        public void MOV_E_H(CPU cpu);
+
+        public void MOV_E_L(CPU cpu);
+
+        public void MOV_E_M(CPU cpu);
+
+        public void MOV_E_A(CPU cpu);
+
+        public void MOV_H_B(CPU cpu);
+
+        public void MOV_H_C(CPU cpu);
+
+        public void MOV_H_D(CPU cpu);
+
+        public void MOV_H_E(CPU cpu);
+
+        public void MOV_H_H(CPU cpu);
+
+        public void MOV_H_L(CPU cpu);
+
+        public void MOV_H_M(CPU cpu);
+
+        public void MOV_H_A(CPU cpu);
+
+        public void MOV_L_B(CPU cpu);
+
+        public void MOV_L_C(CPU cpu);
+
+        public void MOV_L_D(CPU cpu);
+
+        public void MOV_L_E(CPU cpu);
+
+        public void MOV_L_H(CPU cpu);
+
+        public void MOV_L_L(CPU cpu);
+
+        public void MOV_L_M(CPU cpu);
+
+        public void MOV_L_A(CPU cpu);
+
+        public void MOV_M_B(CPU cpu);
+
+        public void MOV_M_C(CPU cpu);
+
+        public void MOV_M_D(CPU cpu);
+
+        public void MOV_M_E(CPU cpu);
+
+        public void MOV_M_H(CPU cpu);
+
+        public void MOV_M_L(CPU cpu);
+
+        public void HLT(CPU cpu);
+
+        public void MOV_M_A(CPU cpu);
+
+        public void MOV_A_B(CPU cpu);
+
+        public void MOV_A_C(CPU cpu);
+
+        public void MOV_A_D(CPU cpu);
+
+        public void MOV_A_E(CPU cpu);
+
+        public void MOV_A_H(CPU cpu);
+
+        public void MOV_A_L(CPU cpu);
+
+        public void MOV_A_M(CPU cpu);
+
+        public void MOV_A_A(CPU cpu);
     }
 }

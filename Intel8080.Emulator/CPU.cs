@@ -12,6 +12,8 @@ namespace Intel8080.Emulator
 
         public int Cycles { get; set; } = 0;
 
+        public bool Halted { get; set; }
+
         public CPU(IMemory memory, IInstructionSet instructionSet)
         {
             Memory = memory;
@@ -27,8 +29,16 @@ namespace Intel8080.Emulator
             Registers = new Registers();
             Flags = new Flags();
         }
-        
+
         public void Run()
+        {
+            while (!Halted)
+            {
+                Step();
+            }
+        }
+        
+        public void Step()
         {
             var opcode = Memory[Registers.PC];
 
