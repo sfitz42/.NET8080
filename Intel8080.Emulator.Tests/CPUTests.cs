@@ -1952,5 +1952,261 @@ namespace Intel8080.Emulator.Tests
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(5, _cpu.Cycles);
         }
+
+        [Fact]
+        public void ADD_B_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x80);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADD_B(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADD_C_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x81);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADD_C(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADD_D_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x82);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADD_D(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADD_E_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x83);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADD_E(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADD_H_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x84);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADD_H(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADD_L_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x85);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADD_L(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADD_M_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x86);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADD_M(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(7, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADD_A_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x87);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADD_A(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADC_B_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x88);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADC_B(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADC_C_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x89);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADC_C(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADC_D_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x8A);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADC_D(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADC_E_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x8B);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADC_E(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADC_H_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x8C);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADC_H(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADC_L_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x8D);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADC_L(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADC_M_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x8E);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADC_M(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(7, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ADC_A_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0x8F);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ADC_A(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
     }
 }

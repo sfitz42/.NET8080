@@ -143,14 +143,32 @@ namespace Intel8080.Emulator
             Opcodes[0x75] = new Opcode("MOV M, L",    1, 7,  null);
             Opcodes[0x76] = new Opcode("HLT",         1, 7,  null);
             Opcodes[0x77] = new Opcode("MOV M, A",    1, 7,  null);
-            Opcodes[0x78] = new Opcode("MOV L, B",    1, 5,  null);
-            Opcodes[0x79] = new Opcode("MOV L, C",    1, 5,  null);
-            Opcodes[0x7A] = new Opcode("MOV L, D",    1, 5,  null);
-            Opcodes[0x7B] = new Opcode("MOV L, E",    1, 5,  null);
-            Opcodes[0x7C] = new Opcode("MOV L, H",    1, 5,  null);
-            Opcodes[0x7D] = new Opcode("MOV L, L",    1, 5,  null);
-            Opcodes[0x7E] = new Opcode("MOV L, M",    1, 7,  null);
-            Opcodes[0x7F] = new Opcode("MOV L, A",    1, 5,  null);
+            Opcodes[0x78] = new Opcode("MOV A, B",    1, 5,  null);
+            Opcodes[0x79] = new Opcode("MOV A, C",    1, 5,  null);
+            Opcodes[0x7A] = new Opcode("MOV A, D",    1, 5,  null);
+            Opcodes[0x7B] = new Opcode("MOV A, E",    1, 5,  null);
+            Opcodes[0x7C] = new Opcode("MOV A, H",    1, 5,  null);
+            Opcodes[0x7D] = new Opcode("MOV A, L",    1, 5,  null);
+            Opcodes[0x7E] = new Opcode("MOV A, M",    1, 7,  null);
+            Opcodes[0x7F] = new Opcode("MOV A, A",    1, 5,  null);
+
+            // 0x8X
+            Opcodes[0x80] = new Opcode("ADD B",       1, 4,  null);
+            Opcodes[0x81] = new Opcode("ADD C",       1, 4,  null);
+            Opcodes[0x82] = new Opcode("ADD D",       1, 4,  null);
+            Opcodes[0x83] = new Opcode("ADD E",       1, 4,  null);
+            Opcodes[0x84] = new Opcode("ADD H",       1, 4,  null);
+            Opcodes[0x85] = new Opcode("ADD L",       1, 4,  null);
+            Opcodes[0x86] = new Opcode("ADD M",       1, 7,  null);
+            Opcodes[0x87] = new Opcode("ADD A",       1, 4,  null);
+            Opcodes[0x88] = new Opcode("ADC B",       1, 4,  null);
+            Opcodes[0x89] = new Opcode("ADC C",       1, 4,  null);
+            Opcodes[0x8A] = new Opcode("ADC D",       1, 4,  null);
+            Opcodes[0x8B] = new Opcode("ADC E",       1, 4,  null);
+            Opcodes[0x8C] = new Opcode("ADC H",       1, 4,  null);
+            Opcodes[0x8D] = new Opcode("ADC L",       1, 4,  null);
+            Opcodes[0x8E] = new Opcode("ADC M",       1, 7,  null);
+            Opcodes[0x8F] = new Opcode("ADC A",       1, 4,  null);
         }
     }
 }

@@ -3,13 +3,13 @@ using Xunit;
 
 namespace Intel8080.Emulator.Tests.Instructions
 {
-    public class ControlInstructionTests
+    public class AcculmulatorInstructions
     {
         private readonly CPU _cpu;
         private readonly IInstructionSet _instructionSet;
         private readonly Mock<IMemory> _memory;
 
-        public ControlInstructionTests()
+        public AcculmulatorInstructions()
         {
             _memory = new Mock<IMemory>();
             _instructionSet = new DefaultInstructionSet();

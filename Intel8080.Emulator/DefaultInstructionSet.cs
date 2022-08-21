@@ -159,6 +159,24 @@ namespace Intel8080.Emulator
             _actions[0x7D] = MOV_A_L;
             _actions[0x7E] = MOV_A_M;
             _actions[0x7F] = MOV_A_A;
+
+            // 0x8x
+            _actions[0x80] = ADD_B;
+            _actions[0x81] = ADD_C;
+            _actions[0x82] = ADD_D;
+            _actions[0x83] = ADD_E;
+            _actions[0x84] = ADD_H;
+            _actions[0x85] = ADD_L;
+            _actions[0x86] = ADD_M;
+            _actions[0x87] = ADD_A;
+            _actions[0x88] = ADC_B;
+            _actions[0x89] = ADC_C;
+            _actions[0x8A] = ADC_D;
+            _actions[0x8B] = ADC_E;
+            _actions[0x8C] = ADC_H;
+            _actions[0x8D] = ADC_L;
+            _actions[0x8E] = ADC_M;
+            _actions[0x8F] = ADC_A;
         }
 
         private void INX(CPU cpu, ref ushort reg)
@@ -230,6 +248,36 @@ namespace Intel8080.Emulator
         private void MOV(ref byte targetReg, ref byte sourceReg)
         {
             targetReg = sourceReg;
+        }
+
+        private void ADD(CPU cpu, ref byte reg)
+        {
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, reg);
+
+            ushort result = (ushort) (cpu.Registers.A + reg);
+
+            cpu.Registers.A = (byte) (result  & 0xFF);
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.CalcCarryFlag(result);
+        }
+
+        private void ADC(CPU cpu, ref byte reg)
+        {
+            int carry = cpu.Flags.Carry ? 1 : 0;
+
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, reg + carry);
+
+            ushort result = (ushort) (cpu.Registers.A + reg +carry);
+
+            cpu.Registers.A = (byte) (result  & 0xFF);
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.CalcCarryFlag(result);
         }
 
         private ushort GetUshort(byte a, byte b)
@@ -1393,7 +1441,7 @@ namespace Intel8080.Emulator
             cpu.Memory[location] = cpu.Registers.A;
         }
 
-        // 0x68   - MOV L, B
+        // 0x78   - MOV A, B
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
@@ -1402,7 +1450,7 @@ namespace Intel8080.Emulator
             MOV(ref cpu.Registers.A, ref cpu.Registers.B);
         }
 
-        // 0x69   - MOV L, C
+        // 0x79   - MOV A, C
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
@@ -1411,7 +1459,7 @@ namespace Intel8080.Emulator
             MOV(ref cpu.Registers.A, ref cpu.Registers.C);
         }
 
-        // 0x6A   - MOV L, D
+        // 0x7A   - MOV A, D
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
@@ -1420,7 +1468,7 @@ namespace Intel8080.Emulator
             MOV(ref cpu.Registers.A, ref cpu.Registers.D);
         }
 
-        // 0x6B   - MOV L, E
+        // 0x7B   - MOV A, E
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
@@ -1429,7 +1477,7 @@ namespace Intel8080.Emulator
             MOV(ref cpu.Registers.A, ref cpu.Registers.E);
         }
 
-        // 0x6C   - MOV L, H
+        // 0x7C   - MOV A, H
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
@@ -1438,7 +1486,7 @@ namespace Intel8080.Emulator
             MOV(ref cpu.Registers.A, ref cpu.Registers.H);
         }
 
-        // 0x6D   - MOV L, L
+        // 0x7D   - MOV A, L
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
@@ -1447,7 +1495,7 @@ namespace Intel8080.Emulator
             MOV(ref cpu.Registers.A, ref cpu.Registers.L);
         }
 
-        // 0x6E   - MOV L, M
+        // 0x7E   - MOV A, M
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
@@ -1458,13 +1506,185 @@ namespace Intel8080.Emulator
             cpu.Registers.A = cpu.Memory[location];
         }
 
-        // 0x6F   - MOV L, L
+        // 0x7F   - MOV A, A
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
         public virtual void MOV_A_A(CPU cpu)
         {
             MOV(ref cpu.Registers.A, ref cpu.Registers.A);
+        }
+
+        // 0x80   - ADD B
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADD_B(CPU cpu)
+        {
+            ADD(cpu, ref cpu.Registers.B);
+        }
+
+        // 0x81   - ADD C
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADD_C(CPU cpu)
+        {
+            ADD(cpu, ref cpu.Registers.C);
+        }
+
+        // 0x82   - ADD D
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADD_D(CPU cpu)
+        {
+            ADD(cpu, ref cpu.Registers.D);
+        }
+
+        // 0x83   - ADD E
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADD_E(CPU cpu)
+        {
+            ADD(cpu, ref cpu.Registers.E);
+        }
+
+        // 0x84   - ADD H
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADD_H(CPU cpu)
+        {
+            ADD(cpu, ref cpu.Registers.H);
+        }
+
+        // 0x85   - ADD L
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADD_L(CPU cpu)
+        {
+            ADD(cpu, ref cpu.Registers.L);
+        }
+
+        // 0x86   - ADD M
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void ADD_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            byte value = cpu.Memory[location];
+
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, value);
+
+            ushort result = (ushort) (cpu.Registers.A + value);
+
+            cpu.Registers.A = (byte) (result  & 0xFF);
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.CalcCarryFlag(result);
+        }
+
+        // 0x87   - ADD A
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADD_A(CPU cpu)
+        {
+            ADD(cpu, ref cpu.Registers.A);
+        }
+
+        // 0x88   - ADC B
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADC_B(CPU cpu)
+        {
+            ADC(cpu, ref cpu.Registers.B);
+        }
+
+        // 0x89   - ADC C
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADC_C(CPU cpu)
+        {
+            ADC(cpu, ref cpu.Registers.C);
+        }
+
+        // 0x8A   - ADC D
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADC_D(CPU cpu)
+        {
+            ADC(cpu, ref cpu.Registers.D);
+        }
+
+        // 0x8B   - ADC E
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADC_E(CPU cpu)
+        {
+            ADC(cpu, ref cpu.Registers.E);
+        }
+
+        // 0x8C   - ADC H
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADC_H(CPU cpu)
+        {
+            ADC(cpu, ref cpu.Registers.H);
+        }
+
+        // 0x8D   - ADC L
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADC_L(CPU cpu)
+        {
+            ADC(cpu, ref cpu.Registers.L);
+        }
+
+        // 0x8E   - ADD M
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void ADC_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            byte value = cpu.Memory[location];
+
+            int carry = cpu.Flags.Carry ? 1 : 0;
+
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, value + carry);
+
+            ushort result = (ushort) (cpu.Registers.A + value + carry);
+
+            cpu.Registers.A = (byte) (result  & 0xFF);
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.CalcCarryFlag(result);
+        }
+
+        // 0x8F   - ADC A
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - None
+        public virtual void ADC_A(CPU cpu)
+        {
+            ADC(cpu, ref cpu.Registers.A);
         }
     }
 }

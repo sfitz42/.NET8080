@@ -247,5 +247,37 @@ namespace Intel8080.Emulator
         public void MOV_A_M(CPU cpu);
 
         public void MOV_A_A(CPU cpu);
+
+        public void ADD_B(CPU cpu);
+
+        public void ADD_C(CPU cpu);
+
+        public void ADD_D(CPU cpu);
+
+        public void ADD_E(CPU cpu);
+
+        public void ADD_H(CPU cpu);
+
+        public void ADD_L(CPU cpu);
+
+        public void ADD_M(CPU cpu);
+        
+        public void ADD_A(CPU cpu);
+
+        public void ADC_B(CPU cpu);
+
+        public void ADC_C(CPU cpu);
+
+        public void ADC_D(CPU cpu);
+
+        public void ADC_E(CPU cpu);
+
+        public void ADC_H(CPU cpu);
+
+        public void ADC_L(CPU cpu);
+
+        public void ADC_M(CPU cpu);
+        
+        public void ADC_A(CPU cpu);
     }
 }
