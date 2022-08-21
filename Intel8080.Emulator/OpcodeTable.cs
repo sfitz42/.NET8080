@@ -142,7 +142,7 @@ namespace Intel8080.Emulator
             Opcodes[0x74] = new Opcode("MOV M, H",    1, 7,  null);
             Opcodes[0x75] = new Opcode("MOV M, L",    1, 7,  null);
             Opcodes[0x76] = new Opcode("HLT",         1, 7,  null);
-            Opcodes[0x77] = new Opcode("MOV M, L",    1, 7,  null);
+            Opcodes[0x77] = new Opcode("MOV M, A",    1, 7,  null);
             Opcodes[0x78] = new Opcode("MOV L, B",    1, 5,  null);
             Opcodes[0x79] = new Opcode("MOV L, C",    1, 5,  null);
             Opcodes[0x7A] = new Opcode("MOV L, D",    1, 5,  null);
