@@ -1518,7 +1518,7 @@ namespace Intel8080.Emulator
         // 0x80   - ADD B
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADD_B(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.B);
@@ -1527,7 +1527,7 @@ namespace Intel8080.Emulator
         // 0x81   - ADD C
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADD_C(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.C);
@@ -1536,7 +1536,7 @@ namespace Intel8080.Emulator
         // 0x82   - ADD D
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADD_D(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.D);
@@ -1545,7 +1545,7 @@ namespace Intel8080.Emulator
         // 0x83   - ADD E
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADD_E(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.E);
@@ -1554,7 +1554,7 @@ namespace Intel8080.Emulator
         // 0x84   - ADD H
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADD_H(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.H);
@@ -1563,7 +1563,7 @@ namespace Intel8080.Emulator
         // 0x85   - ADD L
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADD_L(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.L);
@@ -1572,7 +1572,7 @@ namespace Intel8080.Emulator
         // 0x86   - ADD M
         // Bytes  - 1
         // Cycles - 7
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADD_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
@@ -1594,7 +1594,7 @@ namespace Intel8080.Emulator
         // 0x87   - ADD A
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADD_A(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.A);
@@ -1603,7 +1603,7 @@ namespace Intel8080.Emulator
         // 0x88   - ADC B
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADC_B(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.B);
@@ -1612,7 +1612,7 @@ namespace Intel8080.Emulator
         // 0x89   - ADC C
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADC_C(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.C);
@@ -1621,7 +1621,7 @@ namespace Intel8080.Emulator
         // 0x8A   - ADC D
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADC_D(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.D);
@@ -1630,7 +1630,7 @@ namespace Intel8080.Emulator
         // 0x8B   - ADC E
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADC_E(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.E);
@@ -1639,7 +1639,7 @@ namespace Intel8080.Emulator
         // 0x8C   - ADC H
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADC_H(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.H);
@@ -1648,7 +1648,7 @@ namespace Intel8080.Emulator
         // 0x8D   - ADC L
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADC_L(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.L);
@@ -1657,7 +1657,7 @@ namespace Intel8080.Emulator
         // 0x8E   - ADD M
         // Bytes  - 1
         // Cycles - 7
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADC_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
@@ -1681,7 +1681,7 @@ namespace Intel8080.Emulator
         // 0x8F   - ADC A
         // Bytes  - 1
         // Cycles - 4
-        // Flags  - None
+        // Flags  - S, Z, A, P, C
         public virtual void ADC_A(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.A);
