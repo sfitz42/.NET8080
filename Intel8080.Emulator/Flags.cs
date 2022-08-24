@@ -53,6 +53,11 @@ namespace Intel8080.Emulator
             Carry = (value > 0xFF);
         }
 
+        public void CalcCarryFlagSub(ushort value)
+        {
+            Carry = !(value > 0xFF);
+        }
+
         public void CalcCarryFlagRegisterPair(int value)
         {
             Carry = (value > 0xFFFF);

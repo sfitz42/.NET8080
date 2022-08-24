@@ -177,6 +177,24 @@ namespace Intel8080.Emulator
             _actions[0x8D] = ADC_L;
             _actions[0x8E] = ADC_M;
             _actions[0x8F] = ADC_A;
+
+            // 0x9x
+            _actions[0x90] = SUB_B;
+            _actions[0x91] = SUB_C;
+            _actions[0x92] = SUB_D;
+            _actions[0x93] = SUB_E;
+            _actions[0x94] = SUB_H;
+            _actions[0x95] = SUB_L;
+            _actions[0x96] = SUB_M;
+            _actions[0x97] = SUB_A;
+            _actions[0x98] = SBB_B;
+            _actions[0x99] = SBB_C;
+            _actions[0x9A] = SBB_D;
+            _actions[0x9B] = SBB_E;
+            _actions[0x9C] = SBB_H;
+            _actions[0x9D] = SBB_L;
+            _actions[0x9E] = SBB_M;
+            _actions[0x9F] = SBB_A;
         }
 
         private void INX(CPU cpu, ref ushort reg)
@@ -278,6 +296,42 @@ namespace Intel8080.Emulator
             cpu.Flags.CalcZeroFlag(cpu.Registers.A);
             cpu.Flags.CalcParityFlag(cpu.Registers.A);
             cpu.Flags.CalcCarryFlag(result);
+        }
+
+        private void SUB(CPU cpu, ref byte reg)
+        {
+            // Calculate two's complement of register
+            byte val = (byte) (~(reg) + 1);
+
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, val);
+
+            ushort result = (ushort) (cpu.Registers.A + val);
+
+            cpu.Registers.A = (byte) (result  & 0xFF);
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.CalcCarryFlagSub(result);
+        }
+
+        private void SBB(CPU cpu, ref byte reg)
+        {
+            int carry = cpu.Flags.Carry ? 1 : 0;
+
+            // Calculate two's complement of register
+            byte val = (byte) (~(reg + carry) + 1);
+
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, val);
+
+            ushort result = (ushort) (cpu.Registers.A + val);
+
+            cpu.Registers.A = (byte) (result  & 0xFF);
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.CalcCarryFlagSub(result);
         }
 
         private ushort GetUshort(byte a, byte b)
@@ -1685,6 +1739,180 @@ namespace Intel8080.Emulator
         public virtual void ADC_A(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.A);
+        }
+
+        // 0x90   - SUB B
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SUB_B(CPU cpu)
+        {
+            SUB(cpu, ref cpu.Registers.B);
+        }
+
+        // 0x91   - SUB C
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SUB_C(CPU cpu)
+        {
+            SUB(cpu, ref cpu.Registers.C);
+        }
+
+        // 0x92   - SUB D
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SUB_D(CPU cpu)
+        {
+            SUB(cpu, ref cpu.Registers.D);
+        }
+
+        // 0x93   - SUB E
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SUB_E(CPU cpu)
+        {
+            SUB(cpu, ref cpu.Registers.E);
+        }
+
+        // 0x94   - SUB H
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SUB_H(CPU cpu)
+        {
+            SUB(cpu, ref cpu.Registers.H);
+        }
+
+        // 0x95   - SUB L
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SUB_L(CPU cpu)
+        {
+            SUB(cpu, ref cpu.Registers.L);
+        }
+
+        // 0x96   - SUB M
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - S, Z, A, P, C
+        public virtual void SUB_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            // Calculate two's complement of register
+            byte val = (byte) (~(cpu.Memory[location]) + 1);
+
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, val);
+
+            ushort result = (ushort) (cpu.Registers.A + val);
+
+            cpu.Registers.A = (byte) (result  & 0xFF);
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.CalcCarryFlagSub(result);
+        }
+
+        // 0x97   - SUB A
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SUB_A(CPU cpu)
+        {
+            SUB(cpu, ref cpu.Registers.A);
+        }
+
+        // 0x98   - SBB B
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SBB_B(CPU cpu)
+        {
+            SBB(cpu, ref cpu.Registers.B);
+        }
+
+        // 0x99   - SBB C
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SBB_C(CPU cpu)
+        {
+            SBB(cpu, ref cpu.Registers.C);
+        }
+
+        // 0x9A   - SBB D
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SBB_D(CPU cpu)
+        {
+            SBB(cpu, ref cpu.Registers.D);
+        }
+
+        // 0x9B   - SBB E
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SBB_E(CPU cpu)
+        {
+            SBB(cpu, ref cpu.Registers.E);
+        }
+
+        // 0x9C   - SBB H
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SBB_H(CPU cpu)
+        {
+            SBB(cpu, ref cpu.Registers.H);
+        }
+
+        // 0x9D   - SBB L
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SBB_L(CPU cpu)
+        {
+            SBB(cpu, ref cpu.Registers.L);
+        }
+
+        // 0x9E   - SBB M
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - S, Z, A, P, C
+        public virtual void SBB_M(CPU cpu)
+        {
+            int carry = cpu.Flags.Carry ? 1 : 0;
+
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            // Calculate two's complement of register
+            byte val = (byte) (~(cpu.Memory[location] + carry) + 1);
+
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, val);
+
+            ushort result = (ushort) (cpu.Registers.A + val);
+
+            cpu.Registers.A = (byte) (result  & 0xFF);
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.CalcCarryFlagSub(result);
+        }
+
+        // 0x9D   - SBB A
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void SBB_A(CPU cpu)
+        {
+            SBB(cpu, ref cpu.Registers.A);
         }
     }
 }

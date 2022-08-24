@@ -169,6 +169,24 @@ namespace Intel8080.Emulator
             Opcodes[0x8D] = new Opcode("ADC L",       1, 4,  null);
             Opcodes[0x8E] = new Opcode("ADC M",       1, 7,  null);
             Opcodes[0x8F] = new Opcode("ADC A",       1, 4,  null);
+
+            // 0x8X
+            Opcodes[0x90] = new Opcode("SUB B",       1, 4,  null);
+            Opcodes[0x91] = new Opcode("SUB C",       1, 4,  null);
+            Opcodes[0x92] = new Opcode("SUB D",       1, 4,  null);
+            Opcodes[0x93] = new Opcode("SUB E",       1, 4,  null);
+            Opcodes[0x94] = new Opcode("SUB H",       1, 4,  null);
+            Opcodes[0x95] = new Opcode("SUB L",       1, 4,  null);
+            Opcodes[0x96] = new Opcode("SUB M",       1, 7,  null);
+            Opcodes[0x97] = new Opcode("SUB A",       1, 4,  null);
+            Opcodes[0x98] = new Opcode("SBB B",       1, 4,  null);
+            Opcodes[0x99] = new Opcode("SBB C",       1, 4,  null);
+            Opcodes[0x9A] = new Opcode("SBB D",       1, 4,  null);
+            Opcodes[0x9B] = new Opcode("SBB E",       1, 4,  null);
+            Opcodes[0x9C] = new Opcode("SBB H",       1, 4,  null);
+            Opcodes[0x9D] = new Opcode("SBB L",       1, 4,  null);
+            Opcodes[0x9E] = new Opcode("SBB M",       1, 7,  null);
+            Opcodes[0x9F] = new Opcode("SBB A",       1, 4,  null);
         }
     }
 }
