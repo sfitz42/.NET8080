@@ -195,6 +195,16 @@ namespace Intel8080.Emulator
             _actions[0x9D] = SBB_L;
             _actions[0x9E] = SBB_M;
             _actions[0x9F] = SBB_A;
+
+            // 0xAx
+            _actions[0xA0] = ANA_B;
+            _actions[0xA1] = ANA_C;
+            _actions[0xA2] = ANA_D;
+            _actions[0xA3] = ANA_E;
+            _actions[0xA4] = ANA_H;
+            _actions[0xA5] = ANA_L;
+            _actions[0xA6] = ANA_M;
+            _actions[0xA7] = ANA_A;
         }
 
         private void INX(CPU cpu, ref ushort reg)
@@ -332,6 +342,18 @@ namespace Intel8080.Emulator
             cpu.Flags.CalcZeroFlag(cpu.Registers.A);
             cpu.Flags.CalcParityFlag(cpu.Registers.A);
             cpu.Flags.CalcCarryFlagSub(result);
+        }
+
+        private void ANA(CPU cpu, ref byte reg)
+        {
+            cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (reg & 0x08)) != 0;
+
+            cpu.Registers.A &= reg;
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.Carry = false;
         }
 
         private ushort GetUshort(byte a, byte b)
@@ -1913,6 +1935,88 @@ namespace Intel8080.Emulator
         public virtual void SBB_A(CPU cpu)
         {
             SBB(cpu, ref cpu.Registers.A);
+        }
+
+        // 0xA0   - ANA B
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void ANA_B(CPU cpu)
+        {
+            ANA(cpu, ref cpu.Registers.B);
+        }
+
+        // 0xA1   - ANA C
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void ANA_C(CPU cpu)
+        {
+            ANA(cpu, ref cpu.Registers.C);
+        }
+
+        // 0xA2   - ANA D
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void ANA_D(CPU cpu)
+        {
+            ANA(cpu, ref cpu.Registers.D);
+        }
+
+        // 0xA3   - ANA E
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void ANA_E(CPU cpu)
+        {
+            ANA(cpu, ref cpu.Registers.E);
+        }
+
+        // 0xA4   - ANA H
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void ANA_H(CPU cpu)
+        {
+            ANA(cpu, ref cpu.Registers.H);
+        }
+
+        // 0xA5   - ANA L
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void ANA_L(CPU cpu)
+        {
+            ANA(cpu, ref cpu.Registers.L);
+        }
+
+        // 0xA6   - ANA M
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - S, Z, A, P, C
+        public virtual void ANA_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+            var val = cpu.Memory[location];
+
+            cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (val & 0x08)) != 0;
+
+            cpu.Registers.A &= val;
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.Carry = false;
+        }
+
+        // 0xA7   - ANA A
+        // Bytes  - 1
+        // Cycles - 4
+        // Flags  - S, Z, A, P, C
+        public virtual void ANA_A(CPU cpu)
+        {
+            ANA(cpu, ref cpu.Registers.A);
         }
     }
 }

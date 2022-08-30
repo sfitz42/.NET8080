@@ -311,5 +311,21 @@ namespace Intel8080.Emulator
         public void SBB_M(CPU cpu);
         
         public void SBB_A(CPU cpu);
+
+        public void ANA_B(CPU cpu);
+
+        public void ANA_C(CPU cpu);
+
+        public void ANA_D(CPU cpu);
+
+        public void ANA_E(CPU cpu);
+
+        public void ANA_H(CPU cpu);
+
+        public void ANA_L(CPU cpu);
+
+        public void ANA_M(CPU cpu);
+        
+        public void ANA_A(CPU cpu);
     }
 }

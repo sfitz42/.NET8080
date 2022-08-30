@@ -170,7 +170,7 @@ namespace Intel8080.Emulator
             Opcodes[0x8E] = new Opcode("ADC M",       1, 7,  null);
             Opcodes[0x8F] = new Opcode("ADC A",       1, 4,  null);
 
-            // 0x8X
+            // 0x9X
             Opcodes[0x90] = new Opcode("SUB B",       1, 4,  null);
             Opcodes[0x91] = new Opcode("SUB C",       1, 4,  null);
             Opcodes[0x92] = new Opcode("SUB D",       1, 4,  null);
@@ -187,6 +187,16 @@ namespace Intel8080.Emulator
             Opcodes[0x9D] = new Opcode("SBB L",       1, 4,  null);
             Opcodes[0x9E] = new Opcode("SBB M",       1, 7,  null);
             Opcodes[0x9F] = new Opcode("SBB A",       1, 4,  null);
+
+            // 0xAX
+            Opcodes[0xA0] = new Opcode("ANA B",       1, 4,  null);
+            Opcodes[0xA1] = new Opcode("ANA C",       1, 4,  null);
+            Opcodes[0xA2] = new Opcode("ANA D",       1, 4,  null);
+            Opcodes[0xA3] = new Opcode("ANA E",       1, 4,  null);
+            Opcodes[0xA4] = new Opcode("ANA H",       1, 4,  null);
+            Opcodes[0xA5] = new Opcode("ANA L",       1, 4,  null);
+            Opcodes[0xA6] = new Opcode("ANA M",       1, 7,  null);
+            Opcodes[0xA7] = new Opcode("ANA A",       1, 4,  null);
         }
     }
 }

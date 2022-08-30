@@ -1238,5 +1238,198 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.True(_cpu.Flags.Parity);
             Assert.True(_cpu.Flags.Carry);
         }
+
+        [Fact]
+        public void ANA_B_ShouldBitwiseANDAccumulatorRegB()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xFC;
+            _cpu.Registers.B = 0x0F;
+
+            // Act
+            _instructionSet.ANA_B(_cpu);
+
+            // Assert
+            Assert.Equal(0x0C, _cpu.Registers.A);
+            Assert.Equal(0x0F00, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void ANA_C_ShouldBitwiseANDAccumulatorRegC()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xFC;
+            _cpu.Registers.C = 0x0F;
+
+            // Act
+            _instructionSet.ANA_C(_cpu);
+
+            // Assert
+            Assert.Equal(0x0C, _cpu.Registers.A);
+            Assert.Equal(0x000F, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void ANA_D_ShouldBitwiseANDAccumulatorRegD()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xFC;
+            _cpu.Registers.D = 0x0F;
+
+            // Act
+            _instructionSet.ANA_D(_cpu);
+
+            // Assert
+            Assert.Equal(0x0C, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0F00, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void ANA_E_ShouldBitwiseANDAccumulatorRegE()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xFC;
+            _cpu.Registers.E = 0x0F;
+
+            // Act
+            _instructionSet.ANA_E(_cpu);
+
+            // Assert
+            Assert.Equal(0x0C, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x000F, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void ANA_H_ShouldBitwiseANDAccumulatorRegH()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xFC;
+            _cpu.Registers.H = 0x0F;
+
+            // Act
+            _instructionSet.ANA_H(_cpu);
+
+            // Assert
+            Assert.Equal(0x0C, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0F00, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void ANA_L_ShouldBitwiseANDAccumulatorRegL()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xFC;
+            _cpu.Registers.L = 0x0F;
+
+            // Act
+            _instructionSet.ANA_L(_cpu);
+
+            // Assert
+            Assert.Equal(0x0C, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x000F, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void ANA_M_ShouldBitwiseANDAccumulatorMemoryByte()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xFC;
+            _cpu.Registers.HL = 0x0010;
+
+            _memory.Setup(x => x[0x0010]).Returns(0x0F);
+
+            // Act
+            _instructionSet.ANA_M(_cpu);
+
+            // Assert
+            Assert.Equal(0x0C, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0010, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void ANA_A_ShouldBitwiseANDAccumulatorRegA()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xFF;
+
+            // Act
+            _instructionSet.ANA_A(_cpu);
+
+            // Assert
+            Assert.Equal(0xFF, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
     }
 }
