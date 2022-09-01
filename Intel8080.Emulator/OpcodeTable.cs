@@ -197,6 +197,14 @@ namespace Intel8080.Emulator
             Opcodes[0xA5] = new Opcode("ANA L",       1, 4,  null);
             Opcodes[0xA6] = new Opcode("ANA M",       1, 7,  null);
             Opcodes[0xA7] = new Opcode("ANA A",       1, 4,  null);
+            Opcodes[0xA8] = new Opcode("XRA B",       1, 4,  null);
+            Opcodes[0xA9] = new Opcode("XRA C",       1, 4,  null);
+            Opcodes[0xAA] = new Opcode("XRA D",       1, 4,  null);
+            Opcodes[0xAB] = new Opcode("XRA E",       1, 4,  null);
+            Opcodes[0xAC] = new Opcode("XRA H",       1, 4,  null);
+            Opcodes[0xAD] = new Opcode("XRA L",       1, 4,  null);
+            Opcodes[0xAE] = new Opcode("XRA M",       1, 7,  null);
+            Opcodes[0xAF] = new Opcode("XRA A",       1, 4,  null);
         }
     }
 }

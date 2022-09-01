@@ -327,5 +327,21 @@ namespace Intel8080.Emulator
         public void ANA_M(CPU cpu);
         
         public void ANA_A(CPU cpu);
+
+        public void XRA_B(CPU cpu);
+
+        public void XRA_C(CPU cpu);
+
+        public void XRA_D(CPU cpu);
+
+        public void XRA_E(CPU cpu);
+
+        public void XRA_H(CPU cpu);
+
+        public void XRA_L(CPU cpu);
+
+        public void XRA_M(CPU cpu);
+
+        public void XRA_A(CPU cpu);
     }
 }

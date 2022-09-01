@@ -205,6 +205,14 @@ namespace Intel8080.Emulator
             _actions[0xA5] = ANA_L;
             _actions[0xA6] = ANA_M;
             _actions[0xA7] = ANA_A;
+            _actions[0xA8] = XRA_B;
+            _actions[0xA9] = XRA_C;
+            _actions[0xAA] = XRA_D;
+            _actions[0xAB] = XRA_E;
+            _actions[0xAC] = XRA_H;
+            _actions[0xAD] = XRA_L;
+            _actions[0xAE] = XRA_M;
+            _actions[0xAF] = XRA_A;
         }
 
         private void INX(CPU cpu, ref ushort reg)
@@ -349,6 +357,18 @@ namespace Intel8080.Emulator
             cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (reg & 0x08)) != 0;
 
             cpu.Registers.A &= reg;
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.Carry = false;
+        }
+
+        private void XRA(CPU cpu, ref byte reg)
+        {
+            cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (reg & 0x08)) != 0;
+
+            cpu.Registers.A ^= reg;
 
             cpu.Flags.CalcSignFlag(cpu.Registers.A);
             cpu.Flags.CalcZeroFlag(cpu.Registers.A);
@@ -2017,6 +2037,56 @@ namespace Intel8080.Emulator
         public virtual void ANA_A(CPU cpu)
         {
             ANA(cpu, ref cpu.Registers.A);
+        }
+
+        public virtual void XRA_B(CPU cpu)
+        {
+            XRA(cpu, ref cpu.Registers.B);
+        }
+
+        public virtual void XRA_C(CPU cpu)
+        {
+            XRA(cpu, ref cpu.Registers.C);
+        }
+
+        public virtual void XRA_D(CPU cpu)
+        {
+            XRA(cpu, ref cpu.Registers.D);
+        }
+
+        public virtual void XRA_E(CPU cpu)
+        {
+            XRA(cpu, ref cpu.Registers.E);
+        }
+
+        public virtual void XRA_H(CPU cpu)
+        {
+            XRA(cpu, ref cpu.Registers.H);
+        }
+
+        public virtual void XRA_L(CPU cpu)
+        {
+            XRA(cpu, ref cpu.Registers.L);
+        }
+
+        public virtual void XRA_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+            var val = cpu.Memory[location];
+
+            cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (val & 0x08)) != 0;
+
+            cpu.Registers.A ^= val;
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.Carry = false;
+        }
+
+        public virtual void XRA_A(CPU cpu)
+        {
+            XRA(cpu, ref cpu.Registers.A);
         }
     }
 }

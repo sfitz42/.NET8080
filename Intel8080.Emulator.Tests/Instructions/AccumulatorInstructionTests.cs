@@ -1431,5 +1431,198 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.True(_cpu.Flags.Parity);
             Assert.False(_cpu.Flags.Carry);
         }
+
+        [Fact]
+        public void XRA_B_ShouldBitwiseXORAccumulatorRegB()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x5C;
+            _cpu.Registers.B = 0x78;
+
+            // Act
+            _instructionSet.XRA_B(_cpu);
+
+            // Assert
+            Assert.Equal(0x24, _cpu.Registers.A);
+            Assert.Equal(0x7800, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void XRA_C_ShouldBitwiseXORAccumulatorRegC()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x5C;
+            _cpu.Registers.C = 0x78;
+
+            // Act
+            _instructionSet.XRA_C(_cpu);
+
+            // Assert
+            Assert.Equal(0x24, _cpu.Registers.A);
+            Assert.Equal(0x0078, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void XRA_D_ShouldBitwiseXORAccumulatorRegD()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x5C;
+            _cpu.Registers.D = 0x78;
+
+            // Act
+            _instructionSet.XRA_D(_cpu);
+
+            // Assert
+            Assert.Equal(0x24, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x7800, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void XRA_E_ShouldBitwiseXORAccumulatorRegD()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x5C;
+            _cpu.Registers.E = 0x78;
+
+            // Act
+            _instructionSet.XRA_E(_cpu);
+
+            // Assert
+            Assert.Equal(0x24, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0078, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void XRA_H_ShouldBitwiseXORAccumulatorRegH()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x5C;
+            _cpu.Registers.H = 0x78;
+
+            // Act
+            _instructionSet.XRA_H(_cpu);
+
+            // Assert
+            Assert.Equal(0x24, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x7800, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void XRA_L_ShouldBitwiseXORAccumulatorRegL()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x5C;
+            _cpu.Registers.L = 0x78;
+
+            // Act
+            _instructionSet.XRA_L(_cpu);
+
+            // Assert
+            Assert.Equal(0x24, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0078, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void XRA_M_ShouldBitwiseXORAccumulatorMemoryByte()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x5C;
+            _cpu.Registers.HL = 0x0010;
+
+            _memory.Setup(x => x[0x0010]).Returns(0x78);
+
+            // Act
+            _instructionSet.XRA_M(_cpu);
+
+            // Assert
+            Assert.Equal(0x24, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0010, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void XRA_A_ShouldBitwiseXORAccumulatorRegA()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xFF;
+
+            // Act
+            _instructionSet.XRA_A(_cpu);
+
+            // Assert
+            Assert.Equal(0x00, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.True(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
     }
 }
