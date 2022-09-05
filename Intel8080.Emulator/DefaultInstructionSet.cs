@@ -213,6 +213,16 @@ namespace Intel8080.Emulator
             _actions[0xAD] = XRA_L;
             _actions[0xAE] = XRA_M;
             _actions[0xAF] = XRA_A;
+
+            // 0xBx
+            _actions[0xB0] = ORA_B;
+            _actions[0xB1] = ORA_C;
+            _actions[0xB2] = ORA_D;
+            _actions[0xB3] = ORA_E;
+            _actions[0xB4] = ORA_H;
+            _actions[0xB5] = ORA_L;
+            _actions[0xB6] = ORA_M;
+            _actions[0xB7] = ORA_A;
         }
 
         private void INX(CPU cpu, ref ushort reg)
@@ -369,6 +379,18 @@ namespace Intel8080.Emulator
             cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (reg & 0x08)) != 0;
 
             cpu.Registers.A ^= reg;
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.Carry = false;
+        }
+
+        private void ORA(CPU cpu, ref byte reg)
+        {
+            cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (reg & 0x08)) != 0;
+
+            cpu.Registers.A |= reg;
 
             cpu.Flags.CalcSignFlag(cpu.Registers.A);
             cpu.Flags.CalcZeroFlag(cpu.Registers.A);
@@ -2087,6 +2109,56 @@ namespace Intel8080.Emulator
         public virtual void XRA_A(CPU cpu)
         {
             XRA(cpu, ref cpu.Registers.A);
+        }
+
+        public virtual void ORA_B(CPU cpu)
+        {
+            ORA(cpu, ref cpu.Registers.B);
+        }
+
+        public virtual void ORA_C(CPU cpu)
+        {
+            ORA(cpu, ref cpu.Registers.C);
+        }
+
+        public virtual void ORA_D(CPU cpu)
+        {
+            ORA(cpu, ref cpu.Registers.D);
+        }
+
+        public virtual void ORA_E(CPU cpu)
+        {
+            ORA(cpu, ref cpu.Registers.E);
+        }
+
+        public virtual void ORA_H(CPU cpu)
+        {
+            ORA(cpu, ref cpu.Registers.H);
+        }
+
+        public virtual void ORA_L(CPU cpu)
+        {
+            ORA(cpu, ref cpu.Registers.L);
+        }
+
+        public virtual void ORA_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+            var val = cpu.Memory[location];
+
+            cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (val & 0x08)) != 0;
+
+            cpu.Registers.A |= val;
+
+            cpu.Flags.CalcSignFlag(cpu.Registers.A);
+            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
+            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.Carry = false;
+        }
+
+        public virtual void ORA_A(CPU cpu)
+        {
+            ORA(cpu, ref cpu.Registers.A);
         }
     }
 }

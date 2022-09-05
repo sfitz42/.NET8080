@@ -205,6 +205,16 @@ namespace Intel8080.Emulator
             Opcodes[0xAD] = new Opcode("XRA L",       1, 4,  null);
             Opcodes[0xAE] = new Opcode("XRA M",       1, 7,  null);
             Opcodes[0xAF] = new Opcode("XRA A",       1, 4,  null);
+
+            // 0xBX
+            Opcodes[0xB0] = new Opcode("ORA B",       1, 4,  null);
+            Opcodes[0xB1] = new Opcode("ORA C",       1, 4,  null);
+            Opcodes[0xB2] = new Opcode("ORA D",       1, 4,  null);
+            Opcodes[0xB3] = new Opcode("ORA E",       1, 4,  null);
+            Opcodes[0xB4] = new Opcode("ORA H",       1, 4,  null);
+            Opcodes[0xB5] = new Opcode("ORA L",       1, 4,  null);
+            Opcodes[0xB6] = new Opcode("ORA M",       1, 7,  null);
+            Opcodes[0xB7] = new Opcode("ORA A",       1, 4,  null);
         }
     }
 }

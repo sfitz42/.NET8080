@@ -343,5 +343,21 @@ namespace Intel8080.Emulator
         public void XRA_M(CPU cpu);
 
         public void XRA_A(CPU cpu);
+
+        public void ORA_B(CPU cpu);
+
+        public void ORA_C(CPU cpu);
+
+        public void ORA_D(CPU cpu);
+
+        public void ORA_E(CPU cpu);
+
+        public void ORA_H(CPU cpu);
+
+        public void ORA_L(CPU cpu);
+
+        public void ORA_M(CPU cpu);
+
+        public void ORA_A(CPU cpu);
     }
 }

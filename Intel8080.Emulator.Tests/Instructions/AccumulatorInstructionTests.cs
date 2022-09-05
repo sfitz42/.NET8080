@@ -1624,5 +1624,198 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.True(_cpu.Flags.Parity);
             Assert.False(_cpu.Flags.Carry);
         }
+
+        [Fact]
+        public void ORA_B_ShouldBitwiseOrAccumulatorRegB()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x33;
+            _cpu.Registers.B = 0x0F;
+
+            // Act
+            _instructionSet.ORA_B(_cpu);
+
+            // Assert
+            Assert.Equal(0x3F, _cpu.Registers.A);
+            Assert.Equal(0x0F00, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+        
+        [Fact]
+        public void ORA_C_ShouldBitwiseOrAccumulatorRegC()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x33;
+            _cpu.Registers.C = 0x0F;
+
+            // Act
+            _instructionSet.ORA_C(_cpu);
+
+            // Assert
+            Assert.Equal(0x3F, _cpu.Registers.A);
+            Assert.Equal(0x000F, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+        
+        [Fact]
+        public void ORA_D_ShouldBitwiseOrAccumulatorRegD()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x33;
+            _cpu.Registers.D = 0x0F;
+
+            // Act
+            _instructionSet.ORA_D(_cpu);
+
+            // Assert
+            Assert.Equal(0x3F, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0F00, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+        
+        [Fact]
+        public void ORA_E_ShouldBitwiseOrAccumulatorRegE()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x33;
+            _cpu.Registers.E = 0x0F;
+
+            // Act
+            _instructionSet.ORA_E(_cpu);
+
+            // Assert
+            Assert.Equal(0x3F, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x000F, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+        
+        [Fact]
+        public void ORA_H_ShouldBitwiseOrAccumulatorRegH()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x33;
+            _cpu.Registers.H = 0x0F;
+
+            // Act
+            _instructionSet.ORA_H(_cpu);
+
+            // Assert
+            Assert.Equal(0x3F, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0F00, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+        
+        [Fact]
+        public void ORA_L_ShouldBitwiseOrAccumulatorRegL()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x33;
+            _cpu.Registers.L = 0x0F;
+
+            // Act
+            _instructionSet.ORA_L(_cpu);
+
+            // Assert
+            Assert.Equal(0x3F, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x000F, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+        
+        [Fact]
+        public void ORA_M_ShouldBitwiseOrAccumulatorRegL()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x33;
+            _cpu.Registers.HL = 0x0010;
+
+            _memory.Setup(x => x[0x0010]).Returns(0x0F);
+
+            // Act
+            _instructionSet.ORA_M(_cpu);
+
+            // Assert
+            Assert.Equal(0x3F, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0010, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void ORA_A_ShouldBitwiseOrAccumulatorRegL()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x33;
+
+            // Act
+            _instructionSet.ORA_A(_cpu);
+
+            // Assert
+            Assert.Equal(0x33, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
     }
 }
