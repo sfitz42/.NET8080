@@ -223,6 +223,14 @@ namespace Intel8080.Emulator
             _actions[0xB5] = ORA_L;
             _actions[0xB6] = ORA_M;
             _actions[0xB7] = ORA_A;
+            _actions[0xB8] = CMP_B;
+            _actions[0xB9] = CMP_C;
+            _actions[0xBA] = CMP_D;
+            _actions[0xBB] = CMP_E;
+            _actions[0xBC] = CMP_H;
+            _actions[0xBD] = CMP_L;
+            _actions[0xBE] = CMP_M;
+            _actions[0xBF] = CMP_A;
         }
 
         private void INX(CPU cpu, ref ushort reg)
@@ -396,6 +404,23 @@ namespace Intel8080.Emulator
             cpu.Flags.CalcZeroFlag(cpu.Registers.A);
             cpu.Flags.CalcParityFlag(cpu.Registers.A);
             cpu.Flags.Carry = false;
+        }
+
+        private void CMP(CPU cpu, ref byte reg)
+        {
+            // Calculate two's complement of register
+            byte val = (byte) (~(reg) + 1);
+
+            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.A, val);
+
+            var result = (ushort) (cpu.Registers.A + val);
+
+            var resultByte = (byte) (result & 0xFF);
+
+            cpu.Flags.CalcSignFlag(resultByte);
+            cpu.Flags.CalcZeroFlag(resultByte);
+            cpu.Flags.CalcParityFlag(resultByte);
+            cpu.Flags.CalcCarryFlagSub(result);
         }
 
         private ushort GetUshort(byte a, byte b)
@@ -2159,6 +2184,60 @@ namespace Intel8080.Emulator
         public virtual void ORA_A(CPU cpu)
         {
             ORA(cpu, ref cpu.Registers.A);
+        }
+
+        public virtual void CMP_B(CPU cpu)
+        {
+            CMP(cpu, ref cpu.Registers.B);
+        }
+
+        public virtual void CMP_C(CPU cpu)
+        {
+            CMP(cpu, ref cpu.Registers.C);
+        }
+
+        public virtual void CMP_D(CPU cpu)
+        {
+            CMP(cpu, ref cpu.Registers.D);
+        }
+
+        public virtual void CMP_E(CPU cpu)
+        {
+            CMP(cpu, ref cpu.Registers.E);
+        }
+
+        public virtual void CMP_H(CPU cpu)
+        {
+            CMP(cpu, ref cpu.Registers.H);
+        }
+
+        public virtual void CMP_L(CPU cpu)
+        {
+            CMP(cpu, ref cpu.Registers.L);
+        }
+
+        public virtual void CMP_M(CPU cpu)
+        {
+            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+
+            // Calculate two's complement of register
+            byte val = (byte) (~(cpu.Memory[location]) + 1);
+
+            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.A, val);
+
+            var result = (ushort) (cpu.Registers.A + val);
+
+            var resultByte = (byte) (result & 0xFF);
+
+            cpu.Flags.CalcSignFlag(resultByte);
+            cpu.Flags.CalcZeroFlag(resultByte);
+            cpu.Flags.CalcParityFlag(resultByte);
+            cpu.Flags.CalcCarryFlagSub(result);
+        }
+
+        public virtual void CMP_A(CPU cpu)
+        {
+            CMP(cpu, ref cpu.Registers.A);
         }
     }
 }

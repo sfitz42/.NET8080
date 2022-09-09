@@ -359,5 +359,21 @@ namespace Intel8080.Emulator
         public void ORA_M(CPU cpu);
 
         public void ORA_A(CPU cpu);
+
+        public void CMP_B(CPU cpu);
+
+        public void CMP_C(CPU cpu);
+
+        public void CMP_D(CPU cpu);
+
+        public void CMP_E(CPU cpu);
+
+        public void CMP_H(CPU cpu);
+
+        public void CMP_L(CPU cpu);
+
+        public void CMP_M(CPU cpu);
+
+        public void CMP_A(CPU cpu);
     }
 }

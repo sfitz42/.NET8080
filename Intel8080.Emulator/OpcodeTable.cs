@@ -215,6 +215,14 @@ namespace Intel8080.Emulator
             Opcodes[0xB5] = new Opcode("ORA L",       1, 4,  null);
             Opcodes[0xB6] = new Opcode("ORA M",       1, 7,  null);
             Opcodes[0xB7] = new Opcode("ORA A",       1, 4,  null);
+            Opcodes[0xB8] = new Opcode("CMP B",       1, 4,  null);
+            Opcodes[0xB9] = new Opcode("CMP C",       1, 4,  null);
+            Opcodes[0xBA] = new Opcode("CMP D",       1, 4,  null);
+            Opcodes[0xBB] = new Opcode("CMP E",       1, 4,  null);
+            Opcodes[0xBC] = new Opcode("CMP H",       1, 4,  null);
+            Opcodes[0xBD] = new Opcode("CMP L",       1, 4,  null);
+            Opcodes[0xBE] = new Opcode("CMP M",       1, 7,  null);
+            Opcodes[0xBF] = new Opcode("CMP A",       1, 4,  null);
         }
     }
 }

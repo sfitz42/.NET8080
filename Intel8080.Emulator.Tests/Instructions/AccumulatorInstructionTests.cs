@@ -1817,5 +1817,538 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.True(_cpu.Flags.Parity);
             Assert.False(_cpu.Flags.Carry);
         }
+
+        [Fact]
+        public void CMP_B_BLessThanA_ShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x0A;
+            _cpu.Registers.B = 0x05;
+
+            // Act
+            _instructionSet.CMP_B(_cpu);
+
+            // Assert
+            Assert.Equal(0x0A, _cpu.Registers.A);
+            Assert.Equal(0x0500, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_B_BGreaterThanA_ShouldSetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x02;
+            _cpu.Registers.B = 0x05;
+
+            // Act
+            _instructionSet.CMP_B(_cpu);
+
+            // Assert
+            Assert.Equal(0x02, _cpu.Registers.A);
+            Assert.Equal(0x0500, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.True(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_B_BGreaterThanASignDiffer_ShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xE5;
+            _cpu.Registers.B = 0x05;
+
+            // Act
+            _instructionSet.CMP_B(_cpu);
+
+            // Assert
+            Assert.Equal(0xE5, _cpu.Registers.A);
+            Assert.Equal(0x0500, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_C_CLessThanA_ShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x0A;
+            _cpu.Registers.C = 0x05;
+
+            // Act
+            _instructionSet.CMP_C(_cpu);
+
+            // Assert
+            Assert.Equal(0x0A, _cpu.Registers.A);
+            Assert.Equal(0x0005, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_C_CGreaterThanA_ShouldSetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x02;
+            _cpu.Registers.C = 0x05;
+
+            // Act
+            _instructionSet.CMP_C(_cpu);
+
+            // Assert
+            Assert.Equal(0x02, _cpu.Registers.A);
+            Assert.Equal(0x0005, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.True(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_C_CGreaterThanA_SignDifferShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xE5;
+            _cpu.Registers.C = 0x05;
+
+            // Act
+            _instructionSet.CMP_C(_cpu);
+
+            // Assert
+            Assert.Equal(0xE5, _cpu.Registers.A);
+            Assert.Equal(0x0005, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_D_DLessThanA_ShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x0A;
+            _cpu.Registers.D = 0x05;
+
+            // Act
+            _instructionSet.CMP_D(_cpu);
+
+            // Assert
+            Assert.Equal(0x0A, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0500, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_D_DGreaterThanA_ShouldSetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x02;
+            _cpu.Registers.D = 0x05;
+
+            // Act
+            _instructionSet.CMP_D(_cpu);
+
+            // Assert
+            Assert.Equal(0x02, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0500, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.True(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_D_DGreaterThanA_SignDifferShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xE5;
+            _cpu.Registers.D = 0x05;
+
+            // Act
+            _instructionSet.CMP_D(_cpu);
+
+            // Assert
+            Assert.Equal(0xE5, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0500, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_E_ELessThanA_ShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x0A;
+            _cpu.Registers.E = 0x05;
+
+            // Act
+            _instructionSet.CMP_E(_cpu);
+
+            // Assert
+            Assert.Equal(0x0A, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0005, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_E_EGreaterThanA_ShouldSetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x02;
+            _cpu.Registers.E = 0x05;
+
+            // Act
+            _instructionSet.CMP_E(_cpu);
+
+            // Assert
+            Assert.Equal(0x02, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0005, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.True(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_E_EGreaterThanASignDiffer_ShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xE5;
+            _cpu.Registers.E = 0x05;
+
+            // Act
+            _instructionSet.CMP_E(_cpu);
+
+            // Assert
+            Assert.Equal(0xE5, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0005, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_H_HLessThanA_ShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x0A;
+            _cpu.Registers.H = 0x05;
+
+            // Act
+            _instructionSet.CMP_H(_cpu);
+
+            // Assert
+            Assert.Equal(0x0A, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0500, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_H_HGreaterThanA_ShouldSetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x02;
+            _cpu.Registers.H = 0x05;
+
+            // Act
+            _instructionSet.CMP_H(_cpu);
+
+            // Assert
+            Assert.Equal(0x02, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0500, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.True(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_H_HGreaterThanASignDiffer_ShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xE5;
+            _cpu.Registers.H = 0x05;
+
+            // Act
+            _instructionSet.CMP_H(_cpu);
+
+            // Assert
+            Assert.Equal(0xE5, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0500, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_L_LLessThanA_ShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x0A;
+            _cpu.Registers.L = 0x05;
+
+            // Act
+            _instructionSet.CMP_L(_cpu);
+
+            // Assert
+            Assert.Equal(0x0A, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0005, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_L_LGreaterThanA_ShouldSetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x02;
+            _cpu.Registers.L = 0x05;
+
+            // Act
+            _instructionSet.CMP_L(_cpu);
+
+            // Assert
+            Assert.Equal(0x02, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0005, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.True(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_L_LGreaterThanASignDiffer_ShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xE5;
+            _cpu.Registers.L = 0x05;
+
+            // Act
+            _instructionSet.CMP_L(_cpu);
+
+            // Assert
+            Assert.Equal(0xE5, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0005, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_M_MemoryByteLessThanA_ShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x0A;
+            _cpu.Registers.HL = 0x0010;
+
+            _memory.Setup(x => x[0x0010]).Returns(0x05);
+
+            // Act
+            _instructionSet.CMP_M(_cpu);
+
+            // Assert
+            Assert.Equal(0x0A, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0010, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_M_MemoryByteGreaterThanA_ShouldSetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x02;
+            _cpu.Registers.HL = 0x0010;
+
+            _memory.Setup(x => x[0x0010]).Returns(0x05);
+
+            // Act
+            _instructionSet.CMP_M(_cpu);
+
+            // Assert
+            Assert.Equal(0x02, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0010, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.True(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_M_MemoryByteGreaterThanASignDiffer_ShouldResetCarry()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xE5;
+            _cpu.Registers.HL = 0x0010;
+
+            _memory.Setup(x => x[0x0010]).Returns(0x05);
+
+            // Act
+            _instructionSet.CMP_M(_cpu);
+
+            // Assert
+            Assert.Equal(0xE5, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0010, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void CMP_A_ShouldSetZeroFlag()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x05;
+
+            // Act
+            _instructionSet.CMP_A(_cpu);
+
+            // Assert
+            Assert.Equal(0x05, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.True(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
     }
 }

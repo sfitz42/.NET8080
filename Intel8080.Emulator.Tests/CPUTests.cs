@@ -2848,5 +2848,133 @@ namespace Intel8080.Emulator.Tests
             Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(4, _cpu.Cycles);
         }
+
+        [Fact]
+        public void CMP_B_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xB8);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CMP_B(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void CMP_C_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xB9);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CMP_C(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void CMP_D_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xBA);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CMP_D(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void CMP_E_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xBB);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CMP_E(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void CMP_H_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xBC);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CMP_H(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void CMP_L_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xBD);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CMP_L(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void CMP_M_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xBE);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CMP_M(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(7, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void CMP_A_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xBF);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CMP_A(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(4, _cpu.Cycles);
+        }
     }
 }
