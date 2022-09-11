@@ -223,6 +223,24 @@ namespace Intel8080.Emulator
             Opcodes[0xBD] = new Opcode("CMP L",       1, 4,  null);
             Opcodes[0xBE] = new Opcode("CMP M",       1, 7,  null);
             Opcodes[0xBF] = new Opcode("CMP A",       1, 4,  null);
+
+            // 0xCX
+            Opcodes[0xC0] = new Opcode("RNZ",         1, 5, 11);
+            Opcodes[0xC1] = new Opcode("POP B",       1, 10, null);
+            Opcodes[0xC2] = new Opcode("JNZ a16",     3, 10, null);
+            Opcodes[0xC3] = new Opcode("JMP a16",     3, 10, null);
+            Opcodes[0xC4] = new Opcode("CNZ a16",     3, 11, 17);
+            Opcodes[0xC5] = new Opcode("PUSH B",      1, 11, null);
+            Opcodes[0xC6] = new Opcode("ADI d8",      2, 7,  null);
+            Opcodes[0xC7] = new Opcode("RST 0",       1, 11, null);
+            Opcodes[0xC8] = new Opcode("RZ",          1, 5,  11);
+            Opcodes[0xC9] = new Opcode("RET",         1, 10, null);
+            Opcodes[0xCA] = new Opcode("JZ a16",      3, 10, null);
+            Opcodes[0xCB] = new Opcode("*JMP a16",    3, 10, null);
+            Opcodes[0xCC] = new Opcode("CZ a16",      3, 11, 17);
+            Opcodes[0xCD] = new Opcode("CALL a16",    3, 17, null);
+            Opcodes[0xCE] = new Opcode("ACI d8",      2, 7,  null);
+            Opcodes[0xCF] = new Opcode("RST 1",       1, 11, null);
         }
     }
 }

@@ -231,6 +231,24 @@ namespace Intel8080.Emulator
             _actions[0xBD] = CMP_L;
             _actions[0xBE] = CMP_M;
             _actions[0xBF] = CMP_A;
+
+            // 0xCX
+            _actions[0xC0] = RNZ;
+            _actions[0xC1] = POP_B;
+            _actions[0xC2] = JNZ;
+            _actions[0xC3] = JMP;
+            _actions[0xC4] = CNZ;
+            _actions[0xC5] = PUSH_B;
+            _actions[0xC6] = ADI;
+            _actions[0xC7] = RST_0;
+            _actions[0xC8] = RZ;
+            _actions[0xC9] = RET;
+            _actions[0xCA] = JZ;
+            _actions[0xCB] = JMP;
+            _actions[0xCC] = CZ;
+            _actions[0xCD] = CALL;
+            _actions[0xCE] = ACI;
+            _actions[0xCF] = RST_1;
         }
 
         private void INX(CPU cpu, ref ushort reg)
@@ -421,6 +439,45 @@ namespace Intel8080.Emulator
             cpu.Flags.CalcZeroFlag(resultByte);
             cpu.Flags.CalcParityFlag(resultByte);
             cpu.Flags.CalcCarryFlagSub(result);
+        }
+
+        private void POP(CPU cpu, ref ushort reg)
+        {
+            var data = PopStack(cpu);
+
+            reg = data;
+        }
+
+        private void PUSH(CPU cpu, ref ushort reg)
+        {
+            PushStack(cpu, reg);
+        }
+
+        private void CALL(CPU cpu, ushort address)
+        {
+            PushStack(cpu, (ushort) (cpu.Registers.PC + 1));
+
+            cpu.Registers.PC = address;
+        }
+
+        private ushort PopStack(CPU cpu)
+        {
+            ushort val = GetUshort(
+                cpu.Memory[cpu.Registers.SP + 1],
+                cpu.Memory[cpu.Registers.SP]
+            );
+
+            cpu.Registers.SP += 2;
+
+            return val;
+        }
+
+        private void PushStack(CPU cpu, ushort data)
+        {
+            cpu.Memory[cpu.Registers.SP + 1] = (byte) ((data & 0xFF00) >> 8);
+            cpu.Memory[cpu.Registers.SP] = (byte) (data & 0x00FF);
+
+            cpu.Registers.SP -= 2;
         }
 
         private ushort GetUshort(byte a, byte b)
@@ -2238,6 +2295,117 @@ namespace Intel8080.Emulator
         public virtual void CMP_A(CPU cpu)
         {
             CMP(cpu, ref cpu.Registers.A);
+        }
+
+        public virtual void RNZ(CPU cpu)
+        {
+            if (!cpu.Flags.Zero)
+            {
+                RET(cpu);
+
+                cpu.Cycles += 6;
+            }
+        }
+
+        public virtual void POP_B(CPU cpu)
+        {
+            POP(cpu, ref cpu.Registers.BC);
+        }
+
+        public virtual void JNZ(CPU cpu)
+        {
+            if (!cpu.Flags.Zero)
+                JMP(cpu);
+        }
+
+        public virtual void JMP(CPU cpu)
+        {
+            var data = GetUshort(
+                cpu.Memory[cpu.Registers.PC + 2],
+                cpu.Memory[cpu.Registers.PC + 1]
+            );
+
+            cpu.Registers.PC = data;
+        }
+
+        public virtual void CNZ(CPU cpu)
+        {
+            if (!cpu.Flags.Zero)
+            {
+                CALL(cpu);
+
+                cpu.Cycles += 6;
+            }
+        }
+
+        public virtual void PUSH_B(CPU cpu)
+        {
+            PUSH(cpu, ref cpu.Registers.BC);
+        }
+
+        public virtual void ADI(CPU cpu)
+        {
+            var data = cpu.Memory[cpu.Registers.PC + 1];
+
+            ADD(cpu, ref data);
+        }
+
+        public virtual void RST_0(CPU cpu)
+        {
+            CALL(cpu, 0x00);
+        }
+
+        public virtual void RZ(CPU cpu)
+        {
+            if (cpu.Flags.Zero)
+            {
+                RET(cpu);
+
+                cpu.Cycles += 6;
+            }
+        }
+
+        public virtual void RET(CPU cpu)
+        {
+            cpu.Registers.PC = PopStack(cpu);
+        }
+
+        public virtual void JZ(CPU cpu)
+        {
+            if (cpu.Flags.Zero)
+                JMP(cpu);
+        }
+
+        public virtual void CZ(CPU cpu)
+        {
+            if (cpu.Flags.Zero)
+            {
+                CALL(cpu);
+
+                cpu.Cycles += 6;
+            }
+        }
+
+        public virtual void CALL(CPU cpu)
+        {
+            var data = GetUshort(
+                cpu.Memory[cpu.Registers.PC + 2],
+                cpu.Memory[cpu.Registers.PC + 1]
+            );
+
+            CALL(cpu, data);
+        }
+
+        public virtual void ACI(CPU cpu)
+        {
+            var data = cpu.Memory[cpu.Registers.PC + 1];
+
+            ADC(cpu, ref data);
+        }
+
+        public virtual void RST_1(CPU cpu)
+        {
+            CALL(cpu, 0x08);
         }
     }
 }

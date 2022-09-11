@@ -375,5 +375,35 @@ namespace Intel8080.Emulator
         public void CMP_M(CPU cpu);
 
         public void CMP_A(CPU cpu);
+
+        public void RNZ(CPU cpu);
+
+        public void POP_B(CPU cpu);
+
+        public void JNZ(CPU cpu);
+
+        public void JMP(CPU cpu);
+
+        public void CNZ(CPU cpu);
+
+        public void PUSH_B(CPU cpu);
+
+        public void ADI(CPU cpu);
+
+        public void RST_0(CPU cpu);
+
+        public void RZ(CPU cpu);
+
+        public void RET(CPU cpu);
+
+        public void JZ(CPU cpu);
+
+        public void CZ(CPU cpu);
+
+        public void CALL(CPU cpu);
+
+        public void ACI(CPU cpu);
+
+        public void RST_1(CPU cpu);
     }
 }

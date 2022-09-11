@@ -445,5 +445,50 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Carry);
         }
+
+        [Fact]
+        public void POP_B_ShouldPopStackIntoBC()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0xFF);
+            _memory.Setup(x => x[0x0011]).Returns(0xFE);
+
+            _cpu.Registers.SP = 0x0010;
+
+            // Act
+            _instructionSet.POP_B(_cpu);
+
+            // Assert
+            Assert.Equal(0x00, _cpu.Registers.A);
+            Assert.Equal(0xFEFF, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0012, _cpu.Registers.SP);
+        }
+
+        [Fact]
+        public void PUSH_B_ShouldPushBCToStack()
+        {
+            // Arrange
+            var memory = new DefaultMemory(0x100);
+            var cpu = new CPU(memory, _instructionSet);
+            
+            cpu.Registers.BC = 0xFEFF;
+
+            cpu.Registers.SP = 0x0012;
+
+            // Act
+            _instructionSet.PUSH_B(cpu);
+
+            // Assert
+            Assert.Equal(0x00, cpu.Registers.A);
+            Assert.Equal(0xFEFF, cpu.Registers.BC);
+            Assert.Equal(0x0000, cpu.Registers.DE);
+            Assert.Equal(0x0000, cpu.Registers.HL);
+            Assert.Equal(0x0010, cpu.Registers.SP);
+
+            Assert.Equal(0xFF, cpu.Memory[0x0012]);
+            Assert.Equal(0xFE, cpu.Memory[0x0013]);
+        }
     }
 }
