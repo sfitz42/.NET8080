@@ -1,3 +1,4 @@
+using Intel8080.Emulator.Instructions;
 using Moq;
 using Xunit;
 

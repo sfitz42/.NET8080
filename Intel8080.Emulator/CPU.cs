@@ -1,3 +1,5 @@
+using Intel8080.Emulator.Instructions;
+
 namespace Intel8080.Emulator
 {
     public class CPU

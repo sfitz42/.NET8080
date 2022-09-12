@@ -1,6 +1,6 @@
 using System;
 
-namespace Intel8080.Emulator
+namespace Intel8080.Emulator.Instructions
 {
     public interface IInstructionSet
     {
