@@ -527,15 +527,6 @@ namespace Intel8080.Emulator.Instructions
             cpu.Memory[location] = cpu.Registers.L;
         }
 
-        // 0x76   - HLT
-        // Bytes  - 1
-        // Cycles - 7
-        // Flags  - None
-        public virtual void HLT(CPU cpu)
-        {
-            cpu.Halted = true;
-        }
-
         // 0x77   - MOV M, A
         // Bytes  - 1
         // Cycles - 7

@@ -16,6 +16,8 @@ namespace Intel8080.Emulator.Tests.Instructions
             _instructionSet = new DefaultInstructionSet();
 
             _cpu = new CPU(_memory, _instructionSet);
+
+            _cpu.Registers.PC = 1;
         }
 
         [Fact]

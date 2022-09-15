@@ -10,5 +10,14 @@ namespace Intel8080.Emulator.Instructions
         {
             return;
         }
+
+        // 0x76   - HLT
+        // Bytes  - 1
+        // Cycles - 7
+        // Flags  - None
+        public virtual void HLT(CPU cpu)
+        {
+            cpu.Halted = true;
+        }
     }
 }

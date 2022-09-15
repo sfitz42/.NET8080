@@ -11,19 +11,18 @@ namespace Intel8080.Emulator.Instructions
 
         public virtual void CALL(CPU cpu)
         {
-            var data = GetUshort(
-                cpu.Memory[cpu.Registers.PC + 2],
-                cpu.Memory[cpu.Registers.PC + 1]
-            );
+            var location = cpu.ReadNextUshort();
 
-            CALL(cpu, data);
+            CALL(cpu, location);
         }
 
         public virtual void CZ(CPU cpu)
         {
+            var location = cpu.ReadNextUshort();
+
             if (cpu.Flags.Zero)
             {
-                CALL(cpu);
+                CALL(cpu, location);
 
                 cpu.Cycles += 6;
             }
@@ -31,9 +30,11 @@ namespace Intel8080.Emulator.Instructions
 
         public virtual void CNZ(CPU cpu)
         {
+            var location = cpu.ReadNextUshort();
+
             if (!cpu.Flags.Zero)
             {
-                CALL(cpu);
+                CALL(cpu, location);
 
                 cpu.Cycles += 6;
             }

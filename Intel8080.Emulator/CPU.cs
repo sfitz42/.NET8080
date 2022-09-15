@@ -42,12 +42,38 @@ namespace Intel8080.Emulator
         
         public void Step()
         {
-            var opcode = Memory[Registers.PC];
+            var opcode = ReadNextByte();
 
-            InstructionSet[Memory[Registers.PC]](this);
+            InstructionSet[opcode](this);
 
-            Registers.PC += OpcodeTable.Opcodes[opcode].Length;
             Cycles += OpcodeTable.Opcodes[opcode].Cycles;
+        }
+
+        internal byte ReadByte(int address)
+        {
+            return Memory[address];
+        }
+
+        internal ushort ReadUshort(int address)
+        {
+            var a = ReadByte(address + 1);
+            var b = ReadByte(address);
+
+            return (ushort) ((a << 8) | b);
+        }
+
+        internal byte ReadNextByte()
+        {
+            return ReadByte(Registers.PC++);
+        }
+
+        internal ushort ReadNextUshort()
+        {
+            var res = ReadUshort(Registers.PC);
+            
+            Registers.PC += 2;
+
+            return res;
         }
     }
 }

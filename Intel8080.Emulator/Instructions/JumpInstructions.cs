@@ -2,26 +2,32 @@ namespace Intel8080.Emulator.Instructions
 {
     public partial class DefaultInstructionSet : IInstructionSet
     {
+        private void JMP(CPU cpu, ushort address)
+        {
+            cpu.Registers.PC = address;
+        }
+
         public virtual void JMP(CPU cpu)
         {
-            var data = GetUshort(
-                cpu.Memory[cpu.Registers.PC + 2],
-                cpu.Memory[cpu.Registers.PC + 1]
-            );
+            var location = cpu.ReadNextUshort();
 
-            cpu.Registers.PC = data;
+            JMP(cpu, location);
         }
 
         public virtual void JZ(CPU cpu)
         {
+            var location = cpu.ReadNextUshort();
+
             if (cpu.Flags.Zero)
-                JMP(cpu);
+                JMP(cpu, location);
         }
 
         public virtual void JNZ(CPU cpu)
         {
+            var location = cpu.ReadNextUshort();
+
             if (!cpu.Flags.Zero)
-                JMP(cpu);
+                JMP(cpu, location);
         }
     }
 }

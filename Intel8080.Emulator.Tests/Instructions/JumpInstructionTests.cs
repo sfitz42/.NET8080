@@ -16,6 +16,8 @@ namespace Intel8080.Emulator.Tests.Instructions
             _instructionSet = new DefaultInstructionSet();
 
             _cpu = new CPU(_memory.Object, _instructionSet);
+
+            _cpu.Registers.PC = 1;
         }
 
         [Fact]
@@ -31,7 +33,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _instructionSet.JNZ(_cpu);
 
             // Assert
-            Assert.Equal(0x0000, _cpu.Registers.PC);
+            Assert.Equal(0x0003, _cpu.Registers.PC);
         }
 
         [Fact]
@@ -77,7 +79,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _instructionSet.JZ(_cpu);
 
             // Assert
-            Assert.Equal(0x0000, _cpu.Registers.PC);
+            Assert.Equal(0x0003, _cpu.Registers.PC);
         }
 
         [Fact]

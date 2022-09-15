@@ -15,6 +15,8 @@ namespace Intel8080.Emulator.Tests
             _memory = new Mock<IMemory>();
             _instructionSet = new Mock<DefaultInstructionSet>();
 
+            _instructionSet.CallBase = true;
+
             _cpu = new CPU(_memory.Object, _instructionSet.Object);
         }
 
@@ -3034,7 +3036,7 @@ namespace Intel8080.Emulator.Tests
         }
 
         [Fact]
-        public void JNZ_ShouldAdvancePCAndCycles()
+        public void JNZ_ShouldAdvanceCycles()
         {
             // Arrange
             _memory.Setup(x => x[0x00]).Returns(0xC2);
@@ -3045,12 +3047,11 @@ namespace Intel8080.Emulator.Tests
             // Assert
             _instructionSet.Verify(x => x.JNZ(_cpu), Times.Once);
 
-            Assert.Equal(3, _cpu.Registers.PC);
             Assert.Equal(10, _cpu.Cycles);
         }
 
         [Fact]
-        public void JMP_ShouldAdvancePCAndCycles()
+        public void JMP_ShouldAdvanceCycles()
         {
             // Arrange
             _memory.Setup(x => x[0x00]).Returns(0xC3);
@@ -3061,7 +3062,6 @@ namespace Intel8080.Emulator.Tests
             // Assert
             _instructionSet.Verify(x => x.JMP(_cpu), Times.Once);
 
-            Assert.Equal(3, _cpu.Registers.PC);
             Assert.Equal(10, _cpu.Cycles);
         }
 
@@ -3137,7 +3137,7 @@ namespace Intel8080.Emulator.Tests
         }
 
         [Fact]
-        public void RST_0_ShouldAdvancePCAndCycles()
+        public void RST_0_ShouldAdvanceCycles()
         {
             // Arrange
             _memory.Setup(x => x[0x00]).Returns(0xC7);
@@ -3148,7 +3148,6 @@ namespace Intel8080.Emulator.Tests
             // Assert
             _instructionSet.Verify(x => x.RST_0(_cpu), Times.Once);
 
-            Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(11, _cpu.Cycles);
         }
 
@@ -3156,8 +3155,6 @@ namespace Intel8080.Emulator.Tests
         public void RZ_ShouldAdvancePCAndCycles()
         {
             // Arrange
-            _instructionSet.CallBase = true;
-
             _cpu.Flags.Zero = false;
 
             _memory.Setup(x => x[0x00]).Returns(0xC8);
@@ -3176,8 +3173,6 @@ namespace Intel8080.Emulator.Tests
         public void RZ_ShouldAddCyclesIfZeroFlagSet()
         {
             // Arrange
-            _instructionSet.CallBase = true;
-
             _cpu.Flags.Zero = true;
 
             _memory.Setup(x => x[0x00]).Returns(0xC8);
@@ -3192,7 +3187,7 @@ namespace Intel8080.Emulator.Tests
         }
 
         [Fact]
-        public void RET_ShouldAdvancePCAndCycles()
+        public void RET_ShouldAdvanceCycles()
         {
             // Arrange
             _memory.Setup(x => x[0x00]).Returns(0xC9);
@@ -3203,7 +3198,6 @@ namespace Intel8080.Emulator.Tests
             // Assert
             _instructionSet.Verify(x => x.RET(_cpu), Times.Once);
 
-            Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(10, _cpu.Cycles);
         }
 
@@ -3227,8 +3221,6 @@ namespace Intel8080.Emulator.Tests
         public void CZ_ShouldAdvancePCAndCycles()
         {
             // Arrange
-            _instructionSet.CallBase = true;
-
             _cpu.Flags.Zero = false;
 
             _memory.Setup(x => x[0x00]).Returns(0xCC);
@@ -3247,8 +3239,6 @@ namespace Intel8080.Emulator.Tests
         public void CZ_ShouldAddCyclesIfZeroFlagSet()
         {
             // Arrange
-            _instructionSet.CallBase = true;
-
             _cpu.Flags.Zero = true;
 
             _memory.Setup(x => x[0x00]).Returns(0xCC);
@@ -3263,7 +3253,7 @@ namespace Intel8080.Emulator.Tests
         }
 
         [Fact]
-        public void CALL_ShouldAdvancePCAndCycles()
+        public void CALL_ShouldAdvanceCycles()
         {
             // Arrange
             _memory.Setup(x => x[0x00]).Returns(0xCD);
@@ -3274,7 +3264,6 @@ namespace Intel8080.Emulator.Tests
             // Assert
             _instructionSet.Verify(x => x.CALL(_cpu), Times.Once);
 
-            Assert.Equal(3, _cpu.Registers.PC);
             Assert.Equal(17, _cpu.Cycles);
         }
 
@@ -3295,7 +3284,7 @@ namespace Intel8080.Emulator.Tests
         }
 
         [Fact]
-        public void RST_1_ShouldAdvancePCAndCycles()
+        public void RST_1_ShouldAdvanceCycles()
         {
             // Arrange
             _memory.Setup(x => x[0x00]).Returns(0xCF);
@@ -3306,7 +3295,6 @@ namespace Intel8080.Emulator.Tests
             // Assert
             _instructionSet.Verify(x => x.RST_1(_cpu), Times.Once);
 
-            Assert.Equal(1, _cpu.Registers.PC);
             Assert.Equal(11, _cpu.Cycles);
         }
     }

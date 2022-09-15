@@ -16,6 +16,8 @@ namespace Intel8080.Emulator.Tests.Instructions
             _instructionSet = new DefaultInstructionSet();
 
             _cpu = new CPU(_memory, _instructionSet);
+
+            _cpu.Registers.PC = 1;
         }
 
         [Fact]
@@ -36,7 +38,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0050, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x01, _memory[0x0012]);
+            Assert.Equal(0x04, _memory[0x0012]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 
@@ -55,7 +57,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _instructionSet.CNZ(_cpu);
 
             // Assert
-            Assert.Equal(0x0000, _cpu.Registers.PC);
+            Assert.Equal(0x0003, _cpu.Registers.PC);
             Assert.Equal(0x0012, _cpu.Registers.SP);
         }
         
@@ -71,7 +73,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x01, _memory[0x0012]);
+            Assert.Equal(0x02, _memory[0x0012]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
         
@@ -87,7 +89,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0008, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x01, _memory[0x0012]);
+            Assert.Equal(0x02, _memory[0x0012]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 
@@ -109,12 +111,12 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0050, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x01, _memory[0x0012]);
+            Assert.Equal(0x04, _memory[0x0012]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 
         [Fact]
-        public void CNZ_ShouldNotCallIfZeroFlagFalse()
+        public void CZ_ShouldNotCallIfZeroFlagFalse()
         {
             // Arrange
             _memory[0x0001] = 0x50;
@@ -128,7 +130,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _instructionSet.CZ(_cpu);
 
             // Assert
-            Assert.Equal(0x0000, _cpu.Registers.PC);
+            Assert.Equal(0x0003, _cpu.Registers.PC);
             Assert.Equal(0x0012, _cpu.Registers.SP);
         }
 
@@ -148,7 +150,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0050, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x01, _memory[0x0012]);
+            Assert.Equal(0x04, _memory[0x0012]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
     }

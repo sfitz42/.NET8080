@@ -8,10 +8,7 @@ namespace Intel8080.Emulator.Instructions
         // Flags  - None
         public virtual void STA(CPU cpu)
         {
-            var location = GetUshort(
-                cpu.Memory[cpu.Registers.PC + 2],
-                cpu.Memory[cpu.Registers.PC + 1]
-            );
+            var location = cpu.ReadNextUshort();
 
             cpu.Memory[location] = cpu.Registers.A;
         }
@@ -22,10 +19,7 @@ namespace Intel8080.Emulator.Instructions
         // Flags  - C
         public virtual void LDA(CPU cpu)
         {
-            var location = GetUshort(
-                cpu.Memory[cpu.Registers.PC + 2],
-                cpu.Memory[cpu.Registers.PC + 1]
-            );
+            var location = cpu.ReadNextUshort();
 
             cpu.Registers.A = cpu.Memory[location];
         }
@@ -36,10 +30,7 @@ namespace Intel8080.Emulator.Instructions
         // Flags  - None
         public virtual void SHLD(CPU cpu)
         {
-            var location = GetUshort(
-                cpu.Memory[cpu.Registers.PC + 2],
-                cpu.Memory[cpu.Registers.PC + 1]
-            );
+            var location = cpu.ReadNextUshort();
 
             cpu.Memory[location] = cpu.Registers.L;
             cpu.Memory[location + 1] = cpu.Registers.H;
@@ -51,10 +42,7 @@ namespace Intel8080.Emulator.Instructions
         // Flags  - None
         public virtual void LHLD(CPU cpu)
         {
-            var location = GetUshort(
-                cpu.Memory[cpu.Registers.PC + 2],
-                cpu.Memory[cpu.Registers.PC + 1]
-            );
+            var location = cpu.ReadNextUshort();
 
             cpu.Registers.L = cpu.Memory[location];
             cpu.Registers.H = cpu.Memory[location + 1];

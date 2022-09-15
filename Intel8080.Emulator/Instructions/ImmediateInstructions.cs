@@ -4,17 +4,14 @@ namespace Intel8080.Emulator.Instructions
     {
         private void LXI(CPU cpu, ref ushort reg)
         {
-            ushort data = GetUshort(
-                cpu.Memory[cpu.Registers.PC + 2],
-                cpu.Memory[cpu.Registers.PC + 1]
-            );
+            var data = cpu.ReadNextUshort();
 
             reg = data;
         }
 
         private void MVI(CPU cpu, ref byte reg)
         {
-            reg = cpu.Memory[cpu.Registers.PC + 1];
+            reg = cpu.ReadNextByte();
         }
 
         // 0x01   - LXI, B,d16
@@ -113,9 +110,9 @@ namespace Intel8080.Emulator.Instructions
         // Flags  - None
         public virtual void MVI_M(CPU cpu)
         {
-            var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+            var location = cpu.Registers.HL;
 
-            cpu.Memory[location] = cpu.Memory[cpu.Registers.PC + 1];
+            cpu.Memory[location] = cpu.ReadNextByte();
         }
 
         // 0x3E   - MVI A, d8
@@ -129,14 +126,14 @@ namespace Intel8080.Emulator.Instructions
 
         public virtual void ADI(CPU cpu)
         {
-            var data = cpu.Memory[cpu.Registers.PC + 1];
+            var data = cpu.ReadNextByte();
 
             ADD(cpu, ref data);
         }
 
         public virtual void ACI(CPU cpu)
         {
-            var data = cpu.Memory[cpu.Registers.PC + 1];
+            var data = cpu.ReadNextByte();
 
             ADC(cpu, ref data);
         }
