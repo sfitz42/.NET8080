@@ -19,6 +19,22 @@ namespace Intel8080.Emulator.Tests.Instructions
         }
 
         [Fact]
+        public void RET_ShouldReturnFromSubroutine()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0x50);
+            _memory.Setup(x => x[0x0011]).Returns(0x00);
+
+            _cpu.Registers.SP = 0x0010;
+
+            // Act
+            _instructionSet.RET(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
+
+        [Fact]
         public void RNZ_ShouldNotReturnIfZeroFlagSet()
         {
             // Arrange
@@ -91,7 +107,7 @@ namespace Intel8080.Emulator.Tests.Instructions
         }
 
         [Fact]
-        public void RET_ShouldReturnFromSubroutine()
+        public void RNC_ShouldNotReturnIfCarryFlagSet()
         {
             // Arrange
             _memory.Setup(x => x[0x0010]).Returns(0x50);
@@ -99,8 +115,64 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             _cpu.Registers.SP = 0x0010;
 
+            _cpu.Flags.Carry = true;
+
             // Act
-            _instructionSet.RET(_cpu);
+            _instructionSet.RNC(_cpu);
+
+            // Assert
+            Assert.Equal(0x0000, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void RNC_ShouldReturnIfCarryFlagFalse()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0x50);
+            _memory.Setup(x => x[0x0011]).Returns(0x00);
+
+            _cpu.Registers.SP = 0x0010;
+
+            _cpu.Flags.Carry = false;
+
+            // Act
+            _instructionSet.RNC(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void RC_ShouldNotReturnIfCarryFlagFalse()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0x50);
+            _memory.Setup(x => x[0x0011]).Returns(0x00);
+
+            _cpu.Registers.SP = 0x0010;
+
+            _cpu.Flags.Carry = false;
+
+            // Act
+            _instructionSet.RC(_cpu);
+
+            // Assert
+            Assert.Equal(0x0000, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void RC_ShouldReturnIfCarryFlagSet()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0x50);
+            _memory.Setup(x => x[0x0011]).Returns(0x00);
+
+            _cpu.Registers.SP = 0x0010;
+
+            _cpu.Flags.Carry = true;
+
+            // Act
+            _instructionSet.RC(_cpu);
 
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);

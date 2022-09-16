@@ -14,6 +14,14 @@ namespace Intel8080.Emulator.Instructions
             JMP(cpu, location);
         }
 
+        public virtual void JNZ(CPU cpu)
+        {
+            var location = cpu.ReadNextUshort();
+
+            if (!cpu.Flags.Zero)
+                JMP(cpu, location);
+        }
+
         public virtual void JZ(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
@@ -22,11 +30,19 @@ namespace Intel8080.Emulator.Instructions
                 JMP(cpu, location);
         }
 
-        public virtual void JNZ(CPU cpu)
+        public virtual void JNC(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
-            if (!cpu.Flags.Zero)
+            if (!cpu.Flags.Carry)
+                JMP(cpu, location);
+        }
+
+        public virtual void JC(CPU cpu)
+        {
+            var location = cpu.ReadNextUshort();
+
+            if (cpu.Flags.Carry)
                 JMP(cpu, location);
         }
     }

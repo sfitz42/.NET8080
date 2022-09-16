@@ -405,5 +405,33 @@ namespace Intel8080.Emulator.Instructions
         public void ACI(CPU cpu);
 
         public void RST_1(CPU cpu);
+
+        public void RNC(CPU cpu);
+
+        public void POP_D(CPU cpu);
+
+        public void JNC(CPU cpu);
+
+        public void OUT(CPU cpu);
+
+        public void CNC(CPU cpu);
+
+        public void PUSH_D(CPU cpu);
+
+        public void SUI(CPU cpu);
+
+        public void RST_2(CPU cpu);
+
+        public void RC(CPU cpu);
+
+        public void JC(CPU cpu);
+
+        public void IN(CPU cpu);
+
+        public void CC(CPU cpu);
+
+        public void SBI(CPU cpu);
+
+        public void RST_3(CPU cpu);
     }
 }

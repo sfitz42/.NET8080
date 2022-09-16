@@ -16,6 +16,19 @@ namespace Intel8080.Emulator.Instructions
             CALL(cpu, location);
         }
 
+        public virtual void CNZ(CPU cpu)
+        {
+            var location = cpu.ReadNextUshort();
+
+            if (!cpu.Flags.Zero)
+            {
+                CALL(cpu, location);
+
+                cpu.Cycles += 6;
+            }
+        }
+
+
         public virtual void CZ(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
@@ -28,11 +41,24 @@ namespace Intel8080.Emulator.Instructions
             }
         }
 
-        public virtual void CNZ(CPU cpu)
+        public virtual void CNC(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
-            if (!cpu.Flags.Zero)
+            if (!cpu.Flags.Carry)
+            {
+                CALL(cpu, location);
+
+                cpu.Cycles += 6;
+            }
+        }
+
+
+        public virtual void CC(CPU cpu)
+        {
+            var location = cpu.ReadNextUshort();
+
+            if (cpu.Flags.Carry)
             {
                 CALL(cpu, location);
 
@@ -48,6 +74,16 @@ namespace Intel8080.Emulator.Instructions
         public virtual void RST_1(CPU cpu)
         {
             CALL(cpu, 0x08);
+        }
+
+        public virtual void RST_2(CPU cpu)
+        {
+            CALL(cpu, 0x10);
+        }
+
+        public virtual void RST_3(CPU cpu)
+        {
+            CALL(cpu, 0x18);
         }
     }
 }

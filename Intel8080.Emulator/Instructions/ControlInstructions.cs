@@ -19,5 +19,15 @@ namespace Intel8080.Emulator.Instructions
         {
             cpu.Halted = true;
         }
+
+        public virtual void OUT(CPU cpu)
+        {
+            cpu.ReadNextByte();
+        }
+
+        public virtual void IN(CPU cpu)
+        {
+            cpu.ReadNextByte();
+        }
     }
 }

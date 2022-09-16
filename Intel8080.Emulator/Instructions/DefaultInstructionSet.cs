@@ -248,6 +248,24 @@ namespace Intel8080.Emulator.Instructions
             _actions[0xCD] = CALL;
             _actions[0xCE] = ACI;
             _actions[0xCF] = RST_1;
+
+            // 0xDX
+            _actions[0xD0] = RNC;
+            _actions[0xD1] = POP_D;
+            _actions[0xD2] = JNC;
+            _actions[0xD3] = OUT;
+            _actions[0xD4] = CNC;
+            _actions[0xD5] = PUSH_D;
+            _actions[0xD6] = SUI;
+            _actions[0xD7] = RST_2;
+            _actions[0xD8] = RC;
+            _actions[0xD9] = RET;
+            _actions[0xDA] = JC;
+            _actions[0xDB] = IN;
+            _actions[0xDC] = CC;
+            _actions[0xDD] = CALL;
+            _actions[0xDE] = SBI;
+            _actions[0xDF] = RST_3;
         }
 
         private ushort PopStack(CPU cpu)

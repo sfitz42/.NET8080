@@ -17,7 +17,7 @@ namespace Intel8080.Emulator.Tests
 
             _instructionSet.CallBase = true;
 
-            _cpu = new CPU(_memory.Object, _instructionSet.Object);
+            _cpu = new CPU(_memory.Object, 1, _instructionSet.Object);
         }
 
         [Fact]
@@ -2984,8 +2984,6 @@ namespace Intel8080.Emulator.Tests
         public void RNZ_ShouldAdvancePCAndCycles()
         {
             // Arrange
-            _instructionSet.CallBase = true;
-
             _cpu.Flags.Zero = true;
 
             _memory.Setup(x => x[0x00]).Returns(0xC0);
@@ -3004,8 +3002,6 @@ namespace Intel8080.Emulator.Tests
         public void RNZ_ShouldAddCyclesIfZeroFlagReset()
         {
             // Arrange
-            _instructionSet.CallBase = true;
-
             _cpu.Flags.Zero = false;
 
             _memory.Setup(x => x[0x00]).Returns(0xC0);
@@ -3069,8 +3065,6 @@ namespace Intel8080.Emulator.Tests
         public void CNZ_ShouldAdvancePCAndCycles()
         {
             // Arrange
-            _instructionSet.CallBase = true;
-
             _cpu.Flags.Zero = true;
 
             _memory.Setup(x => x[0x00]).Returns(0xC4);
@@ -3089,8 +3083,6 @@ namespace Intel8080.Emulator.Tests
         public void CNZ_ShouldAddCyclesIfZeroFlagReset()
         {
             // Arrange
-            _instructionSet.CallBase = true;
-
             _cpu.Flags.Zero = false;
 
             _memory.Setup(x => x[0x00]).Returns(0xC4);
@@ -3294,6 +3286,289 @@ namespace Intel8080.Emulator.Tests
 
             // Assert
             _instructionSet.Verify(x => x.RST_1(_cpu), Times.Once);
+
+            Assert.Equal(11, _cpu.Cycles);
+        }
+    
+        [Fact]
+        public void RNC_ShouldAdvancePCAndCyclesIfCarrySet()
+        {
+            // Arrange
+            _cpu.Flags.Carry = true;
+
+            _memory.Setup(x => x[0x00]).Returns(0xD0);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.RNC(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void RNC_ShouldAddCyclesIfCarryFlagReset()
+        {
+            // Arrange
+            _cpu.Flags.Carry = false;
+
+            _memory.Setup(x => x[0x00]).Returns(0xD0);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.RNC(_cpu), Times.Once);
+
+            Assert.Equal(11, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void POP_D_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xD1);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.POP_D(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void JNC_ShouldAdvanceCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xD2);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.JNC(_cpu), Times.Once);
+
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void OUT_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xD3);
+
+            _cpu.Ports[0].Out = (byte x) => { return; };
+
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.OUT(_cpu), Times.Once);
+
+            Assert.Equal(2, _cpu.Registers.PC);
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void CNC_ShouldAdvancePCAndCyclesIfCarrySet()
+        {
+            // Arrange
+            _cpu.Flags.Carry = true;
+
+            _memory.Setup(x => x[0x00]).Returns(0xD4);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CNC(_cpu), Times.Once);
+
+            Assert.Equal(3, _cpu.Registers.PC);
+            Assert.Equal(11, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void CNC_ShouldAddCyclesIfZeroFlagReset()
+        {
+            // Arrange
+            _cpu.Flags.Carry = false;
+
+            _memory.Setup(x => x[0x00]).Returns(0xD4);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CNC(_cpu), Times.Once);
+
+            Assert.Equal(17, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void PUSH_D_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xD5);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.PUSH_D(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(11, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void SUI_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xD6);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.SUI(_cpu), Times.Once);
+
+            Assert.Equal(2, _cpu.Registers.PC);
+            Assert.Equal(7, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void RST_2_ShouldAdvanceCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xD7);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.RST_2(_cpu), Times.Once);
+
+            Assert.Equal(11, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void RC_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _cpu.Flags.Carry = false;
+
+            _memory.Setup(x => x[0x00]).Returns(0xD8);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.RC(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void RC_ShouldAddCyclesIfZeroFlagSet()
+        {
+            // Arrange
+            _cpu.Flags.Carry = true;
+
+            _memory.Setup(x => x[0x00]).Returns(0xD8);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.RC(_cpu), Times.Once);
+
+            Assert.Equal(11, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void JC_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xDA);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.JC(_cpu), Times.Once);
+
+            Assert.Equal(3, _cpu.Registers.PC);
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void IN_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xDB);
+
+            _cpu.Ports[0].In = () => 0x10;
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.IN(_cpu), Times.Once);
+
+            Assert.Equal(2, _cpu.Registers.PC);
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void CC_ShouldAddCyclesIfZeroFlagSet()
+        {
+            // Arrange
+            _cpu.Flags.Carry = true;
+
+            _memory.Setup(x => x[0x00]).Returns(0xDC);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CC(_cpu), Times.Once);
+
+            Assert.Equal(17, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void SBI_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xDE);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.SBI(_cpu), Times.Once);
+
+            Assert.Equal(2, _cpu.Registers.PC);
+            Assert.Equal(7, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void RST_3_ShouldAdvanceCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xDF);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.RST_3(_cpu), Times.Once);
 
             Assert.Equal(11, _cpu.Cycles);
         }

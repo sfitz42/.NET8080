@@ -241,6 +241,24 @@ namespace Intel8080.Emulator
             Opcodes[0xCD] = new Opcode("CALL a16",    3, 17, null);
             Opcodes[0xCE] = new Opcode("ACI d8",      2, 7,  null);
             Opcodes[0xCF] = new Opcode("RST 1",       1, 11, null);
+
+            // 0xDX
+            Opcodes[0xD0] = new Opcode("RNC",         1, 5, 11);
+            Opcodes[0xD1] = new Opcode("POP D",       1, 10, null);
+            Opcodes[0xD2] = new Opcode("JNC a16",     3, 10, null);
+            Opcodes[0xD3] = new Opcode("OUT d8",      2, 10, null);
+            Opcodes[0xD4] = new Opcode("CNC a16",     3, 11, 17);
+            Opcodes[0xD5] = new Opcode("PUSH D",      1, 11, null);
+            Opcodes[0xD6] = new Opcode("SUI d8",      2, 7,  null);
+            Opcodes[0xD7] = new Opcode("RST 2",       1, 11, null);
+            Opcodes[0xD8] = new Opcode("RC",          1, 5,  11);
+            Opcodes[0xD9] = new Opcode("*RET",        1, 10, null);
+            Opcodes[0xDA] = new Opcode("JC a16",      3, 10, null);
+            Opcodes[0xDB] = new Opcode("IN d8",       2, 10, null);
+            Opcodes[0xDC] = new Opcode("CC a16",      3, 11, 17);
+            Opcodes[0xDD] = new Opcode("*CALL a16",   3, 17, null);
+            Opcodes[0xDE] = new Opcode("SBI d8",      2, 7,  null);
+            Opcodes[0xDF] = new Opcode("RST 3",       1, 11, null);
         }
     }
 }

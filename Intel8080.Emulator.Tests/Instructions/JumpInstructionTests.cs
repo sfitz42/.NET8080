@@ -21,6 +21,20 @@ namespace Intel8080.Emulator.Tests.Instructions
         }
 
         [Fact]
+        public void JMP_ShouldSetPCToJumpAddr()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0001]).Returns(0x50);
+            _memory.Setup(x => x[0x0002]).Returns(0x00);
+
+            // Act
+            _instructionSet.JMP(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
+
+        [Fact]
         public void JNZ_ShouldNotJumpIfZeroFlagIsSet()
         {
             // Arrange
@@ -53,20 +67,6 @@ namespace Intel8080.Emulator.Tests.Instructions
         }
 
         [Fact]
-        public void JMP_ShouldSetPCToJumpAddr()
-        {
-            // Arrange
-            _memory.Setup(x => x[0x0001]).Returns(0x50);
-            _memory.Setup(x => x[0x0002]).Returns(0x00);
-
-            // Act
-            _instructionSet.JMP(_cpu);
-
-            // Assert
-            Assert.Equal(0x0050, _cpu.Registers.PC);
-        }
-
-        [Fact]
         public void JZ_ShouldNotJumpIfZeroFlagFalse()
         {
             // Arrange
@@ -83,7 +83,7 @@ namespace Intel8080.Emulator.Tests.Instructions
         }
 
         [Fact]
-        public void JNZ_ShouldJumpIfZeroFlagSet()
+        public void JZ_ShouldJumpIfZeroFlagSet()
         {
             // Arrange
             _memory.Setup(x => x[0x0001]).Returns(0x50);
@@ -93,6 +93,70 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             // Act
             _instructionSet.JZ(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void JNC_ShouldNotJumpIfCarryFlagIsSet()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0001]).Returns(0x50);
+            _memory.Setup(x => x[0x0002]).Returns(0x00);
+
+            _cpu.Flags.Carry = true;
+
+            // Act
+            _instructionSet.JNC(_cpu);
+
+            // Assert
+            Assert.Equal(0x0003, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void JNC_ShouldJumpIfCarryFlagIsFalse()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0001]).Returns(0x50);
+            _memory.Setup(x => x[0x0002]).Returns(0x00);
+
+            _cpu.Flags.Zero = false;
+
+            // Act
+            _instructionSet.JNC(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void JC_ShouldNotJumpIfCarryFlagFalse()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0001]).Returns(0x50);
+            _memory.Setup(x => x[0x0002]).Returns(0x00);
+
+            _cpu.Flags.Carry = false;
+
+            // Act
+            _instructionSet.JC(_cpu);
+
+            // Assert
+            Assert.Equal(0x0003, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void JZ_ShouldJumpIfCarryFlagSet()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0001]).Returns(0x50);
+            _memory.Setup(x => x[0x0002]).Returns(0x00);
+
+            _cpu.Flags.Carry = true;
+
+            // Act
+            _instructionSet.JC(_cpu);
 
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);

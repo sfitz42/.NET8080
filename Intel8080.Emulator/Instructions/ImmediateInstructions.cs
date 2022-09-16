@@ -137,5 +137,19 @@ namespace Intel8080.Emulator.Instructions
 
             ADC(cpu, ref data);
         }
+
+        public virtual void SUI(CPU cpu)
+        {
+            var data = cpu.ReadNextByte();
+
+            SUB(cpu, ref data);
+        }
+
+        public virtual void SBI(CPU cpu)
+        {
+            var data = cpu.ReadNextByte();
+
+            SBB(cpu, ref data);
+        }
     }
 }

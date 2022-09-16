@@ -33,16 +33,6 @@ namespace Intel8080.Emulator.Instructions
             reg -= 1;
         }
 
-        public virtual void PUSH_B(CPU cpu)
-        {
-            PUSH(cpu, ref cpu.Registers.BC);
-        }
-
-        public virtual void POP_B(CPU cpu)
-        {
-            POP(cpu, ref cpu.Registers.BC);
-        }
-
         // 0x09   - DAD B
         // Bytes  - 1
         // Cycles - 10
@@ -149,6 +139,26 @@ namespace Intel8080.Emulator.Instructions
         public virtual void DCX_SP(CPU cpu)
         {
             DCX(cpu, ref cpu.Registers.SP);
+        }
+
+        public virtual void POP_B(CPU cpu)
+        {
+            POP(cpu, ref cpu.Registers.BC);
+        }
+
+        public virtual void PUSH_B(CPU cpu)
+        {
+            PUSH(cpu, ref cpu.Registers.BC);
+        }
+
+        public virtual void POP_D(CPU cpu)
+        {
+            POP(cpu, ref cpu.Registers.DE);
+        }
+
+        public virtual void PUSH_D(CPU cpu)
+        {
+            PUSH(cpu, ref cpu.Registers.DE);
         }
     }
 }
