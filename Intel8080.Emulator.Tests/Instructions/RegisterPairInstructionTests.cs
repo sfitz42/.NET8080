@@ -583,6 +583,59 @@ namespace Intel8080.Emulator.Tests.Instructions
         }
 
         [Fact]
+        public void POP_PSW_ShouldPopStackIntoAandFlags()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0xFF);
+            _memory.Setup(x => x[0x0011]).Returns(0x42);
+
+            _cpu.Registers.SP = 0x0010;
+
+            // Act
+            _instructionSet.POP_PSW(_cpu);
+
+            // Assert
+            Assert.Equal(0x42, _cpu.Registers.A);
+            Assert.Equal(0xFF, _cpu.Flags.F);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0012, _cpu.Registers.SP);
+
+            Assert.True(_cpu.Flags.Sign);
+            Assert.True(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.True(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void PUSH_PSW_ShouldPushAccumulatorAndFlagsOntoStack()
+        {
+            // Arrange
+            var memory = new DefaultMemory(0x100);
+            var cpu = new CPU(memory, _instructionSet);
+            
+            cpu.Registers.A = 0x42;
+            cpu.Flags.F = 0xFF;
+
+            cpu.Registers.SP = 0x0012;
+
+            // Act
+            _instructionSet.PUSH_PSW(cpu);
+
+            // Assert
+            Assert.Equal(0x42, cpu.Registers.A);
+            Assert.Equal(0x0000, cpu.Registers.BC);
+            Assert.Equal(0x0000, cpu.Registers.DE);
+            Assert.Equal(0x0000, cpu.Registers.HL);
+            Assert.Equal(0x0010, cpu.Registers.SP);
+
+            Assert.Equal(0xFF, cpu.Memory[0x0012]);
+            Assert.Equal(0x42, cpu.Memory[0x0013]);
+        }
+
+        [Fact]
         public void XCHG_ShouldSwapContentsHLandDE()
         {
             // Arrange           
@@ -626,6 +679,23 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.Equal(0x3C, cpu.Memory[0x0012]);
             Assert.Equal(0x0B, cpu.Memory[0x0013]);
+        }
+
+        [Fact]
+        public void SPHL_ShouldLoadSPWithHLContents()
+        {
+            // Arrange
+            _cpu.Registers.HL = 0x506C;
+
+            // Act
+            _instructionSet.SPHL(_cpu);
+
+            // Assert
+            Assert.Equal(0x00, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x506C, _cpu.Registers.HL);
+            Assert.Equal(0x506C, _cpu.Registers.SP);
         }
     }
 }

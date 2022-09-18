@@ -227,6 +227,70 @@ namespace Intel8080.Emulator.Tests.Instructions
         }
 
         [Fact]
+        public void JP_ShouldNotJumpIfSignFlagSet()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0001]).Returns(0x50);
+            _memory.Setup(x => x[0x0002]).Returns(0x00);
+
+            _cpu.Flags.Sign = true;
+
+            // Act
+            _instructionSet.JP(_cpu);
+
+            // Assert
+            Assert.Equal(0x0003, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void JP_ShouldJumpIfSignFlagReset()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0001]).Returns(0x50);
+            _memory.Setup(x => x[0x0002]).Returns(0x00);
+
+            _cpu.Flags.Sign = false;
+
+            // Act
+            _instructionSet.JP(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void JM_ShouldNotJumpIfSignFlagReset()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0001]).Returns(0x50);
+            _memory.Setup(x => x[0x0002]).Returns(0x00);
+
+            _cpu.Flags.Sign = false;
+
+            // Act
+            _instructionSet.JM(_cpu);
+
+            // Assert
+            Assert.Equal(0x0003, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void JM_ShouldJumpIfSignFlagSet()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0001]).Returns(0x50);
+            _memory.Setup(x => x[0x0002]).Returns(0x00);
+
+            _cpu.Flags.Sign = true;
+
+            // Act
+            _instructionSet.JM(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
+
+        [Fact]
         public void PCHL_ShouldChangePCToHL()
         {
             // Arrange

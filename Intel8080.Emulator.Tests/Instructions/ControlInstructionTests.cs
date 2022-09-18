@@ -76,5 +76,25 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x48, _cpu.Registers.A);
             Assert.Equal(0x48, output);
         }
+
+        [Fact]
+        public void DI_ShouldDisableInterupts()
+        {
+            // Act
+            _instructionSet.DI(_cpu);
+
+            // Assert
+            Assert.False(_cpu.InterruptEnabled);
+        }
+
+        [Fact]
+        public void EI_ShouldEnableInterupts()
+        {
+            // Act
+            _instructionSet.EI(_cpu);
+
+            // Assert
+            Assert.True(_cpu.InterruptEnabled);
+        }
     }
 }

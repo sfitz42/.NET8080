@@ -171,6 +171,24 @@ namespace Intel8080.Emulator.Instructions
             PUSH(cpu, ref cpu.Registers.HL);
         }
 
+        public virtual void POP_PSW(CPU cpu)
+        {
+            var data = PopStack(cpu);
+
+            cpu.Registers.A = (byte) ((data & 0xFF00) >> 8);
+            cpu.Flags.F = (byte) (data & 0xFF);
+        }
+
+        public virtual void PUSH_PSW(CPU cpu)
+        {
+            var data = GetUshort(
+                cpu.Registers.A,
+                cpu.Flags.F
+            );
+
+            PUSH(cpu, ref data);
+        }
+
         public virtual void XCHG(CPU cpu)
         {
             var temp = cpu.Registers.HL;
@@ -187,6 +205,11 @@ namespace Intel8080.Emulator.Instructions
 
             cpu.Memory[cpu.Registers.SP] = (byte) (temp & 0xFF);
             cpu.Memory[cpu.Registers.SP + 1] = (byte) ((temp & 0xFF00) >> 8);
+        }
+
+        public virtual void SPHL(CPU cpu)
+        {
+            cpu.Registers.SP = cpu.Registers.HL;
         }
     }
 }

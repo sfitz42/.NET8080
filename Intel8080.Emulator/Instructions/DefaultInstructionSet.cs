@@ -13,7 +13,7 @@ namespace Intel8080.Emulator.Instructions
 
         public DefaultInstructionSet()
         {
-            _actions = new Action<CPU>[0xFF];
+            _actions = new Action<CPU>[0x100];
 
             // 0x0X
             _actions[0x00] = NOP;
@@ -267,7 +267,7 @@ namespace Intel8080.Emulator.Instructions
             _actions[0xDE] = SBI;
             _actions[0xDF] = RST_3;
 
-            // 0xDX
+            // 0xEX
             _actions[0xE0] = RPO;
             _actions[0xE1] = POP_H;
             _actions[0xE2] = JPO;
@@ -284,6 +284,24 @@ namespace Intel8080.Emulator.Instructions
             _actions[0xED] = CALL;
             _actions[0xEE] = XRI;
             _actions[0xEF] = RST_5;
+
+            // 0xFX
+            _actions[0xF0] = RP;
+            _actions[0xF1] = POP_PSW;
+            _actions[0xF2] = JP;
+            _actions[0xF3] = DI;
+            _actions[0xF4] = CP;
+            _actions[0xF5] = PUSH_PSW;
+            _actions[0xF6] = ORI;
+            _actions[0xF7] = RST_6;
+            _actions[0xF8] = RM;
+            _actions[0xF9] = SPHL;
+            _actions[0xFA] = JM;
+            _actions[0xFB] = EI;
+            _actions[0xFC] = CM;
+            _actions[0xFD] = CALL;
+            _actions[0xFE] = CPI;
+            _actions[0xFF] = RST_7;
         }
 
         private ushort PopStack(CPU cpu)

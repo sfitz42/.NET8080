@@ -217,6 +217,39 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x02, _memory[0x0012]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
+        
+        [Fact]
+        public void RST_6_ShouldCall0x30()
+        {
+            _cpu.Registers.SP = 0x0012;
+
+            // Act
+            _instructionSet.RST_6(_cpu);
+
+            // Assert
+            Assert.Equal(0x0030, _cpu.Registers.PC);
+            Assert.Equal(0x0010, _cpu.Registers.SP);
+
+            Assert.Equal(0x02, _memory[0x0012]);
+            Assert.Equal(0x00, _memory[0x0011]);
+        }
+
+                
+        [Fact]
+        public void RST_7_ShouldCall0x38()
+        {
+            _cpu.Registers.SP = 0x0012;
+
+            // Act
+            _instructionSet.RST_7(_cpu);
+
+            // Assert
+            Assert.Equal(0x0038, _cpu.Registers.PC);
+            Assert.Equal(0x0010, _cpu.Registers.SP);
+
+            Assert.Equal(0x02, _memory[0x0012]);
+            Assert.Equal(0x00, _memory[0x0011]);
+        }
 
         [Fact]
         public void CNC_ShouldCallIfZeroFlagFalse()
@@ -365,6 +398,88 @@ namespace Intel8080.Emulator.Tests.Instructions
 
         [Fact]
         public void CPE_ShouldNotCallIfParityOdd()
+        {
+            // Arrange
+            _memory[0x0001] = 0x50;
+            _memory[0x0002] = 0x00;
+
+            _cpu.Registers.SP = 0x0012;
+
+            _cpu.Flags.Parity = false;
+
+            // Act
+            _instructionSet.CPE(_cpu);
+
+            // Assert
+            Assert.Equal(0x0003, _cpu.Registers.PC);
+            Assert.Equal(0x0012, _cpu.Registers.SP);
+        }
+
+        [Fact]
+        public void CP_ShouldNotCallIfSignFlagReset()
+        {
+            // Arrange
+            _memory[0x0001] = 0x50;
+            _memory[0x0002] = 0x00;
+
+            _cpu.Registers.SP = 0x0012;
+
+            _cpu.Flags.Sign = false;
+
+            // Act
+            _instructionSet.CP(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+            Assert.Equal(0x0010, _cpu.Registers.SP);
+
+            Assert.Equal(0x04, _memory[0x0012]);
+            Assert.Equal(0x00, _memory[0x0011]);
+        }
+
+        [Fact]
+        public void CP_ShouldCallIfSignFlagReset()
+        {
+            // Arrange
+            _memory[0x0001] = 0x50;
+            _memory[0x0002] = 0x00;
+
+            _cpu.Registers.SP = 0x0012;
+
+            _cpu.Flags.Sign = true;
+
+            // Act
+            _instructionSet.CP(_cpu);
+
+            // Assert
+            Assert.Equal(0x0003, _cpu.Registers.PC);
+            Assert.Equal(0x0012, _cpu.Registers.SP);
+        }
+
+        [Fact]
+        public void CM_ShouldNotCallIfSignFlagSet()
+        {
+            // Arrange
+            _memory[0x0001] = 0x50;
+            _memory[0x0002] = 0x00;
+
+            _cpu.Registers.SP = 0x0012;
+
+            _cpu.Flags.Sign = true;
+
+            // Act
+            _instructionSet.CM(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+            Assert.Equal(0x0010, _cpu.Registers.SP);
+
+            Assert.Equal(0x04, _memory[0x0012]);
+            Assert.Equal(0x00, _memory[0x0011]);
+        }
+
+        [Fact]
+        public void CM_ShouldNotCallIfSignFlagReset()
         {
             // Arrange
             _memory[0x0001] = 0x50;

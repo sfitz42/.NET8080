@@ -33,5 +33,15 @@ namespace Intel8080.Emulator.Instructions
 
             cpu.Registers.A = port.In();
         }
+
+        public virtual void DI(CPU cpu)
+        {
+            cpu.InterruptEnabled = false;
+        }
+
+        public virtual void EI(CPU cpu)
+        {
+            cpu.InterruptEnabled = true;
+        }
     }
 }

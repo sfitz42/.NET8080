@@ -62,6 +62,22 @@ namespace Intel8080.Emulator.Instructions
                 JMP(cpu, location);
         }
 
+        public virtual void JP(CPU cpu)
+        {
+            var location = cpu.ReadNextUshort();
+
+            if (!cpu.Flags.Sign)
+                JMP(cpu, location);
+        }
+
+        public virtual void JM(CPU cpu)
+        {
+            var location = cpu.ReadNextUshort();
+
+            if (cpu.Flags.Sign)
+                JMP(cpu, location);
+        }
+
         public virtual void PCHL(CPU cpu)
         {
             cpu.Registers.PC = cpu.Registers.HL;

@@ -19,6 +19,8 @@ namespace Intel8080.Emulator
 
         public bool Halted { get; set; }
 
+        public bool InterruptEnabled { get; set; } = true;
+
         public CPU(IMemory memory, int availablePorts, IInstructionSet instructionSet)
         {
             Memory = memory;

@@ -91,6 +91,31 @@ namespace Intel8080.Emulator.Instructions
             }
         }
 
+        public virtual void CP(CPU cpu)
+        {
+            var location = cpu.ReadNextUshort();
+
+            if (!cpu.Flags.Sign)
+            {
+                CALL(cpu, location);
+
+                cpu.Cycles += 6;
+            }
+        }
+
+
+        public virtual void CM(CPU cpu)
+        {
+            var location = cpu.ReadNextUshort();
+
+            if (cpu.Flags.Sign)
+            {
+                CALL(cpu, location);
+
+                cpu.Cycles += 6;
+            }
+        }
+
         public virtual void RST_0(CPU cpu)
         {
             CALL(cpu, 0x00);
@@ -119,6 +144,16 @@ namespace Intel8080.Emulator.Instructions
         public virtual void RST_5(CPU cpu)
         {
             CALL(cpu, 0x28);
+        }
+
+        public virtual void RST_6(CPU cpu)
+        {
+            CALL(cpu, 0x30);
+        }
+
+        public virtual void RST_7(CPU cpu)
+        {
+            CALL(cpu, 0x38);
         }
     }
 }

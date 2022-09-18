@@ -249,5 +249,77 @@ namespace Intel8080.Emulator.Tests.Instructions
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);
         }
+
+        [Fact]
+        public void RP_ShouldNotReturnIfSignFlagIsSet()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0x50);
+            _memory.Setup(x => x[0x0011]).Returns(0x00);
+
+            _cpu.Registers.SP = 0x0010;
+
+            _cpu.Flags.Sign = true;
+
+            // Act
+            _instructionSet.RP(_cpu);
+
+            // Assert
+            Assert.Equal(0x0000, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void RP_ShouldReturnIfSignFlagReset()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0x50);
+            _memory.Setup(x => x[0x0011]).Returns(0x00);
+
+            _cpu.Registers.SP = 0x0010;
+
+            _cpu.Flags.Sign = false;
+
+            // Act
+            _instructionSet.RP(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void RM_ShouldNotReturnIfSignFlagReset()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0x50);
+            _memory.Setup(x => x[0x0011]).Returns(0x00);
+
+            _cpu.Registers.SP = 0x0010;
+
+            _cpu.Flags.Sign = false;
+
+            // Act
+            _instructionSet.RM(_cpu);
+
+            // Assert
+            Assert.Equal(0x0000, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void RM_ShouldReturnIfSignFlagSet()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0x50);
+            _memory.Setup(x => x[0x0011]).Returns(0x00);
+
+            _cpu.Registers.SP = 0x0010;
+
+            _cpu.Flags.Sign = true;
+
+            // Act
+            _instructionSet.RM(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
     }
 }

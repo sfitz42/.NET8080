@@ -225,7 +225,7 @@ namespace Intel8080.Emulator
             Opcodes[0xBF] = new Opcode("CMP A",       1, 4,  null);
 
             // 0xCX
-            Opcodes[0xC0] = new Opcode("RNZ",         1, 5, 11);
+            Opcodes[0xC0] = new Opcode("RNZ",         1, 5,  11);
             Opcodes[0xC1] = new Opcode("POP B",       1, 10, null);
             Opcodes[0xC2] = new Opcode("JNZ a16",     3, 10, null);
             Opcodes[0xC3] = new Opcode("JMP a16",     3, 10, null);
@@ -243,7 +243,7 @@ namespace Intel8080.Emulator
             Opcodes[0xCF] = new Opcode("RST 1",       1, 11, null);
 
             // 0xDX
-            Opcodes[0xD0] = new Opcode("RNC",         1, 5, 11);
+            Opcodes[0xD0] = new Opcode("RNC",         1, 5,  11);
             Opcodes[0xD1] = new Opcode("POP D",       1, 10, null);
             Opcodes[0xD2] = new Opcode("JNC a16",     3, 10, null);
             Opcodes[0xD3] = new Opcode("OUT d8",      2, 10, null);
@@ -261,7 +261,7 @@ namespace Intel8080.Emulator
             Opcodes[0xDF] = new Opcode("RST 3",       1, 11, null);
 
             // 0xEX
-            Opcodes[0xE0] = new Opcode("RPO",         1, 5, 11);
+            Opcodes[0xE0] = new Opcode("RPO",         1, 5,  11);
             Opcodes[0xE1] = new Opcode("POP H",       1, 10, null);
             Opcodes[0xE2] = new Opcode("JPO a16",     3, 10, null);
             Opcodes[0xE3] = new Opcode("XTHL",        1, 18, null);
@@ -270,13 +270,31 @@ namespace Intel8080.Emulator
             Opcodes[0xE6] = new Opcode("ANI d8",      2, 7,  null);
             Opcodes[0xE7] = new Opcode("RST 4",       1, 11, null);
             Opcodes[0xE8] = new Opcode("RPE",         1, 5,  11);
-            Opcodes[0xE9] = new Opcode("PCHL",        1, 5, null);
+            Opcodes[0xE9] = new Opcode("PCHL",        1, 5,  null);
             Opcodes[0xEA] = new Opcode("JPE a16",     3, 10, null);
-            Opcodes[0xEB] = new Opcode("XCHG",        1, 5, null);
+            Opcodes[0xEB] = new Opcode("XCHG",        1, 5,  null);
             Opcodes[0xEC] = new Opcode("CPE a16",     3, 11, 17);
             Opcodes[0xED] = new Opcode("*CALL a16",   3, 17, null);
             Opcodes[0xEE] = new Opcode("XRI d8",      2, 7,  null);
             Opcodes[0xEF] = new Opcode("RST 5",       1, 11, null);
+
+            // 0xFX
+            Opcodes[0xF0] = new Opcode("RP",          1, 5,  11);
+            Opcodes[0xF1] = new Opcode("POP PSW",     1, 10, null);
+            Opcodes[0xF2] = new Opcode("JP a16",      3, 10, null);
+            Opcodes[0xF3] = new Opcode("DI",          1, 4,  null);
+            Opcodes[0xF4] = new Opcode("CP a16",      3, 11, 17);
+            Opcodes[0xF5] = new Opcode("PUSH PSW",    1, 11, null);
+            Opcodes[0xF6] = new Opcode("ORI d8",      2, 7,  null);
+            Opcodes[0xF7] = new Opcode("RST 6",       1, 11, null);
+            Opcodes[0xF8] = new Opcode("RM",          1, 5,  11);
+            Opcodes[0xF9] = new Opcode("SPHL",        1, 5,  null);
+            Opcodes[0xFA] = new Opcode("JM a16",      3, 10, null);
+            Opcodes[0xFB] = new Opcode("EI",          1, 4,  null);
+            Opcodes[0xFC] = new Opcode("CM a16",      3, 11, 17);
+            Opcodes[0xFD] = new Opcode("*CALL a16",   3, 17, null);
+            Opcodes[0xFE] = new Opcode("CPI d8",      2, 7,  null);
+            Opcodes[0xFF] = new Opcode("RST 7",       1, 11, null);
         }
     }
 }

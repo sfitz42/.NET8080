@@ -66,5 +66,25 @@ namespace Intel8080.Emulator.Instructions
                 cpu.Cycles += 6;
             }
         }
+
+        public virtual void RP(CPU cpu)
+        {
+            if (!cpu.Flags.Sign)
+            {
+                RET(cpu);
+
+                cpu.Cycles += 6;
+            }
+        }
+
+        public virtual void RM(CPU cpu)
+        {
+            if (cpu.Flags.Sign)
+            {
+                RET(cpu);
+
+                cpu.Cycles += 6;
+            }
+        }
     }
 }

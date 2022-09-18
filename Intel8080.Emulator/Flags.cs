@@ -10,7 +10,7 @@ namespace Intel8080.Emulator
         private const byte ParityMask = 0x04;
         private const byte CarryMask = 0x01;
 
-        public byte F { get; private set; } = 0x00;
+        public byte F { get; set; } = 0x00;
         public bool Sign { get => GetFlag(SignMask); set => SetFlag(value, SignMask); }
         public bool Zero { get => GetFlag(ZeroMask); set => SetFlag(value, ZeroMask); }
         public bool AuxiliaryCarry { get => GetFlag(AuxCarryMask); set => SetFlag(value, AuxCarryMask); }

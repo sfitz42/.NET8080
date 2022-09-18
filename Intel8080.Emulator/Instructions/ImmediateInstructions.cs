@@ -165,5 +165,19 @@ namespace Intel8080.Emulator.Instructions
 
             XRA(cpu, ref data);
         }
+
+        public virtual void ORI(CPU cpu)
+        {
+            var data = cpu.ReadNextByte();
+
+            ORA(cpu, ref data);
+        }
+
+        public virtual void CPI(CPU cpu)
+        {
+            var data = cpu.ReadNextByte();
+
+            CMP(cpu, ref data);
+        }
     }
 }

@@ -463,5 +463,35 @@ namespace Intel8080.Emulator.Instructions
         public void XRI(CPU cpu);
 
         public void RST_5(CPU cpu);
+
+        public void RP(CPU cpu);
+
+        public void POP_PSW(CPU cpu);
+
+        public void JP(CPU cpu);
+
+        public void DI(CPU cpu);
+
+        public void CP(CPU cpu);
+
+        public void PUSH_PSW(CPU cpu);
+
+        public void ORI(CPU cpu);
+
+        public void RST_6(CPU cpu);
+
+        public void RM(CPU cpu);
+
+        public void SPHL(CPU cpu);
+
+        public void JM(CPU cpu);
+
+        public void EI(CPU cpu);
+
+        public void CM(CPU cpu);
+
+        public void CPI(CPU cpu);
+
+        public void RST_7(CPU cpu);
     }
 }
