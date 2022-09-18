@@ -22,12 +22,16 @@ namespace Intel8080.Emulator.Instructions
 
         public virtual void OUT(CPU cpu)
         {
-            cpu.ReadNextByte();
+            var port = cpu.Ports[cpu.ReadNextByte()];
+
+            port.Out(cpu.Registers.A);
         }
 
         public virtual void IN(CPU cpu)
         {
-            cpu.ReadNextByte();
+            var port = cpu.Ports[cpu.ReadNextByte()];
+
+            cpu.Registers.A = port.In();
         }
     }
 }

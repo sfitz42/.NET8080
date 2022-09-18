@@ -1,3 +1,4 @@
+using System.Linq;
 using Intel8080.Emulator.Instructions;
 
 namespace Intel8080.Emulator
@@ -10,11 +11,22 @@ namespace Intel8080.Emulator
 
         public IInstructionSet InstructionSet { get; }
 
+        public Port[] Ports { get; } = null!;
+
         public Flags Flags { get; }
 
         public int Cycles { get; set; } = 0;
 
         public bool Halted { get; set; }
+
+        public CPU(IMemory memory, int availablePorts, IInstructionSet instructionSet)
+        {
+            Memory = memory;
+            Ports = Enumerable.Range(0, availablePorts).Select(p => new Port()).ToArray();
+            InstructionSet = instructionSet;
+            Registers = new Registers();
+            Flags = new Flags();
+        }
 
         public CPU(IMemory memory, IInstructionSet instructionSet)
         {

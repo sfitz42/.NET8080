@@ -15,7 +15,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory = new Mock<IMemory>();
             _instructionSet = new DefaultInstructionSet();
 
-            _cpu = new CPU(_memory.Object, _instructionSet);
+            _cpu = new CPU(_memory.Object, 1, _instructionSet);
         }
 
         [Fact]
@@ -40,6 +40,41 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             // Assert
             Assert.True(_cpu.Halted);
+        }
+
+        [Fact]
+        public void IN_ShouldReadByteFromPort()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0000]).Returns(0x00);
+
+            _cpu.Ports[0].In = () => { return 0x48; };
+
+            // Act
+            _instructionSet.IN(_cpu);
+
+            // Assert
+            Assert.Equal(0x48, _cpu.Registers.A);
+        }
+
+        [Fact]
+        public void OUT_ShouldWriteByteToPort()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x48;
+            
+            _memory.Setup(x => x[0x0000]).Returns(0x00);
+
+            int output = 0;
+
+            _cpu.Ports[0].Out = (byte x) => { output = x; };
+
+            // Act
+            _instructionSet.OUT(_cpu);
+
+            // Assert
+            Assert.Equal(0x48, _cpu.Registers.A);
+            Assert.Equal(0x48, output);
         }
     }
 }
