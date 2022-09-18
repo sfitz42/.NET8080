@@ -355,5 +355,53 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.False(_cpu.Flags.Parity);
             Assert.False(_cpu.Flags.Carry);
         }
+
+        [Fact]
+        public void ANI_ShouldBitwiseANDAccumulatorImmediateData()
+        {
+            // Arrange
+            _cpu.Registers.A = 0xFC;
+            _memory[0x0001] = 0x0F;
+
+            // Act
+            _instructionSet.ANI(_cpu);
+
+            // Assert
+            Assert.Equal(0x0C, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
+
+        [Fact]
+        public void XRI_ShouldBitwiseXORAccumulatorImmediateData()
+        {
+            // Arrange
+            _cpu.Registers.A = 0x5C;
+            _memory[0x0001] = 0x78;
+
+            // Act
+            _instructionSet.XRI(_cpu);
+
+            // Assert
+            Assert.Equal(0x24, _cpu.Registers.A);
+            Assert.Equal(0x0000, _cpu.Registers.BC);
+            Assert.Equal(0x0000, _cpu.Registers.DE);
+            Assert.Equal(0x0000, _cpu.Registers.HL);
+            Assert.Equal(0x0000, _cpu.Registers.SP);
+
+            Assert.False(_cpu.Flags.Sign);
+            Assert.False(_cpu.Flags.Zero);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.Parity);
+            Assert.False(_cpu.Flags.Carry);
+        }
     }
 }

@@ -46,5 +46,25 @@ namespace Intel8080.Emulator.Instructions
                 cpu.Cycles += 6;
             }
         }
+
+        public virtual void RPO(CPU cpu)
+        {
+            if (!cpu.Flags.Parity)
+            {
+                RET(cpu);
+
+                cpu.Cycles += 6;
+            }
+        }
+
+        public virtual void RPE(CPU cpu)
+        {
+            if (cpu.Flags.Parity)
+            {
+                RET(cpu);
+
+                cpu.Cycles += 6;
+            }
+        }
     }
 }

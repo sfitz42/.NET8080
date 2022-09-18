@@ -3572,5 +3572,299 @@ namespace Intel8080.Emulator.Tests
 
             Assert.Equal(11, _cpu.Cycles);
         }
+
+        [Fact]
+        public void RPO_ShouldAdvancePCAndCyclesIfParityEven()
+        {
+            // Arrange
+            _cpu.Flags.Parity = true;
+
+            _memory.Setup(x => x[0x00]).Returns(0xE0);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.RPO(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void RPO_ShouldAddCyclesIfParityOdd()
+        {
+            // Arrange
+            _cpu.Flags.Carry = false;
+
+            _memory.Setup(x => x[0x00]).Returns(0xE0);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.RPO(_cpu), Times.Once);
+
+            Assert.Equal(11, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void POP_H_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xE1);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.POP_H(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void JPO_ShouldAdvanceCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xE2);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.JPO(_cpu), Times.Once);
+
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void XTHL_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xE3);
+
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.XTHL(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(18, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void CPO_ShouldAdvancePCAndCyclesIfParityEven()
+        {
+            // Arrange
+            _cpu.Flags.Parity = true;
+
+            _memory.Setup(x => x[0x00]).Returns(0xE4);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CPO(_cpu), Times.Once);
+
+            Assert.Equal(3, _cpu.Registers.PC);
+            Assert.Equal(11, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void CPO_ShouldAddCyclesIfParityOdd()
+        {
+            // Arrange
+            _cpu.Flags.Carry = false;
+
+            _memory.Setup(x => x[0x00]).Returns(0xE4);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CPO(_cpu), Times.Once);
+
+            Assert.Equal(17, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void PUSH_H_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xE5);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.PUSH_H(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(11, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void ANI_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xE6);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.ANI(_cpu), Times.Once);
+
+            Assert.Equal(2, _cpu.Registers.PC);
+            Assert.Equal(7, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void RST_4_ShouldAdvanceCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xE7);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.RST_4(_cpu), Times.Once);
+
+            Assert.Equal(11, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void RPE_ShouldAdvancePCAndCyclesIfParityOdd()
+        {
+            // Arrange
+            _cpu.Flags.Parity = false;
+
+            _memory.Setup(x => x[0x00]).Returns(0xE8);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.RPE(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void RPE_ShouldAddCyclesIfParityEven()
+        {
+            // Arrange
+            _cpu.Flags.Parity = true;
+
+            _memory.Setup(x => x[0x00]).Returns(0xE8);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.RPE(_cpu), Times.Once);
+
+            Assert.Equal(11, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void PCHL_ShouldAdvanceCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xE9);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.PCHL(_cpu), Times.Once);
+
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void JPE_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xEA);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.JPE(_cpu), Times.Once);
+
+            Assert.Equal(3, _cpu.Registers.PC);
+            Assert.Equal(10, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void XCHG_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xEB);
+         
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.XCHG(_cpu), Times.Once);
+
+            Assert.Equal(1, _cpu.Registers.PC);
+            Assert.Equal(5, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void CPE_ShouldAddCyclesIfParityEven()
+        {
+            // Arrange
+            _cpu.Flags.Parity = true;
+
+            _memory.Setup(x => x[0x00]).Returns(0xEC);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.CPE(_cpu), Times.Once);
+
+            Assert.Equal(17, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void XRI_ShouldAdvancePCAndCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xEE);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.XRI(_cpu), Times.Once);
+
+            Assert.Equal(2, _cpu.Registers.PC);
+            Assert.Equal(7, _cpu.Cycles);
+        }
+
+        [Fact]
+        public void RST_5_ShouldAdvanceCycles()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x00]).Returns(0xEF);
+            
+            // Act
+            _cpu.Step();
+
+            // Assert
+            _instructionSet.Verify(x => x.RST_5(_cpu), Times.Once);
+
+            Assert.Equal(11, _cpu.Cycles);
+        }
     }
 }

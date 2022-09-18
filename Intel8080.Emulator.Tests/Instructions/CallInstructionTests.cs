@@ -185,6 +185,38 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x02, _memory[0x0012]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
+        
+        [Fact]
+        public void RST_4_ShouldCall0x20()
+        {
+            _cpu.Registers.SP = 0x0012;
+
+            // Act
+            _instructionSet.RST_4(_cpu);
+
+            // Assert
+            Assert.Equal(0x0020, _cpu.Registers.PC);
+            Assert.Equal(0x0010, _cpu.Registers.SP);
+
+            Assert.Equal(0x02, _memory[0x0012]);
+            Assert.Equal(0x00, _memory[0x0011]);
+        }
+        
+        [Fact]
+        public void RST_5_ShouldCall0x28()
+        {
+            _cpu.Registers.SP = 0x0012;
+
+            // Act
+            _instructionSet.RST_5(_cpu);
+
+            // Assert
+            Assert.Equal(0x0028, _cpu.Registers.PC);
+            Assert.Equal(0x0010, _cpu.Registers.SP);
+
+            Assert.Equal(0x02, _memory[0x0012]);
+            Assert.Equal(0x00, _memory[0x0011]);
+        }
 
         [Fact]
         public void CNC_ShouldCallIfZeroFlagFalse()
@@ -262,6 +294,88 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             // Act
             _instructionSet.CC(_cpu);
+
+            // Assert
+            Assert.Equal(0x0003, _cpu.Registers.PC);
+            Assert.Equal(0x0012, _cpu.Registers.SP);
+        }
+
+        [Fact]
+        public void CPO_ShouldNotCallIfParityEven()
+        {
+            // Arrange
+            _memory[0x0001] = 0x50;
+            _memory[0x0002] = 0x00;
+
+            _cpu.Registers.SP = 0x0012;
+
+            _cpu.Flags.Parity = false;
+
+            // Act
+            _instructionSet.CPO(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+            Assert.Equal(0x0010, _cpu.Registers.SP);
+
+            Assert.Equal(0x04, _memory[0x0012]);
+            Assert.Equal(0x00, _memory[0x0011]);
+        }
+
+        [Fact]
+        public void CPO_ShouldCallIfParityOdd()
+        {
+            // Arrange
+            _memory[0x0001] = 0x50;
+            _memory[0x0002] = 0x00;
+
+            _cpu.Registers.SP = 0x0012;
+
+            _cpu.Flags.Parity = true;
+
+            // Act
+            _instructionSet.CPO(_cpu);
+
+            // Assert
+            Assert.Equal(0x0003, _cpu.Registers.PC);
+            Assert.Equal(0x0012, _cpu.Registers.SP);
+        }
+
+        [Fact]
+        public void CPE_ShouldNotCallIfParityEven()
+        {
+            // Arrange
+            _memory[0x0001] = 0x50;
+            _memory[0x0002] = 0x00;
+
+            _cpu.Registers.SP = 0x0012;
+
+            _cpu.Flags.Parity = true;
+
+            // Act
+            _instructionSet.CPE(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+            Assert.Equal(0x0010, _cpu.Registers.SP);
+
+            Assert.Equal(0x04, _memory[0x0012]);
+            Assert.Equal(0x00, _memory[0x0011]);
+        }
+
+        [Fact]
+        public void CPE_ShouldNotCallIfParityOdd()
+        {
+            // Arrange
+            _memory[0x0001] = 0x50;
+            _memory[0x0002] = 0x00;
+
+            _cpu.Registers.SP = 0x0012;
+
+            _cpu.Flags.Parity = false;
+
+            // Act
+            _instructionSet.CPE(_cpu);
 
             // Assert
             Assert.Equal(0x0003, _cpu.Registers.PC);

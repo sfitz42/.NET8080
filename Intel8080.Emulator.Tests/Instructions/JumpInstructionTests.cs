@@ -121,7 +121,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory.Setup(x => x[0x0001]).Returns(0x50);
             _memory.Setup(x => x[0x0002]).Returns(0x00);
 
-            _cpu.Flags.Zero = false;
+            _cpu.Flags.Carry = false;
 
             // Act
             _instructionSet.JNC(_cpu);
@@ -147,7 +147,7 @@ namespace Intel8080.Emulator.Tests.Instructions
         }
 
         [Fact]
-        public void JZ_ShouldJumpIfCarryFlagSet()
+        public void JC_ShouldJumpIfCarryFlagSet()
         {
             // Arrange
             _memory.Setup(x => x[0x0001]).Returns(0x50);
@@ -160,6 +160,83 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void JPO_ShouldNotJumpIfParityEven()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0001]).Returns(0x50);
+            _memory.Setup(x => x[0x0002]).Returns(0x00);
+
+            _cpu.Flags.Parity = true;
+
+            // Act
+            _instructionSet.JPO(_cpu);
+
+            // Assert
+            Assert.Equal(0x0003, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void JPO_ShouldJumpIfParityOdd()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0001]).Returns(0x50);
+            _memory.Setup(x => x[0x0002]).Returns(0x00);
+
+            _cpu.Flags.Parity = false;
+
+            // Act
+            _instructionSet.JPO(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void JPE_ShouldNotJumpIfParityOdd()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0001]).Returns(0x50);
+            _memory.Setup(x => x[0x0002]).Returns(0x00);
+
+            _cpu.Flags.Parity = false;
+
+            // Act
+            _instructionSet.JPE(_cpu);
+
+            // Assert
+            Assert.Equal(0x0003, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void JPE_ShouldJumpIfParityEven()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0001]).Returns(0x50);
+            _memory.Setup(x => x[0x0002]).Returns(0x00);
+
+            _cpu.Flags.Parity = true;
+
+            // Act
+            _instructionSet.JPE(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void PCHL_ShouldChangePCToHL()
+        {
+            // Arrange
+            _cpu.Registers.HL = 0x413E;
+
+            // Act
+            _instructionSet.PCHL(_cpu);
+
+            // Assert
+            Assert.Equal(0x413E, _cpu.Registers.PC);
         }
     }
 }

@@ -151,5 +151,19 @@ namespace Intel8080.Emulator.Instructions
 
             SBB(cpu, ref data);
         }
+
+        public virtual void ANI(CPU cpu)
+        {
+            var data = cpu.ReadNextByte();
+
+            ANA(cpu, ref data);
+        }
+
+        public virtual void XRI(CPU cpu)
+        {
+            var data = cpu.ReadNextByte();
+
+            XRA(cpu, ref data);
+        }
     }
 }

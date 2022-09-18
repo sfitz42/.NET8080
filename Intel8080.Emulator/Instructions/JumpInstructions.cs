@@ -45,5 +45,26 @@ namespace Intel8080.Emulator.Instructions
             if (cpu.Flags.Carry)
                 JMP(cpu, location);
         }
+
+        public virtual void JPO(CPU cpu)
+        {
+            var location = cpu.ReadNextUshort();
+
+            if (!cpu.Flags.Parity)
+                JMP(cpu, location);
+        }
+
+        public virtual void JPE(CPU cpu)
+        {
+            var location = cpu.ReadNextUshort();
+
+            if (cpu.Flags.Parity)
+                JMP(cpu, location);
+        }
+
+        public virtual void PCHL(CPU cpu)
+        {
+            cpu.Registers.PC = cpu.Registers.HL;
+        }
     }
 }

@@ -177,5 +177,77 @@ namespace Intel8080.Emulator.Tests.Instructions
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);
         }
+
+        [Fact]
+        public void RPO_ShouldNotReturnIfParityEven()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0x50);
+            _memory.Setup(x => x[0x0011]).Returns(0x00);
+
+            _cpu.Registers.SP = 0x0010;
+
+            _cpu.Flags.Parity = true;
+
+            // Act
+            _instructionSet.RPO(_cpu);
+
+            // Assert
+            Assert.Equal(0x0000, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void RPO_ShouldReturnIfParityOdd()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0x50);
+            _memory.Setup(x => x[0x0011]).Returns(0x00);
+
+            _cpu.Registers.SP = 0x0010;
+
+            _cpu.Flags.Parity = false;
+
+            // Act
+            _instructionSet.RPO(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void RPE_ShouldNotReturnIfParityOdd()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0x50);
+            _memory.Setup(x => x[0x0011]).Returns(0x00);
+
+            _cpu.Registers.SP = 0x0010;
+
+            _cpu.Flags.Parity = false;
+
+            // Act
+            _instructionSet.RPE(_cpu);
+
+            // Assert
+            Assert.Equal(0x0000, _cpu.Registers.PC);
+        }
+
+        [Fact]
+        public void RPE_ShouldReturnIfParityEven()
+        {
+            // Arrange
+            _memory.Setup(x => x[0x0010]).Returns(0x50);
+            _memory.Setup(x => x[0x0011]).Returns(0x00);
+
+            _cpu.Registers.SP = 0x0010;
+
+            _cpu.Flags.Parity = true;
+
+            // Act
+            _instructionSet.RPE(_cpu);
+
+            // Assert
+            Assert.Equal(0x0050, _cpu.Registers.PC);
+        }
     }
 }

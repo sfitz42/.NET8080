@@ -160,5 +160,33 @@ namespace Intel8080.Emulator.Instructions
         {
             PUSH(cpu, ref cpu.Registers.DE);
         }
+
+        public virtual void POP_H(CPU cpu)
+        {
+            POP(cpu, ref cpu.Registers.HL);
+        }
+
+        public virtual void PUSH_H(CPU cpu)
+        {
+            PUSH(cpu, ref cpu.Registers.HL);
+        }
+
+        public virtual void XCHG(CPU cpu)
+        {
+            var temp = cpu.Registers.HL;
+            
+            cpu.Registers.HL = cpu.Registers.DE;
+            cpu.Registers.DE = temp;
+        }
+
+        public virtual void XTHL(CPU cpu)
+        {
+            var temp = cpu.Registers.HL;
+
+            cpu.Registers.HL = cpu.ReadUshort(cpu.Registers.SP);
+
+            cpu.Memory[cpu.Registers.SP] = (byte) (temp & 0xFF);
+            cpu.Memory[cpu.Registers.SP + 1] = (byte) ((temp & 0xFF00) >> 8);
+        }
     }
 }
