@@ -318,10 +318,10 @@ namespace Intel8080.Emulator.Instructions
 
         private void PushStack(CPU cpu, ushort data)
         {
+            cpu.Registers.SP -= 2;
+
             cpu.Memory[cpu.Registers.SP + 1] = (byte) ((data & 0xFF00) >> 8);
             cpu.Memory[cpu.Registers.SP] = (byte) (data & 0x00FF);
-
-            cpu.Registers.SP -= 2;
         }
 
         private ushort GetUshort(byte a, byte b)

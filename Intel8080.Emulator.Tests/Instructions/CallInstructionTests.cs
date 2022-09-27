@@ -36,7 +36,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0050, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x04, _memory[0x0012]);
+            Assert.Equal(0x03, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 
@@ -58,7 +58,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0050, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x04, _memory[0x0012]);
+            Assert.Equal(0x03, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 
@@ -99,7 +99,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0050, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x04, _memory[0x0012]);
+            Assert.Equal(0x03, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 
@@ -134,7 +134,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0000, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x02, _memory[0x0012]);
+            Assert.Equal(0x01, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
         
@@ -150,7 +150,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0008, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x02, _memory[0x0012]);
+            Assert.Equal(0x01, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
         
@@ -166,7 +166,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0010, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x02, _memory[0x0012]);
+            Assert.Equal(0x01, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
         
@@ -182,7 +182,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0018, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x02, _memory[0x0012]);
+            Assert.Equal(0x01, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
         
@@ -198,7 +198,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0020, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x02, _memory[0x0012]);
+            Assert.Equal(0x01, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
         
@@ -214,7 +214,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0028, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x02, _memory[0x0012]);
+            Assert.Equal(0x01, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
         
@@ -230,7 +230,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0030, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x02, _memory[0x0012]);
+            Assert.Equal(0x01, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 
@@ -247,7 +247,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0038, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x02, _memory[0x0012]);
+            Assert.Equal(0x01, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 
@@ -269,7 +269,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0050, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x04, _memory[0x0012]);
+            Assert.Equal(0x03, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 
@@ -310,7 +310,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0050, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x04, _memory[0x0012]);
+            Assert.Equal(0x03, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 
@@ -351,7 +351,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0050, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x04, _memory[0x0012]);
+            Assert.Equal(0x03, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 
@@ -392,7 +392,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0050, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x04, _memory[0x0012]);
+            Assert.Equal(0x03, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 
@@ -433,7 +433,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0050, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x04, _memory[0x0012]);
+            Assert.Equal(0x03, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 
@@ -474,7 +474,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             Assert.Equal(0x0050, _cpu.Registers.PC);
             Assert.Equal(0x0010, _cpu.Registers.SP);
 
-            Assert.Equal(0x04, _memory[0x0012]);
+            Assert.Equal(0x03, _memory[0x0010]);
             Assert.Equal(0x00, _memory[0x0011]);
         }
 

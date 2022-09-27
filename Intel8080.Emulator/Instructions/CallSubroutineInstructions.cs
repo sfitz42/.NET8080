@@ -4,7 +4,7 @@ namespace Intel8080.Emulator.Instructions
     {
         private void CALL(CPU cpu, ushort address)
         {
-            PushStack(cpu, (ushort) (cpu.Registers.PC + 1));
+            PushStack(cpu, cpu.Registers.PC);
 
             cpu.Registers.PC = address;
         }
