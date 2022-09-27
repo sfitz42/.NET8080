@@ -38,6 +38,15 @@ namespace Intel8080.Emulator
             Flags = new Flags();
         }
 
+        public CPU(IMemory memory, int availablePorts)
+        {
+            Memory = memory;
+            InstructionSet = new DefaultInstructionSet();
+            Ports = Enumerable.Range(0, availablePorts).Select(p => new Port()).ToArray();
+            Registers = new Registers();
+            Flags = new Flags();
+        }
+
         public CPU(IMemory memory)
         {
             Memory = memory;
@@ -53,7 +62,7 @@ namespace Intel8080.Emulator
                 Step();
             }
         }
-        
+
         public void Step()
         {
             var opcode = ReadNextByte();
@@ -73,7 +82,7 @@ namespace Intel8080.Emulator
             var a = ReadByte(address + 1);
             var b = ReadByte(address);
 
-            return (ushort) ((a << 8) | b);
+            return (ushort)((a << 8) | b);
         }
 
         internal byte ReadNextByte()
@@ -84,7 +93,7 @@ namespace Intel8080.Emulator
         internal ushort ReadNextUshort()
         {
             var res = ReadUshort(Registers.PC);
-            
+
             Registers.PC += 2;
 
             return res;
