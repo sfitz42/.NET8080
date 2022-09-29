@@ -368,7 +368,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
             Assert.False(_cpu.Flags.Parity);
         }
 
@@ -390,7 +390,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
             Assert.True(_cpu.Flags.Parity);
         }
 
@@ -412,7 +412,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
             Assert.False(_cpu.Flags.Parity);
         }
 
@@ -434,7 +434,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
             Assert.True(_cpu.Flags.Parity);
         }
 
@@ -456,7 +456,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
             Assert.False(_cpu.Flags.Parity);
         }
 
@@ -478,7 +478,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
             Assert.True(_cpu.Flags.Parity);
         }
 
@@ -500,7 +500,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
             Assert.False(_cpu.Flags.Parity);
         }
 
@@ -522,7 +522,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
             Assert.True(_cpu.Flags.Parity);
         }
 
@@ -544,7 +544,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
             Assert.False(_cpu.Flags.Parity);
         }
 
@@ -566,7 +566,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
             Assert.True(_cpu.Flags.Parity);
         }
 
@@ -588,7 +588,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
             Assert.False(_cpu.Flags.Parity);
         }
 
@@ -610,7 +610,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
             Assert.True(_cpu.Flags.Parity);
         }
 
@@ -635,7 +635,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
             Assert.False(_cpu.Flags.Parity);
         }
 
@@ -660,7 +660,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
             Assert.True(_cpu.Flags.Parity);
         }
 
@@ -682,7 +682,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.False(_cpu.Flags.AuxiliaryCarry);
+            Assert.True(_cpu.Flags.AuxiliaryCarry);
             Assert.False(_cpu.Flags.Parity);
         }
 
@@ -704,7 +704,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             Assert.True(_cpu.Flags.Sign);
             Assert.False(_cpu.Flags.Zero);
-            Assert.True(_cpu.Flags.AuxiliaryCarry);
+            Assert.False(_cpu.Flags.AuxiliaryCarry);
             Assert.True(_cpu.Flags.Parity);
         }
 

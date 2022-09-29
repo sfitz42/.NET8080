@@ -176,7 +176,10 @@ namespace Intel8080.Emulator.Instructions
             var data = PopStack(cpu);
 
             cpu.Registers.A = (byte) ((data & 0xFF00) >> 8);
-            cpu.Flags.F = (byte) (data & 0xFF);
+
+            var flags = (byte) (data & 0x00FF);
+
+            cpu.Flags.SetFlagsPSW(flags);
         }
 
         public virtual void PUSH_PSW(CPU cpu)

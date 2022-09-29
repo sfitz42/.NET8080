@@ -10,7 +10,7 @@ namespace Intel8080.Emulator
         private const byte ParityMask = 0x04;
         private const byte CarryMask = 0x01;
 
-        public byte F { get; set; } = 0x00;
+        public byte F { get; set; } = 0x02;
         public bool Sign { get => GetFlag(SignMask); set => SetFlag(value, SignMask); }
         public bool Zero { get => GetFlag(ZeroMask); set => SetFlag(value, ZeroMask); }
         public bool AuxiliaryCarry { get => GetFlag(AuxCarryMask); set => SetFlag(value, AuxCarryMask); }
@@ -30,13 +30,6 @@ namespace Intel8080.Emulator
         public void CalcAuxCarryFlag(int a, int b)
         {
             int result = (a & 0xF) + (b & 0xF) & 0x10;
-
-            AuxiliaryCarry = result != 0;
-        }
-
-        public void CalcAuxCarryFlagSub(int a, int b)
-        {
-            int result = (a & 0xF) - (b & 0xF) & 0x10;
 
             AuxiliaryCarry = result != 0;
         }
@@ -65,7 +58,16 @@ namespace Intel8080.Emulator
 
         public void Clear()
         {
-            F = 0x00;
+            F = 0x02;
+        }
+
+        public void SetFlagsPSW(byte flags)
+        {
+            Sign =           (flags & SignMask) != 0;
+            Zero =           (flags & ZeroMask) != 0;
+            AuxiliaryCarry = (flags & AuxCarryMask) != 0;
+            Parity =         (flags & ParityMask) != 0;
+            Carry =          (flags & CarryMask) != 0;
         }
 
         private bool GetFlag(byte mask)

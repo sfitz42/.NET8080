@@ -43,7 +43,7 @@ namespace Intel8080.Emulator.Instructions
 
             ushort result = (ushort) (cpu.Registers.A + val);
 
-            cpu.Registers.A = (byte) (result  & 0xFF);
+            cpu.Registers.A = (byte) (result & 0xFF);
 
             cpu.Flags.CalcSignFlag(cpu.Registers.A);
             cpu.Flags.CalcZeroFlag(cpu.Registers.A);
@@ -84,43 +84,38 @@ namespace Intel8080.Emulator.Instructions
 
         private void XRA(CPU cpu, ref byte reg)
         {
-            cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (reg & 0x08)) != 0;
-
             cpu.Registers.A ^= reg;
 
             cpu.Flags.CalcSignFlag(cpu.Registers.A);
             cpu.Flags.CalcZeroFlag(cpu.Registers.A);
             cpu.Flags.CalcParityFlag(cpu.Registers.A);
             cpu.Flags.Carry = false;
+            cpu.Flags.AuxiliaryCarry = false;
         }
 
         private void ORA(CPU cpu, ref byte reg)
         {
-            cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (reg & 0x08)) != 0;
-
             cpu.Registers.A |= reg;
 
             cpu.Flags.CalcSignFlag(cpu.Registers.A);
             cpu.Flags.CalcZeroFlag(cpu.Registers.A);
             cpu.Flags.CalcParityFlag(cpu.Registers.A);
             cpu.Flags.Carry = false;
+            cpu.Flags.AuxiliaryCarry = false;
         }
 
         private void CMP(CPU cpu, ref byte reg)
         {
-            // Calculate two's complement of register
-            byte val = (byte) (~(reg) + 1);
+            var result = (ushort) (cpu.Registers.A - reg);
 
-            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.A, val);
-
-            var result = (ushort) (cpu.Registers.A + val);
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, ~reg + 1);
+            cpu.Flags.CalcCarryFlag(result);
 
             var resultByte = (byte) (result & 0xFF);
 
             cpu.Flags.CalcSignFlag(resultByte);
             cpu.Flags.CalcZeroFlag(resultByte);
             cpu.Flags.CalcParityFlag(resultByte);
-            cpu.Flags.CalcCarryFlagSub(result);
         }
 
         // 0x80   - ADD B
@@ -185,18 +180,9 @@ namespace Intel8080.Emulator.Instructions
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
-            byte value = cpu.Memory[location];
+            byte val = cpu.Memory[location];
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, value);
-
-            ushort result = (ushort) (cpu.Registers.A + value);
-
-            cpu.Registers.A = (byte) (result  & 0xFF);
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
-            cpu.Flags.CalcCarryFlag(result);
+            ADD(cpu, ref val);
         }
 
         // 0x87   - ADD A
@@ -270,20 +256,9 @@ namespace Intel8080.Emulator.Instructions
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
-            byte value = cpu.Memory[location];
+            byte val = cpu.Memory[location];
 
-            int carry = cpu.Flags.Carry ? 1 : 0;
-
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, value + carry);
-
-            ushort result = (ushort) (cpu.Registers.A + value + carry);
-
-            cpu.Registers.A = (byte) (result  & 0xFF);
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
-            cpu.Flags.CalcCarryFlag(result);
+            ADC(cpu, ref val);
         }
 
         // 0x8F   - ADC A
@@ -357,19 +332,9 @@ namespace Intel8080.Emulator.Instructions
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
-            // Calculate two's complement of register
-            byte val = (byte) (~(cpu.Memory[location]) + 1);
+            var val = cpu.Memory[location];
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, val);
-
-            ushort result = (ushort) (cpu.Registers.A + val);
-
-            cpu.Registers.A = (byte) (result  & 0xFF);
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
-            cpu.Flags.CalcCarryFlagSub(result);
+            SUB(cpu, ref val);
         }
 
         // 0x97   - SUB A
@@ -441,23 +406,11 @@ namespace Intel8080.Emulator.Instructions
         // Flags  - S, Z, A, P, C
         public virtual void SBB_M(CPU cpu)
         {
-            int carry = cpu.Flags.Carry ? 1 : 0;
-
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
-            // Calculate two's complement of register
-            byte val = (byte) (~(cpu.Memory[location] + carry) + 1);
+            var val = cpu.Memory[location];
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, val);
-
-            ushort result = (ushort) (cpu.Registers.A + val);
-
-            cpu.Registers.A = (byte) (result  & 0xFF);
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
-            cpu.Flags.CalcCarryFlagSub(result);
+            SBB(cpu, ref val);
         }
 
         // 0x9D   - SBB A
@@ -532,14 +485,7 @@ namespace Intel8080.Emulator.Instructions
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
             var val = cpu.Memory[location];
 
-            cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (val & 0x08)) != 0;
-
-            cpu.Registers.A &= val;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
-            cpu.Flags.Carry = false;
+            ANA(cpu, ref val);
         }
 
         // 0xA7   - ANA A
@@ -586,14 +532,7 @@ namespace Intel8080.Emulator.Instructions
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
             var val = cpu.Memory[location];
 
-            cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (val & 0x08)) != 0;
-
-            cpu.Registers.A ^= val;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
-            cpu.Flags.Carry = false;
+            XRA(cpu, ref val);
         }
 
         public virtual void XRA_A(CPU cpu)
@@ -636,14 +575,7 @@ namespace Intel8080.Emulator.Instructions
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
             var val = cpu.Memory[location];
 
-            cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (val & 0x08)) != 0;
-
-            cpu.Registers.A |= val;
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
-            cpu.Flags.Carry = false;
+            ORA(cpu, ref val);
         }
 
         public virtual void ORA_A(CPU cpu)
@@ -684,20 +616,9 @@ namespace Intel8080.Emulator.Instructions
         public virtual void CMP_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
+            var val = cpu.Memory[location];
 
-            // Calculate two's complement of register
-            byte val = (byte) (~(cpu.Memory[location]) + 1);
-
-            cpu.Flags.CalcAuxCarryFlagSub(cpu.Registers.A, val);
-
-            var result = (ushort) (cpu.Registers.A + val);
-
-            var resultByte = (byte) (result & 0xFF);
-
-            cpu.Flags.CalcSignFlag(resultByte);
-            cpu.Flags.CalcZeroFlag(resultByte);
-            cpu.Flags.CalcParityFlag(resultByte);
-            cpu.Flags.CalcCarryFlagSub(result);
+            CMP(cpu, ref val);
         }
 
         public virtual void CMP_A(CPU cpu)

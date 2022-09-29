@@ -596,7 +596,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
             // Assert
             Assert.Equal(0x42, _cpu.Registers.A);
-            Assert.Equal(0xFF, _cpu.Flags.F);
+            Assert.Equal(0xD7, _cpu.Flags.F);
             Assert.Equal(0x0000, _cpu.Registers.BC);
             Assert.Equal(0x0000, _cpu.Registers.DE);
             Assert.Equal(0x0000, _cpu.Registers.HL);

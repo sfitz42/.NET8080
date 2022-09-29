@@ -15,7 +15,7 @@ namespace Intel8080.Emulator.Instructions
 
         private void DCR(CPU cpu, ref byte reg)
         {
-            cpu.Flags.CalcAuxCarryFlagSub(reg, 1);
+            cpu.Flags.CalcAuxCarryFlag(reg, -1);
 
             reg -= 1;
 
@@ -167,7 +167,7 @@ namespace Intel8080.Emulator.Instructions
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
-            cpu.Flags.CalcAuxCarryFlagSub(cpu.Memory[location], 1);
+            cpu.Flags.CalcAuxCarryFlag(cpu.Memory[location], -1);
 
             cpu.Memory[location] -= 1;
 
@@ -200,30 +200,27 @@ namespace Intel8080.Emulator.Instructions
         // Flags  - S Z A P C
         public virtual void DAA(CPU cpu)
         {
-            byte low = (byte) (cpu.Registers.A & 0x0F);
+            bool carry = false;
+            byte correction = 0;
+
+            byte low = (byte)(cpu.Registers.A & 0x0F);
+            byte high = (byte)((cpu.Registers.A & 0xF0) >> 4);
 
             if (low > 0x09 | cpu.Flags.AuxiliaryCarry)
             {
-                cpu.Flags.CalcAuxCarryFlag(low, 6);
-
-                cpu.Registers.A += 6;
+                correction += 0x06;
             }
 
-            byte high = (byte)((cpu.Registers.A & 0xF0) >> 4);
-
-            if (high > 0x09 | cpu.Flags.AuxiliaryCarry)
+            if (high > 0x09 || (high >= 0x09 && low > 0x09) || cpu.Flags.Carry)
             {
-                ushort result = (ushort) ((high + 6) << 4);
-
-                cpu.Flags.CalcCarryFlag(result);
-
-                cpu.Registers.A &= 0x0F;
-                cpu.Registers.A |= (byte) (result & 0xF0);
+                // Add 0x06 (0x60 == 0x06 << 4) to Accumulator high bits
+                correction += 0x60;
+                carry = true;
             }
 
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            ADD(cpu, ref correction);
+
+            cpu.Flags.Carry = carry;
         }
     }
 }

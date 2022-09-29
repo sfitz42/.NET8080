@@ -22,7 +22,7 @@ namespace Intel8080.TestRoms
             _cpu.Ports[1].In = () => 0;
             _cpu.Ports[1].Out = Port_1_Out;
 
-            _memory.LoadRom("../../../Roms/TST8080.COM", 0x100);
+            _memory.LoadRom("Roms/TST8080.COM", 0x100);
 
             _cpu.Registers.PC = 0x100;
 
