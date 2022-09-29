@@ -72,6 +72,17 @@ namespace Intel8080.Emulator
             Cycles += OpcodeTable.Opcodes[opcode].Cycles;
         }
 
+        public void Reset()
+        {
+            Registers.BC = 0;
+            Registers.DE = 0;
+            Registers.HL = 0;
+            Registers.PC = 0;
+            Registers.SP = 0;
+
+            Flags.Clear();
+        }
+
         internal byte ReadByte(int address)
         {
             return Memory[address];

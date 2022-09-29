@@ -37,7 +37,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - S, Z, A, P
-        
+
         public virtual void INR_C(CPU cpu)
         {
             INR(cpu, ref cpu.Registers.C);
@@ -191,7 +191,7 @@ namespace Intel8080.Emulator.Instructions
         // Flags  - None
         public virtual void CMA(CPU cpu)
         {
-            cpu.Registers.A = (byte) ~cpu.Registers.A;
+            cpu.Registers.A = (byte)~cpu.Registers.A;
         }
 
         // 0x27   - DAA

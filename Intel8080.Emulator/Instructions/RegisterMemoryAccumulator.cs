@@ -8,66 +8,80 @@ namespace Intel8080.Emulator.Instructions
         {
             cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, reg);
 
-            ushort result = (ushort) (cpu.Registers.A + reg);
+            var result = (ushort)(cpu.Registers.A + reg);
 
-            cpu.Registers.A = (byte) (result  & 0xFF);
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, reg);
             cpu.Flags.CalcCarryFlag(result);
+
+            var resultByte = (byte)(result & 0x00FF);
+
+            cpu.Flags.CalcSignFlag(resultByte);
+            cpu.Flags.CalcZeroFlag(resultByte);
+            cpu.Flags.CalcParityFlag(resultByte);
+
+            cpu.Registers.A = resultByte;
         }
 
         private void ADC(CPU cpu, ref byte reg)
         {
-            int carry = cpu.Flags.Carry ? 1 : 0;
+            var carry = cpu.Flags.Carry ? 1 : 0;
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, reg + carry);
+            var result = (ushort)(cpu.Registers.A + reg + carry);
 
-            ushort result = (ushort) (cpu.Registers.A + reg +carry);
-
-            cpu.Registers.A = (byte) (result  & 0xFF);
-
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, reg, carry);
             cpu.Flags.CalcCarryFlag(result);
+
+            var resultByte = (byte)(result & 0x00FF);
+
+            cpu.Flags.CalcSignFlag(resultByte);
+            cpu.Flags.CalcZeroFlag(resultByte);
+            cpu.Flags.CalcParityFlag(resultByte);
+
+            cpu.Registers.A = resultByte;
         }
 
         private void SUB(CPU cpu, ref byte reg)
         {
-            // Calculate two's complement of register
-            byte val = (byte) (~(reg) + 1);
+            var data = (byte)~reg;
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, val);
+            var borrow = 1;
 
-            ushort result = (ushort) (cpu.Registers.A + val);
+            var result = (ushort)(cpu.Registers.A + data + borrow);
 
-            cpu.Registers.A = (byte) (result & 0xFF);
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, data, borrow);
+            cpu.Flags.CalcCarryFlag(result);
 
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
-            cpu.Flags.CalcCarryFlagSub(result);
+            var resultByte = (byte)(result & 0x00FF);
+
+            cpu.Flags.CalcSignFlag(resultByte);
+            cpu.Flags.CalcZeroFlag(resultByte);
+            cpu.Flags.CalcParityFlag(resultByte);
+
+            cpu.Registers.A = resultByte;
+
+            cpu.Flags.Carry = !cpu.Flags.Carry;
         }
 
         private void SBB(CPU cpu, ref byte reg)
         {
-            int carry = cpu.Flags.Carry ? 1 : 0;
+            var data = (byte)~reg;
 
-            // Calculate two's complement of register
-            byte val = (byte) (~(reg + carry) + 1);
+            var borrow = !cpu.Flags.Carry ? 1 : 0;
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, val);
+            var result = (ushort)(cpu.Registers.A + data + borrow);
 
-            ushort result = (ushort) (cpu.Registers.A + val);
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, data, borrow);
+            cpu.Flags.CalcCarryFlag(result);
 
-            cpu.Registers.A = (byte) (result  & 0xFF);
+            var resultByte = (byte)(result & 0x00FF);
 
-            cpu.Flags.CalcSignFlag(cpu.Registers.A);
-            cpu.Flags.CalcZeroFlag(cpu.Registers.A);
-            cpu.Flags.CalcParityFlag(cpu.Registers.A);
-            cpu.Flags.CalcCarryFlagSub(result);
+            cpu.Flags.CalcSignFlag(resultByte);
+            cpu.Flags.CalcZeroFlag(resultByte);
+            cpu.Flags.CalcParityFlag(resultByte);
+
+            cpu.Registers.A = resultByte;
+
+            cpu.Flags.Carry = !cpu.Flags.Carry;
         }
 
         private void ANA(CPU cpu, ref byte reg)
@@ -106,16 +120,20 @@ namespace Intel8080.Emulator.Instructions
 
         private void CMP(CPU cpu, ref byte reg)
         {
-            var result = (ushort) (cpu.Registers.A - reg);
+            var data = (byte)~reg;
 
-            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, ~reg + 1);
+            var result = (ushort)(cpu.Registers.A + data + 1);
+
+            cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, data, 1);
             cpu.Flags.CalcCarryFlag(result);
 
-            var resultByte = (byte) (result & 0xFF);
+            var resultByte = (byte)(result & 0x00FF);
 
             cpu.Flags.CalcSignFlag(resultByte);
             cpu.Flags.CalcZeroFlag(resultByte);
             cpu.Flags.CalcParityFlag(resultByte);
+
+            cpu.Flags.Carry = !cpu.Flags.Carry;
         }
 
         // 0x80   - ADD B

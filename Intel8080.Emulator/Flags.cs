@@ -27,9 +27,9 @@ namespace Intel8080.Emulator
             Zero = (value == 0);
         }
 
-        public void CalcAuxCarryFlag(int a, int b)
+        public void CalcAuxCarryFlag(int a, int b, int cy = 0)
         {
-            int result = (a & 0xF) + (b & 0xF) & 0x10;
+            int result = (a & 0x0F) + (b & 0x0F) + (cy & 0x0F) & 0x10;
 
             AuxiliaryCarry = result != 0;
         }
