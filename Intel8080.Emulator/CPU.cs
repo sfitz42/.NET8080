@@ -19,7 +19,9 @@ namespace Intel8080.Emulator
 
         public bool Halted { get; set; }
 
-        public bool InterruptEnabled { get; set; } = true;
+        public bool InterruptEnabled { get; set; } = false;
+
+        private byte? _interrupt = null;
 
         public CPU(IMemory memory, int availablePorts, IInstructionSet instructionSet)
         {
@@ -65,7 +67,19 @@ namespace Intel8080.Emulator
 
         public void Step()
         {
-            var opcode = ReadNextByte();
+            byte opcode;
+
+            if (InterruptEnabled && _interrupt != null)
+            {
+                opcode = _interrupt.Value;
+
+                InterruptEnabled = false;
+                _interrupt = null;
+            }
+            else
+            {
+                opcode = ReadNextByte();
+            }
 
             InstructionSet[opcode](this);
 
@@ -81,6 +95,11 @@ namespace Intel8080.Emulator
             Registers.SP = 0;
 
             Flags.Clear();
+        }
+
+        public void RaiseInterrupt(byte opcode)
+        {
+            _interrupt = opcode;
         }
 
         internal byte ReadByte(int address)
