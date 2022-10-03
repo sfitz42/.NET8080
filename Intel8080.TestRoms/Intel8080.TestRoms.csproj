@@ -9,4 +9,19 @@
     <ProjectReference Include="..\Intel8080.Emulator\Intel8080.Emulator.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Roms\8080EXM.COM">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Roms\8080PRE.COM">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Roms\CPUTEST.COM">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Roms\TST8080.COM">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

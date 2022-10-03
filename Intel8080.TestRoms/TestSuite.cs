@@ -12,10 +12,10 @@ namespace Intel8080.TestRoms
 
         private readonly List<string> _testRoms = new List<string>()
         {
-            "../../../Roms/TST8080.COM",
-            "../../../Roms/CPUTEST.COM",
-            "../../../Roms/8080PRE.COM",
-            "../../../Roms/8080EXM.COM"
+            "Roms/TST8080.COM",
+            "Roms/CPUTEST.COM",
+            "Roms/8080PRE.COM",
+            "Roms/8080EXM.COM"
         };
 
         public TestSuite()
