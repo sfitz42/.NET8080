@@ -1,20 +1,20 @@
 namespace Intel8080.Emulator.Instructions
 {
-    public partial class DefaultInstructionSet : IInstructionSet
+    public static partial class DefaultInstructionSet
     {
-        private void JMP(CPU cpu, ushort address)
+        private static void JMP(CPU cpu, ushort address)
         {
             cpu.Registers.PC = address;
         }
 
-        public virtual void JMP(CPU cpu)
+        public static void JMP(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
             JMP(cpu, location);
         }
 
-        public virtual void JNZ(CPU cpu)
+        public static void JNZ(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -22,7 +22,7 @@ namespace Intel8080.Emulator.Instructions
                 JMP(cpu, location);
         }
 
-        public virtual void JZ(CPU cpu)
+        public static void JZ(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -30,7 +30,7 @@ namespace Intel8080.Emulator.Instructions
                 JMP(cpu, location);
         }
 
-        public virtual void JNC(CPU cpu)
+        public static void JNC(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -38,7 +38,7 @@ namespace Intel8080.Emulator.Instructions
                 JMP(cpu, location);
         }
 
-        public virtual void JC(CPU cpu)
+        public static void JC(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -46,7 +46,7 @@ namespace Intel8080.Emulator.Instructions
                 JMP(cpu, location);
         }
 
-        public virtual void JPO(CPU cpu)
+        public static void JPO(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -54,7 +54,7 @@ namespace Intel8080.Emulator.Instructions
                 JMP(cpu, location);
         }
 
-        public virtual void JPE(CPU cpu)
+        public static void JPE(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -62,7 +62,7 @@ namespace Intel8080.Emulator.Instructions
                 JMP(cpu, location);
         }
 
-        public virtual void JP(CPU cpu)
+        public static void JP(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -70,7 +70,7 @@ namespace Intel8080.Emulator.Instructions
                 JMP(cpu, location);
         }
 
-        public virtual void JM(CPU cpu)
+        public static void JM(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -78,7 +78,7 @@ namespace Intel8080.Emulator.Instructions
                 JMP(cpu, location);
         }
 
-        public virtual void PCHL(CPU cpu)
+        public static void PCHL(CPU cpu)
         {
             cpu.Registers.PC = cpu.Registers.HL;
         }

@@ -1,18 +1,18 @@
 namespace Intel8080.Emulator.Instructions
 {
-    public partial class DefaultInstructionSet : IInstructionSet
+    public static partial class DefaultInstructionSet
     {
-        private void MOV(ref byte targetReg, ref byte sourceReg)
+        private static void MOV(ref byte targetReg, ref byte sourceReg)
         {
             targetReg = sourceReg;
         }
 
-        private void STAX(CPU cpu, ushort reg)
+        private static void STAX(CPU cpu, ushort reg)
         {
             cpu.Memory[reg] = cpu.Registers.A;
         }
 
-        private void LDAX(CPU cpu, ushort reg)
+        private static void LDAX(CPU cpu, ushort reg)
         {
             cpu.Registers.A = cpu.Memory[reg];
         }
@@ -21,7 +21,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_B_B(CPU cpu)
+        public static void MOV_B_B(CPU cpu)
         {
             MOV(ref cpu.Registers.B, ref cpu.Registers.B);
         }
@@ -30,7 +30,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_B_C(CPU cpu)
+        public static void MOV_B_C(CPU cpu)
         {
             MOV(ref cpu.Registers.B, ref cpu.Registers.C);
         }
@@ -39,7 +39,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_B_D(CPU cpu)
+        public static void MOV_B_D(CPU cpu)
         {
             MOV(ref cpu.Registers.B, ref cpu.Registers.D);
         }
@@ -48,7 +48,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_B_E(CPU cpu)
+        public static void MOV_B_E(CPU cpu)
         {
             MOV(ref cpu.Registers.B, ref cpu.Registers.E);
         }
@@ -57,7 +57,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_B_H(CPU cpu)
+        public static void MOV_B_H(CPU cpu)
         {
             MOV(ref cpu.Registers.B, ref cpu.Registers.H);
         }
@@ -66,7 +66,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_B_L(CPU cpu)
+        public static void MOV_B_L(CPU cpu)
         {
             MOV(ref cpu.Registers.B, ref cpu.Registers.L);
         }
@@ -75,7 +75,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_B_M(CPU cpu)
+        public static void MOV_B_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -86,7 +86,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_B_A(CPU cpu)
+        public static void MOV_B_A(CPU cpu)
         {
             MOV(ref cpu.Registers.B, ref cpu.Registers.A);
         }
@@ -95,7 +95,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_C_B(CPU cpu)
+        public static void MOV_C_B(CPU cpu)
         {
             MOV(ref cpu.Registers.C, ref cpu.Registers.B);
         }
@@ -104,7 +104,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_C_C(CPU cpu)
+        public static void MOV_C_C(CPU cpu)
         {
             MOV(ref cpu.Registers.C, ref cpu.Registers.C);
         }
@@ -113,7 +113,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_C_D(CPU cpu)
+        public static void MOV_C_D(CPU cpu)
         {
             MOV(ref cpu.Registers.C, ref cpu.Registers.D);
         }
@@ -122,7 +122,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_C_E(CPU cpu)
+        public static void MOV_C_E(CPU cpu)
         {
             MOV(ref cpu.Registers.C, ref cpu.Registers.E);
         }
@@ -131,7 +131,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_C_H(CPU cpu)
+        public static void MOV_C_H(CPU cpu)
         {
             MOV(ref cpu.Registers.C, ref cpu.Registers.H);
         }
@@ -140,7 +140,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_C_L(CPU cpu)
+        public static void MOV_C_L(CPU cpu)
         {
             MOV(ref cpu.Registers.C, ref cpu.Registers.L);
         }
@@ -149,7 +149,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_C_M(CPU cpu)
+        public static void MOV_C_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -160,7 +160,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_C_A(CPU cpu)
+        public static void MOV_C_A(CPU cpu)
         {
             MOV(ref cpu.Registers.C, ref cpu.Registers.A);
         }
@@ -169,7 +169,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_D_B(CPU cpu)
+        public static void MOV_D_B(CPU cpu)
         {
             MOV(ref cpu.Registers.D, ref cpu.Registers.B);
         }
@@ -178,7 +178,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_D_C(CPU cpu)
+        public static void MOV_D_C(CPU cpu)
         {
             MOV(ref cpu.Registers.D, ref cpu.Registers.C);
         }
@@ -187,7 +187,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_D_D(CPU cpu)
+        public static void MOV_D_D(CPU cpu)
         {
             MOV(ref cpu.Registers.D, ref cpu.Registers.D);
         }
@@ -196,7 +196,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_D_E(CPU cpu)
+        public static void MOV_D_E(CPU cpu)
         {
             MOV(ref cpu.Registers.D, ref cpu.Registers.E);
         }
@@ -205,7 +205,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_D_H(CPU cpu)
+        public static void MOV_D_H(CPU cpu)
         {
             MOV(ref cpu.Registers.D, ref cpu.Registers.H);
         }
@@ -214,7 +214,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_D_L(CPU cpu)
+        public static void MOV_D_L(CPU cpu)
         {
             MOV(ref cpu.Registers.D, ref cpu.Registers.L);
         }
@@ -223,7 +223,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_D_M(CPU cpu)
+        public static void MOV_D_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -234,7 +234,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_D_A(CPU cpu)
+        public static void MOV_D_A(CPU cpu)
         {
             MOV(ref cpu.Registers.D, ref cpu.Registers.A);
         }
@@ -243,7 +243,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_E_B(CPU cpu)
+        public static void MOV_E_B(CPU cpu)
         {
             MOV(ref cpu.Registers.E, ref cpu.Registers.B);
         }
@@ -252,7 +252,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_E_C(CPU cpu)
+        public static void MOV_E_C(CPU cpu)
         {
             MOV(ref cpu.Registers.E, ref cpu.Registers.C);
         }
@@ -261,7 +261,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_E_D(CPU cpu)
+        public static void MOV_E_D(CPU cpu)
         {
             MOV(ref cpu.Registers.E, ref cpu.Registers.D);
         }
@@ -270,7 +270,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_E_E(CPU cpu)
+        public static void MOV_E_E(CPU cpu)
         {
             MOV(ref cpu.Registers.E, ref cpu.Registers.E);
         }
@@ -279,7 +279,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_E_H(CPU cpu)
+        public static void MOV_E_H(CPU cpu)
         {
             MOV(ref cpu.Registers.E, ref cpu.Registers.H);
         }
@@ -288,7 +288,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_E_L(CPU cpu)
+        public static void MOV_E_L(CPU cpu)
         {
             MOV(ref cpu.Registers.E, ref cpu.Registers.L);
         }
@@ -297,7 +297,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_E_M(CPU cpu)
+        public static void MOV_E_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -308,7 +308,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_E_A(CPU cpu)
+        public static void MOV_E_A(CPU cpu)
         {
             MOV(ref cpu.Registers.E, ref cpu.Registers.A);
         }
@@ -317,7 +317,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_H_B(CPU cpu)
+        public static void MOV_H_B(CPU cpu)
         {
             MOV(ref cpu.Registers.H, ref cpu.Registers.B);
         }
@@ -326,7 +326,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_H_C(CPU cpu)
+        public static void MOV_H_C(CPU cpu)
         {
             MOV(ref cpu.Registers.H, ref cpu.Registers.C);
         }
@@ -335,7 +335,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_H_D(CPU cpu)
+        public static void MOV_H_D(CPU cpu)
         {
             MOV(ref cpu.Registers.H, ref cpu.Registers.D);
         }
@@ -344,7 +344,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_H_E(CPU cpu)
+        public static void MOV_H_E(CPU cpu)
         {
             MOV(ref cpu.Registers.H, ref cpu.Registers.E);
         }
@@ -353,7 +353,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_H_H(CPU cpu)
+        public static void MOV_H_H(CPU cpu)
         {
             MOV(ref cpu.Registers.H, ref cpu.Registers.H);
         }
@@ -362,7 +362,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_H_L(CPU cpu)
+        public static void MOV_H_L(CPU cpu)
         {
             MOV(ref cpu.Registers.H, ref cpu.Registers.L);
         }
@@ -371,7 +371,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_H_M(CPU cpu)
+        public static void MOV_H_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -382,7 +382,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_H_A(CPU cpu)
+        public static void MOV_H_A(CPU cpu)
         {
             MOV(ref cpu.Registers.H, ref cpu.Registers.A);
         }
@@ -391,7 +391,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_L_B(CPU cpu)
+        public static void MOV_L_B(CPU cpu)
         {
             MOV(ref cpu.Registers.L, ref cpu.Registers.B);
         }
@@ -400,7 +400,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_L_C(CPU cpu)
+        public static void MOV_L_C(CPU cpu)
         {
             MOV(ref cpu.Registers.L, ref cpu.Registers.C);
         }
@@ -409,7 +409,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_L_D(CPU cpu)
+        public static void MOV_L_D(CPU cpu)
         {
             MOV(ref cpu.Registers.L, ref cpu.Registers.D);
         }
@@ -418,7 +418,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_L_E(CPU cpu)
+        public static void MOV_L_E(CPU cpu)
         {
             MOV(ref cpu.Registers.L, ref cpu.Registers.E);
         }
@@ -427,7 +427,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_L_H(CPU cpu)
+        public static void MOV_L_H(CPU cpu)
         {
             MOV(ref cpu.Registers.L, ref cpu.Registers.H);
         }
@@ -436,7 +436,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_L_L(CPU cpu)
+        public static void MOV_L_L(CPU cpu)
         {
             MOV(ref cpu.Registers.L, ref cpu.Registers.L);
         }
@@ -445,7 +445,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_L_M(CPU cpu)
+        public static void MOV_L_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -456,7 +456,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_L_A(CPU cpu)
+        public static void MOV_L_A(CPU cpu)
         {
             MOV(ref cpu.Registers.L, ref cpu.Registers.A);
         }
@@ -465,7 +465,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_M_B(CPU cpu)
+        public static void MOV_M_B(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -476,7 +476,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_M_C(CPU cpu)
+        public static void MOV_M_C(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -487,7 +487,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_M_D(CPU cpu)
+        public static void MOV_M_D(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -498,7 +498,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_M_E(CPU cpu)
+        public static void MOV_M_E(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -509,7 +509,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_M_H(CPU cpu)
+        public static void MOV_M_H(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -520,7 +520,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_M_L(CPU cpu)
+        public static void MOV_M_L(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -531,7 +531,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_M_A(CPU cpu)
+        public static void MOV_M_A(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -542,7 +542,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_A_B(CPU cpu)
+        public static void MOV_A_B(CPU cpu)
         {
             MOV(ref cpu.Registers.A, ref cpu.Registers.B);
         }
@@ -551,7 +551,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_A_C(CPU cpu)
+        public static void MOV_A_C(CPU cpu)
         {
             MOV(ref cpu.Registers.A, ref cpu.Registers.C);
         }
@@ -560,7 +560,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_A_D(CPU cpu)
+        public static void MOV_A_D(CPU cpu)
         {
             MOV(ref cpu.Registers.A, ref cpu.Registers.D);
         }
@@ -569,7 +569,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_A_E(CPU cpu)
+        public static void MOV_A_E(CPU cpu)
         {
             MOV(ref cpu.Registers.A, ref cpu.Registers.E);
         }
@@ -578,7 +578,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_A_H(CPU cpu)
+        public static void MOV_A_H(CPU cpu)
         {
             MOV(ref cpu.Registers.A, ref cpu.Registers.H);
         }
@@ -587,7 +587,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_A_L(CPU cpu)
+        public static void MOV_A_L(CPU cpu)
         {
             MOV(ref cpu.Registers.A, ref cpu.Registers.L);
         }
@@ -596,7 +596,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void MOV_A_M(CPU cpu)
+        public static void MOV_A_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -607,7 +607,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void MOV_A_A(CPU cpu)
+        public static void MOV_A_A(CPU cpu)
         {
             MOV(ref cpu.Registers.A, ref cpu.Registers.A);
         }
@@ -616,7 +616,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void STAX_B(CPU cpu)
+        public static void STAX_B(CPU cpu)
         {
             STAX(cpu, cpu.Registers.BC);
         }
@@ -625,7 +625,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void STAX_D(CPU cpu)
+        public static void STAX_D(CPU cpu)
         {
             STAX(cpu, cpu.Registers.DE);
         }
@@ -634,7 +634,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void LDAX_B(CPU cpu)
+        public static void LDAX_B(CPU cpu)
         {
             LDAX(cpu, cpu.Registers.BC);
         }
@@ -643,7 +643,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - None
-        public virtual void LDAX_D(CPU cpu)
+        public static void LDAX_D(CPU cpu)
         {
             LDAX(cpu, cpu.Registers.DE);
         }

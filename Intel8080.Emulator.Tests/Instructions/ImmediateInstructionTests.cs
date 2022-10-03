@@ -7,14 +7,12 @@ namespace Intel8080.Emulator.Tests.Instructions
     public class ImmediateInstructionTests
     {
         private readonly CPU _cpu;
-        private readonly IInstructionSet _instructionSet;
         private readonly IMemory _memory;
 
         public ImmediateInstructionTests()
         {
             _memory = new DefaultMemory(0x100);
-            _instructionSet = new DefaultInstructionSet();
-            _cpu = new CPU(_memory, _instructionSet);
+            _cpu = new CPU(_memory);
 
             _cpu.Registers.PC = 1;
         }
@@ -27,7 +25,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0002] = 0x01;
 
             // Act
-            _instructionSet.LXI_B(_cpu);
+            DefaultInstructionSet.LXI_B(_cpu);
 
             // Assert
             Assert.Equal(0x0000, _cpu.Registers.A);
@@ -45,7 +43,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0002] = 0x01;
 
             // Act
-            _instructionSet.LXI_D(_cpu);
+            DefaultInstructionSet.LXI_D(_cpu);
 
             // Assert
             Assert.Equal(0x0000, _cpu.Registers.A);
@@ -63,7 +61,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0002] = 0x01;
 
             // Act
-            _instructionSet.LXI_H(_cpu);
+            DefaultInstructionSet.LXI_H(_cpu);
 
             // Assert
             Assert.Equal(0x0000, _cpu.Registers.A);
@@ -81,7 +79,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0002] = 0x01;
 
             // Act
-            _instructionSet.LXI_SP(_cpu);
+            DefaultInstructionSet.LXI_SP(_cpu);
 
             // Assert
             Assert.Equal(0x0000, _cpu.Registers.A);
@@ -98,7 +96,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0001] = 0xFF;
 
             // Act
-            _instructionSet.MVI_B(_cpu);
+            DefaultInstructionSet.MVI_B(_cpu);
 
             // Assert
             Assert.Equal(0x0000, _cpu.Registers.A);
@@ -115,7 +113,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0001] = 0xFF;
 
             // Act
-            _instructionSet.MVI_C(_cpu);
+            DefaultInstructionSet.MVI_C(_cpu);
 
             // Assert
             Assert.Equal(0x0000, _cpu.Registers.A);
@@ -132,7 +130,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0001] = 0xFF;
 
             // Act
-            _instructionSet.MVI_D(_cpu);
+            DefaultInstructionSet.MVI_D(_cpu);
 
             // Assert
             Assert.Equal(0x0000, _cpu.Registers.A);
@@ -149,7 +147,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0001] = 0xFF;
 
             // Act
-            _instructionSet.MVI_E(_cpu);
+            DefaultInstructionSet.MVI_E(_cpu);
 
             // Assert
             Assert.Equal(0x0000, _cpu.Registers.A);
@@ -166,7 +164,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0001] = 0xFF;
 
             // Act
-            _instructionSet.MVI_H(_cpu);
+            DefaultInstructionSet.MVI_H(_cpu);
 
             // Assert
             Assert.Equal(0x0000, _cpu.Registers.A);
@@ -183,7 +181,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0001] = 0xFF;
 
             // Act
-            _instructionSet.MVI_L(_cpu);
+            DefaultInstructionSet.MVI_L(_cpu);
 
             // Assert
             Assert.Equal(0x0000, _cpu.Registers.A);
@@ -201,7 +199,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0001] = 0xFF;
 
             // Act
-            _instructionSet.MVI_M(_cpu);
+            DefaultInstructionSet.MVI_M(_cpu);
 
             // Assert
             Assert.Equal(0x0000, _cpu.Registers.A);
@@ -220,7 +218,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0001] = 0xFF;
 
             // Act
-            _instructionSet.MVI_A(_cpu);
+            DefaultInstructionSet.MVI_A(_cpu);
 
             // Assert
             Assert.Equal(0x00FF, _cpu.Registers.A);
@@ -238,7 +236,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0001] = 0x2E;
 
             // Act
-            _instructionSet.ADI(_cpu);
+            DefaultInstructionSet.ADI(_cpu);
 
             // Assert
             Assert.Equal(0x9A, _cpu.Registers.A);
@@ -264,7 +262,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = true;
 
             // Act
-            _instructionSet.ACI(_cpu);
+            DefaultInstructionSet.ACI(_cpu);
 
             // Assert
             Assert.Equal(0x80, _cpu.Registers.A);
@@ -288,7 +286,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x01] = 0x3E;
 
             // Act
-            _instructionSet.SUI(_cpu);
+            DefaultInstructionSet.SUI(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -314,7 +312,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = false;
 
             // Act
-            _instructionSet.SBI(_cpu);
+            DefaultInstructionSet.SBI(_cpu);
 
             // Assert
             Assert.Equal(0x02, _cpu.Registers.A);
@@ -340,7 +338,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = true;
 
             // Act
-            _instructionSet.SBI(_cpu);
+            DefaultInstructionSet.SBI(_cpu);
 
             // Assert
             Assert.Equal(0x01, _cpu.Registers.A);
@@ -364,7 +362,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0001] = 0x0F;
 
             // Act
-            _instructionSet.ANI(_cpu);
+            DefaultInstructionSet.ANI(_cpu);
 
             // Assert
             Assert.Equal(0x0C, _cpu.Registers.A);
@@ -388,7 +386,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x0001] = 0x78;
 
             // Act
-            _instructionSet.XRI(_cpu);
+            DefaultInstructionSet.XRI(_cpu);
 
             // Assert
             Assert.Equal(0x24, _cpu.Registers.A);
@@ -412,7 +410,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Memory[0x0001] = 0x0F;
 
             // Act
-            _instructionSet.ORI(_cpu);
+            DefaultInstructionSet.ORI(_cpu);
 
             // Assert
             Assert.Equal(0x3F, _cpu.Registers.A);
@@ -436,7 +434,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Memory[0x0001] = 0x05;
 
             // Act
-            _instructionSet.CPI(_cpu);
+            DefaultInstructionSet.CPI(_cpu);
 
             // Assert
             Assert.Equal(0x02, _cpu.Registers.A);

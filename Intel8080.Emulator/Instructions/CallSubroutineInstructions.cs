@@ -1,22 +1,22 @@
 namespace Intel8080.Emulator.Instructions
 {
-    public partial class DefaultInstructionSet : IInstructionSet
+    public static partial class DefaultInstructionSet
     {
-        private void CALL(CPU cpu, ushort address)
+        private static void CALL(CPU cpu, ushort address)
         {
             PushStack(cpu, cpu.Registers.PC);
 
             cpu.Registers.PC = address;
         }
 
-        public virtual void CALL(CPU cpu)
+        public static void CALL(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
             CALL(cpu, location);
         }
 
-        public virtual void CNZ(CPU cpu)
+        public static void CNZ(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -29,7 +29,7 @@ namespace Intel8080.Emulator.Instructions
         }
 
 
-        public virtual void CZ(CPU cpu)
+        public static void CZ(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -41,7 +41,7 @@ namespace Intel8080.Emulator.Instructions
             }
         }
 
-        public virtual void CNC(CPU cpu)
+        public static void CNC(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -54,7 +54,7 @@ namespace Intel8080.Emulator.Instructions
         }
 
 
-        public virtual void CC(CPU cpu)
+        public static void CC(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -66,7 +66,7 @@ namespace Intel8080.Emulator.Instructions
             }
         }
 
-        public virtual void CPO(CPU cpu)
+        public static void CPO(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -79,7 +79,7 @@ namespace Intel8080.Emulator.Instructions
         }
 
 
-        public virtual void CPE(CPU cpu)
+        public static void CPE(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -91,7 +91,7 @@ namespace Intel8080.Emulator.Instructions
             }
         }
 
-        public virtual void CP(CPU cpu)
+        public static void CP(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -104,7 +104,7 @@ namespace Intel8080.Emulator.Instructions
         }
 
 
-        public virtual void CM(CPU cpu)
+        public static void CM(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -116,42 +116,42 @@ namespace Intel8080.Emulator.Instructions
             }
         }
 
-        public virtual void RST_0(CPU cpu)
+        public static void RST_0(CPU cpu)
         {
             CALL(cpu, 0x00);
         }
 
-        public virtual void RST_1(CPU cpu)
+        public static void RST_1(CPU cpu)
         {
             CALL(cpu, 0x08);
         }
 
-        public virtual void RST_2(CPU cpu)
+        public static void RST_2(CPU cpu)
         {
             CALL(cpu, 0x10);
         }
 
-        public virtual void RST_3(CPU cpu)
+        public static void RST_3(CPU cpu)
         {
             CALL(cpu, 0x18);
         }
 
-        public virtual void RST_4(CPU cpu)
+        public static void RST_4(CPU cpu)
         {
             CALL(cpu, 0x20);
         }
 
-        public virtual void RST_5(CPU cpu)
+        public static void RST_5(CPU cpu)
         {
             CALL(cpu, 0x28);
         }
 
-        public virtual void RST_6(CPU cpu)
+        public static void RST_6(CPU cpu)
         {
             CALL(cpu, 0x30);
         }
 
-        public virtual void RST_7(CPU cpu)
+        public static void RST_7(CPU cpu)
         {
             CALL(cpu, 0x38);
         }

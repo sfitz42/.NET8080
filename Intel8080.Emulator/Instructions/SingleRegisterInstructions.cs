@@ -1,8 +1,8 @@
 namespace Intel8080.Emulator.Instructions
 {
-    public partial class DefaultInstructionSet : IInstructionSet
+    public static partial class DefaultInstructionSet
     {
-        private void INR(CPU cpu, ref byte reg)
+        private static void INR(CPU cpu, ref byte reg)
         {
             cpu.Flags.CalcAuxCarryFlag(reg, 1);
 
@@ -13,7 +13,7 @@ namespace Intel8080.Emulator.Instructions
             cpu.Flags.CalcParityFlag(reg);
         }
 
-        private void DCR(CPU cpu, ref byte reg)
+        private static void DCR(CPU cpu, ref byte reg)
         {
             cpu.Flags.CalcAuxCarryFlag(reg, -1);
 
@@ -28,7 +28,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - S, Z, A, P
-        public virtual void INR_B(CPU cpu)
+        public static void INR_B(CPU cpu)
         {
             INR(cpu, ref cpu.Registers.B);
         }
@@ -38,7 +38,7 @@ namespace Intel8080.Emulator.Instructions
         // Cycles - 5
         // Flags  - S, Z, A, P
 
-        public virtual void INR_C(CPU cpu)
+        public static void INR_C(CPU cpu)
         {
             INR(cpu, ref cpu.Registers.C);
         }
@@ -47,7 +47,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - S, Z, A, P
-        public virtual void INR_D(CPU cpu)
+        public static void INR_D(CPU cpu)
         {
             INR(cpu, ref cpu.Registers.D);
         }
@@ -56,7 +56,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void INR_E(CPU cpu)
+        public static void INR_E(CPU cpu)
         {
             INR(cpu, ref cpu.Registers.E);
         }
@@ -65,7 +65,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - S, Z, A, P
-        public virtual void INR_H(CPU cpu)
+        public static void INR_H(CPU cpu)
         {
             INR(cpu, ref cpu.Registers.H);
         }
@@ -74,7 +74,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - S, Z, A, P
-        public virtual void INR_L(CPU cpu)
+        public static void INR_L(CPU cpu)
         {
             INR(cpu, ref cpu.Registers.L);
         }
@@ -83,7 +83,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 10
         // Flags  - S, Z, A, P
-        public virtual void INR_M(CPU cpu)
+        public static void INR_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -100,7 +100,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - S, Z, A, P
-        public virtual void INR_A(CPU cpu)
+        public static void INR_A(CPU cpu)
         {
             INR(cpu, ref cpu.Registers.A);
         }
@@ -109,7 +109,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - S, Z, A, P
-        public virtual void DCR_B(CPU cpu)
+        public static void DCR_B(CPU cpu)
         {
             DCR(cpu, ref cpu.Registers.B);
         }
@@ -118,7 +118,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - S, Z, A, P
-        public virtual void DCR_C(CPU cpu)
+        public static void DCR_C(CPU cpu)
         {
             DCR(cpu, ref cpu.Registers.C);
         }
@@ -127,7 +127,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - S, Z, A, P
-        public virtual void DCR_D(CPU cpu)
+        public static void DCR_D(CPU cpu)
         {
             DCR(cpu, ref cpu.Registers.D);
         }
@@ -136,7 +136,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - None
-        public virtual void DCR_E(CPU cpu)
+        public static void DCR_E(CPU cpu)
         {
             DCR(cpu, ref cpu.Registers.E);
         }
@@ -145,7 +145,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - S, Z, A, P
-        public virtual void DCR_H(CPU cpu)
+        public static void DCR_H(CPU cpu)
         {
             DCR(cpu, ref cpu.Registers.H);
         }
@@ -154,7 +154,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - S, Z, A, P
-        public virtual void DCR_L(CPU cpu)
+        public static void DCR_L(CPU cpu)
         {
             DCR(cpu, ref cpu.Registers.L);
         }
@@ -163,7 +163,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 10
         // Flags  - S, Z, A, P
-        public virtual void DCR_M(CPU cpu)
+        public static void DCR_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -180,7 +180,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 5
         // Flags  - S, Z, A, P
-        public virtual void DCR_A(CPU cpu)
+        public static void DCR_A(CPU cpu)
         {
             DCR(cpu, ref cpu.Registers.A);
         }
@@ -189,7 +189,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - None
-        public virtual void CMA(CPU cpu)
+        public static void CMA(CPU cpu)
         {
             cpu.Registers.A = (byte)~cpu.Registers.A;
         }
@@ -198,7 +198,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S Z A P C
-        public virtual void DAA(CPU cpu)
+        public static void DAA(CPU cpu)
         {
             bool carry = false;
             byte correction = 0;

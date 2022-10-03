@@ -7,14 +7,12 @@ namespace Intel8080.Emulator.Tests.Instructions
     public class SingleRegisterInstructionTests
     {
         private readonly CPU _cpu;
-        private readonly IInstructionSet _instructionSet;
         private readonly IMemory _memory;
 
         public SingleRegisterInstructionTests()
         {
             _memory = new DefaultMemory(0x100);
-            _instructionSet = new DefaultInstructionSet();
-            _cpu = new CPU(_memory, _instructionSet);
+            _cpu = new CPU(_memory);
         }
 
         [Fact]
@@ -24,7 +22,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.B = 0x99;
 
             // Act
-            _instructionSet.INR_B(_cpu);
+            DefaultInstructionSet.INR_B(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -46,7 +44,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.B = 0xFF;
 
             // Act
-            _instructionSet.INR_B(_cpu);
+            DefaultInstructionSet.INR_B(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -68,7 +66,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.C = 0x99;
 
             // Act
-            _instructionSet.INR_C(_cpu);
+            DefaultInstructionSet.INR_C(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -90,7 +88,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.C = 0xFF;
 
             // Act
-            _instructionSet.INR_C(_cpu);
+            DefaultInstructionSet.INR_C(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -112,7 +110,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.D = 0x99;
 
             // Act
-            _instructionSet.INR_D(_cpu);
+            DefaultInstructionSet.INR_D(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -134,7 +132,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.D = 0xFF;
 
             // Act
-            _instructionSet.INR_D(_cpu);
+            DefaultInstructionSet.INR_D(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -156,7 +154,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.E = 0x99;
 
             // Act
-            _instructionSet.INR_E(_cpu);
+            DefaultInstructionSet.INR_E(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -178,7 +176,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.E = 0xFF;
 
             // Act
-            _instructionSet.INR_E(_cpu);
+            DefaultInstructionSet.INR_E(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -200,7 +198,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.H = 0x99;
 
             // Act
-            _instructionSet.INR_H(_cpu);
+            DefaultInstructionSet.INR_H(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -222,7 +220,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.H = 0xFF;
 
             // Act
-            _instructionSet.INR_H(_cpu);
+            DefaultInstructionSet.INR_H(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -244,7 +242,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.L = 0x99;
 
             // Act
-            _instructionSet.INR_L(_cpu);
+            DefaultInstructionSet.INR_L(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -266,7 +264,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.L = 0xFF;
 
             // Act
-            _instructionSet.INR_L(_cpu);
+            DefaultInstructionSet.INR_L(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -289,7 +287,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Memory[0x99] = 0x40;
 
             // Act
-            _instructionSet.INR_M(_cpu);
+            DefaultInstructionSet.INR_M(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -313,7 +311,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.A = 0x99;
 
             // Act
-            _instructionSet.INR_A(_cpu);
+            DefaultInstructionSet.INR_A(_cpu);
 
             // Assert
             Assert.Equal(0x9A, _cpu.Registers.A);
@@ -335,7 +333,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.A = 0xFF;
 
             // Act
-            _instructionSet.INR_A(_cpu);
+            DefaultInstructionSet.INR_A(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -357,7 +355,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.B = 0xFF;
 
             // Act
-            _instructionSet.DCR_B(_cpu);
+            DefaultInstructionSet.DCR_B(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -379,7 +377,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.B = 0x00;
 
             // Act
-            _instructionSet.DCR_B(_cpu);
+            DefaultInstructionSet.DCR_B(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -401,7 +399,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.C = 0xFF;
 
             // Act
-            _instructionSet.DCR_C(_cpu);
+            DefaultInstructionSet.DCR_C(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -423,7 +421,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.C = 0x00;
 
             // Act
-            _instructionSet.DCR_C(_cpu);
+            DefaultInstructionSet.DCR_C(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -445,7 +443,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.D = 0xFF;
 
             // Act
-            _instructionSet.DCR_D(_cpu);
+            DefaultInstructionSet.DCR_D(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -467,7 +465,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.D = 0x00;
 
             // Act
-            _instructionSet.DCR_D(_cpu);
+            DefaultInstructionSet.DCR_D(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -489,7 +487,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.E = 0xFF;
 
             // Act
-            _instructionSet.DCR_E(_cpu);
+            DefaultInstructionSet.DCR_E(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -511,7 +509,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.E = 0x00;
 
             // Act
-            _instructionSet.DCR_E(_cpu);
+            DefaultInstructionSet.DCR_E(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -533,7 +531,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.H = 0xFF;
 
             // Act
-            _instructionSet.DCR_H(_cpu);
+            DefaultInstructionSet.DCR_H(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -555,7 +553,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.H = 0x00;
 
             // Act
-            _instructionSet.DCR_H(_cpu);
+            DefaultInstructionSet.DCR_H(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -577,7 +575,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.L = 0xFF;
 
             // Act
-            _instructionSet.DCR_L(_cpu);
+            DefaultInstructionSet.DCR_L(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -599,7 +597,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.L = 0x00;
 
             // Act
-            _instructionSet.DCR_L(_cpu);
+            DefaultInstructionSet.DCR_L(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -622,7 +620,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Memory[0x99] = 0xFF;
 
             // Act
-            _instructionSet.DCR_M(_cpu);
+            DefaultInstructionSet.DCR_M(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -647,7 +645,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Memory[0x99] = 0x00;
 
             // Act
-            _instructionSet.DCR_M(_cpu);
+            DefaultInstructionSet.DCR_M(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -671,7 +669,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.A = 0xFF;
 
             // Act
-            _instructionSet.DCR_A(_cpu);
+            DefaultInstructionSet.DCR_A(_cpu);
 
             // Assert
             Assert.Equal(0xFE, _cpu.Registers.A);
@@ -693,7 +691,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.A = 0x00;
 
             // Act
-            _instructionSet.DCR_A(_cpu);
+            DefaultInstructionSet.DCR_A(_cpu);
 
             // Assert
             Assert.Equal(0xFF, _cpu.Registers.A);
@@ -715,7 +713,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.A = 0x9B;
 
             // Act
-            _instructionSet.DAA(_cpu);
+            DefaultInstructionSet.DAA(_cpu);
 
             // Assert
             Assert.Equal(0x01, _cpu.Registers.A);
@@ -738,7 +736,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.A = 0x51;
 
             // Act
-            _instructionSet.CMA(_cpu);
+            DefaultInstructionSet.CMA(_cpu);
 
             // Assert
             Assert.Equal(0xAE, _cpu.Registers.A);

@@ -8,21 +8,19 @@ namespace Intel8080.Emulator.Tests.Instructions
     {
         private readonly CPU _cpu;
         private readonly Mock<IMemory> _memory;
-        private readonly IInstructionSet _instructionSet;
 
         public CarryBitInstructionTests()
         {
             _memory = new Mock<IMemory>();
 
-            _instructionSet = new DefaultInstructionSet();
-            _cpu = new CPU(_memory.Object, _instructionSet);
+            _cpu = new CPU(_memory.Object);
         }
 
         [Fact]
         public void NOP_ShouldAffectOnlyPCAndCycles()
         {
             // Act
-            _instructionSet.NOP(_cpu);
+            DefaultInstructionSet.NOP(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -39,7 +37,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = false;
 
             // Act
-            _instructionSet.STC(_cpu);
+            DefaultInstructionSet.STC(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -58,7 +56,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = false;
 
             // Act
-            _instructionSet.CMC(_cpu);
+            DefaultInstructionSet.CMC(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -77,7 +75,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = true;
 
             // Act
-            _instructionSet.CMC(_cpu);
+            DefaultInstructionSet.CMC(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);

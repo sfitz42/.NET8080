@@ -1,15 +1,15 @@
 namespace Intel8080.Emulator.Instructions
 {
-    public partial class DefaultInstructionSet : IInstructionSet
+    public static partial class DefaultInstructionSet
     {
-        private void LXI(CPU cpu, ref ushort reg)
+        private static void LXI(CPU cpu, ref ushort reg)
         {
             var data = cpu.ReadNextUshort();
 
             reg = data;
         }
 
-        private void MVI(CPU cpu, ref byte reg)
+        private static void MVI(CPU cpu, ref byte reg)
         {
             reg = cpu.ReadNextByte();
         }
@@ -18,7 +18,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 3
         // Cycles - 10
         // Flags  - None
-        public virtual void LXI_B(CPU cpu)
+        public static void LXI_B(CPU cpu)
         {
             LXI(cpu, ref cpu.Registers.BC);
         }
@@ -27,7 +27,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 3
         // Cycles - 10
         // Flags  - None
-        public virtual void LXI_D(CPU cpu)
+        public static void LXI_D(CPU cpu)
         {
             LXI(cpu, ref cpu.Registers.DE);
         }
@@ -36,7 +36,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - None
-        public virtual void LXI_H(CPU cpu)
+        public static void LXI_H(CPU cpu)
         {
             LXI(cpu, ref cpu.Registers.HL);
         }
@@ -45,7 +45,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 3
         // Cycles - 10
         // Flags  - None
-        public virtual void LXI_SP(CPU cpu)
+        public static void LXI_SP(CPU cpu)
         {
             LXI(cpu, ref cpu.Registers.SP);
         }
@@ -54,7 +54,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 2
         // Cycles - 7
         // Flags  - None
-        public virtual void MVI_B(CPU cpu)
+        public static void MVI_B(CPU cpu)
         {
             MVI(cpu, ref cpu.Registers.B);
         }
@@ -63,7 +63,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 2
         // Cycles - 7
         // Flags  - None
-        public virtual void MVI_C(CPU cpu)
+        public static void MVI_C(CPU cpu)
         {
             MVI(cpu, ref cpu.Registers.C);
         }
@@ -72,7 +72,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 2
         // Cycles - 7
         // Flags  - None
-        public virtual void MVI_D(CPU cpu)
+        public static void MVI_D(CPU cpu)
         {
             MVI(cpu, ref cpu.Registers.D);
         }
@@ -81,7 +81,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 2
         // Cycles - 7
         // Flags  - None
-        public virtual void MVI_E(CPU cpu)
+        public static void MVI_E(CPU cpu)
         {
             MVI(cpu, ref cpu.Registers.E);
         }
@@ -90,7 +90,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 2
         // Cycles - 7
         // Flags  - None
-        public virtual void MVI_H(CPU cpu)
+        public static void MVI_H(CPU cpu)
         {
             MVI(cpu, ref cpu.Registers.H);
         }
@@ -99,7 +99,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 2
         // Cycles - 7
         // Flags  - None
-        public virtual void MVI_L(CPU cpu)
+        public static void MVI_L(CPU cpu)
         {
             MVI(cpu, ref cpu.Registers.L);
         }
@@ -108,7 +108,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 2
         // Cycles - 10
         // Flags  - None
-        public virtual void MVI_M(CPU cpu)
+        public static void MVI_M(CPU cpu)
         {
             var location = cpu.Registers.HL;
 
@@ -119,61 +119,61 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 2
         // Cycles - 7
         // Flags  - None
-        public virtual void MVI_A(CPU cpu)
+        public static void MVI_A(CPU cpu)
         {
             MVI(cpu, ref cpu.Registers.A);
         }
 
-        public virtual void ADI(CPU cpu)
+        public static void ADI(CPU cpu)
         {
             var data = cpu.ReadNextByte();
 
             ADD(cpu, ref data);
         }
 
-        public virtual void ACI(CPU cpu)
+        public static void ACI(CPU cpu)
         {
             var data = cpu.ReadNextByte();
 
             ADC(cpu, ref data);
         }
 
-        public virtual void SUI(CPU cpu)
+        public static void SUI(CPU cpu)
         {
             var data = cpu.ReadNextByte();
 
             SUB(cpu, ref data);
         }
 
-        public virtual void SBI(CPU cpu)
+        public static void SBI(CPU cpu)
         {
             var data = cpu.ReadNextByte();
 
             SBB(cpu, ref data);
         }
 
-        public virtual void ANI(CPU cpu)
+        public static void ANI(CPU cpu)
         {
             var data = cpu.ReadNextByte();
 
             ANA(cpu, ref data);
         }
 
-        public virtual void XRI(CPU cpu)
+        public static void XRI(CPU cpu)
         {
             var data = cpu.ReadNextByte();
 
             XRA(cpu, ref data);
         }
 
-        public virtual void ORI(CPU cpu)
+        public static void ORI(CPU cpu)
         {
             var data = cpu.ReadNextByte();
 
             ORA(cpu, ref data);
         }
 
-        public virtual void CPI(CPU cpu)
+        public static void CPI(CPU cpu)
         {
             var data = cpu.ReadNextByte();
 

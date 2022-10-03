@@ -1,12 +1,12 @@
 namespace Intel8080.Emulator.Instructions
 {
-    public partial class DefaultInstructionSet : IInstructionSet
+    public static partial class DefaultInstructionSet
     {
         // 0x32   - STA a16
         // Bytes  - 3
         // Cycles - 13
         // Flags  - None
-        public virtual void STA(CPU cpu)
+        public static void STA(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -17,7 +17,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 3
         // Cycles - 13
         // Flags  - C
-        public virtual void LDA(CPU cpu)
+        public static void LDA(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -28,7 +28,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 3
         // Cycles - 16
         // Flags  - None
-        public virtual void SHLD(CPU cpu)
+        public static void SHLD(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 
@@ -40,7 +40,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 3
         // Cycles - 16
         // Flags  - None
-        public virtual void LHLD(CPU cpu)
+        public static void LHLD(CPU cpu)
         {
             var location = cpu.ReadNextUshort();
 

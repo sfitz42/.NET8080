@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Intel8080.Emulator.Instructions;
 
@@ -9,41 +10,23 @@ namespace Intel8080.Emulator
 
         public Registers Registers { get; }
 
-        public IInstructionSet InstructionSet { get; }
-
         public Port[] Ports { get; } = null!;
 
         public Flags Flags { get; }
 
-        public int Cycles { get; set; } = 0;
+        public long Cycles { get; set; } = 0;
 
         public bool Halted { get; set; }
 
         public bool InterruptEnabled { get; set; } = false;
 
+        private readonly Action<CPU>[] _instructionSet = DefaultInstructionSet.Actions;
+
         private byte? _interrupt = null;
-
-        public CPU(IMemory memory, int availablePorts, IInstructionSet instructionSet)
-        {
-            Memory = memory;
-            Ports = Enumerable.Range(0, availablePorts).Select(p => new Port()).ToArray();
-            InstructionSet = instructionSet;
-            Registers = new Registers();
-            Flags = new Flags();
-        }
-
-        public CPU(IMemory memory, IInstructionSet instructionSet)
-        {
-            Memory = memory;
-            InstructionSet = instructionSet;
-            Registers = new Registers();
-            Flags = new Flags();
-        }
 
         public CPU(IMemory memory, int availablePorts)
         {
             Memory = memory;
-            InstructionSet = new DefaultInstructionSet();
             Ports = Enumerable.Range(0, availablePorts).Select(p => new Port()).ToArray();
             Registers = new Registers();
             Flags = new Flags();
@@ -52,7 +35,6 @@ namespace Intel8080.Emulator
         public CPU(IMemory memory)
         {
             Memory = memory;
-            InstructionSet = new DefaultInstructionSet();
             Registers = new Registers();
             Flags = new Flags();
         }
@@ -81,7 +63,7 @@ namespace Intel8080.Emulator
                 opcode = ReadNextByte();
             }
 
-            InstructionSet[opcode](this);
+            _instructionSet[opcode](this);
 
             Cycles += OpcodeTable.Opcodes[opcode].Cycles;
         }

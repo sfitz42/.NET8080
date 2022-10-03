@@ -1,12 +1,12 @@
 namespace Intel8080.Emulator.Instructions
 {
-    public partial class DefaultInstructionSet : IInstructionSet
+    public static partial class DefaultInstructionSet
     {
         // 0x37   - STC
         // Bytes  - 1
         // Cycles - 4
         // Flags  - C
-        public virtual void STC(CPU cpu)
+        public static void STC(CPU cpu)
         {
             cpu.Flags.Carry = true;
         }
@@ -15,7 +15,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - C
-        public virtual void CMC(CPU cpu)
+        public static void CMC(CPU cpu)
         {
             cpu.Flags.Carry = !cpu.Flags.Carry;
         }

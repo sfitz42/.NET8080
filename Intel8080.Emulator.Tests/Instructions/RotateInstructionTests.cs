@@ -7,14 +7,12 @@ namespace Intel8080.Emulator.Tests.Instructions
     public class RotateInstructionTests
     {
         private readonly CPU _cpu;
-        private readonly IInstructionSet _instructionSet;
         private readonly Mock<IMemory> _memory;
 
         public RotateInstructionTests()
         {
             _memory = new Mock<IMemory>();
-            _instructionSet = new DefaultInstructionSet();
-            _cpu = new CPU(_memory.Object, _instructionSet);
+            _cpu = new CPU(_memory.Object);
         }
 
         [Fact]
@@ -24,7 +22,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.A = 0xF2;
 
             // Act
-            _instructionSet.RLC(_cpu);
+            DefaultInstructionSet.RLC(_cpu);
 
             // Assert
             Assert.Equal(0xE5, _cpu.Registers.A);
@@ -43,7 +41,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.A = 0xF2;
 
             // Act
-            _instructionSet.RRC(_cpu);
+            DefaultInstructionSet.RRC(_cpu);
 
             // Assert
             Assert.Equal(0x79, _cpu.Registers.A);
@@ -62,7 +60,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.A = 0xB5;
 
             // Act
-            _instructionSet.RAL(_cpu);
+            DefaultInstructionSet.RAL(_cpu);
 
             // Assert
             Assert.Equal(0x6A, _cpu.Registers.A);
@@ -83,7 +81,7 @@ namespace Intel8080.Emulator.Tests.Instructions
 
 
             // Act
-            _instructionSet.RAL(_cpu);
+            DefaultInstructionSet.RAL(_cpu);
 
             // Assert
             Assert.Equal(0x6B, _cpu.Registers.A);
@@ -102,7 +100,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.A = 0x6A;
 
             // Act
-            _instructionSet.RAR(_cpu);
+            DefaultInstructionSet.RAR(_cpu);
 
             // Assert
             Assert.Equal(0x35, _cpu.Registers.A);
@@ -122,7 +120,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = true;
 
             // Act
-            _instructionSet.RAR(_cpu);
+            DefaultInstructionSet.RAR(_cpu);
 
             // Assert
             Assert.Equal(0xB5, _cpu.Registers.A);

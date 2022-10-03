@@ -7,15 +7,13 @@ namespace Intel8080.Emulator.Tests.Instructions
     public class JumpInstructionTests
     {
         private readonly CPU _cpu;
-        private readonly IInstructionSet _instructionSet;
         private readonly Mock<IMemory> _memory;
 
         public JumpInstructionTests()
         {
             _memory = new Mock<IMemory>();
-            _instructionSet = new DefaultInstructionSet();
 
-            _cpu = new CPU(_memory.Object, _instructionSet);
+            _cpu = new CPU(_memory.Object);
 
             _cpu.Registers.PC = 1;
         }
@@ -28,7 +26,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory.Setup(x => x[0x0002]).Returns(0x00);
 
             // Act
-            _instructionSet.JMP(_cpu);
+            DefaultInstructionSet.JMP(_cpu);
 
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);
@@ -44,7 +42,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Zero = true;
 
             // Act
-            _instructionSet.JNZ(_cpu);
+            DefaultInstructionSet.JNZ(_cpu);
 
             // Assert
             Assert.Equal(0x0003, _cpu.Registers.PC);
@@ -60,7 +58,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Zero = false;
 
             // Act
-            _instructionSet.JNZ(_cpu);
+            DefaultInstructionSet.JNZ(_cpu);
 
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);
@@ -76,7 +74,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Zero = false;
 
             // Act
-            _instructionSet.JZ(_cpu);
+            DefaultInstructionSet.JZ(_cpu);
 
             // Assert
             Assert.Equal(0x0003, _cpu.Registers.PC);
@@ -92,7 +90,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Zero = true;
 
             // Act
-            _instructionSet.JZ(_cpu);
+            DefaultInstructionSet.JZ(_cpu);
 
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);
@@ -108,7 +106,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = true;
 
             // Act
-            _instructionSet.JNC(_cpu);
+            DefaultInstructionSet.JNC(_cpu);
 
             // Assert
             Assert.Equal(0x0003, _cpu.Registers.PC);
@@ -124,7 +122,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = false;
 
             // Act
-            _instructionSet.JNC(_cpu);
+            DefaultInstructionSet.JNC(_cpu);
 
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);
@@ -140,7 +138,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = false;
 
             // Act
-            _instructionSet.JC(_cpu);
+            DefaultInstructionSet.JC(_cpu);
 
             // Assert
             Assert.Equal(0x0003, _cpu.Registers.PC);
@@ -156,7 +154,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Carry = true;
 
             // Act
-            _instructionSet.JC(_cpu);
+            DefaultInstructionSet.JC(_cpu);
 
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);
@@ -172,7 +170,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Parity = true;
 
             // Act
-            _instructionSet.JPO(_cpu);
+            DefaultInstructionSet.JPO(_cpu);
 
             // Assert
             Assert.Equal(0x0003, _cpu.Registers.PC);
@@ -188,7 +186,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Parity = false;
 
             // Act
-            _instructionSet.JPO(_cpu);
+            DefaultInstructionSet.JPO(_cpu);
 
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);
@@ -204,7 +202,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Parity = false;
 
             // Act
-            _instructionSet.JPE(_cpu);
+            DefaultInstructionSet.JPE(_cpu);
 
             // Assert
             Assert.Equal(0x0003, _cpu.Registers.PC);
@@ -220,7 +218,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Parity = true;
 
             // Act
-            _instructionSet.JPE(_cpu);
+            DefaultInstructionSet.JPE(_cpu);
 
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);
@@ -236,7 +234,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Sign = true;
 
             // Act
-            _instructionSet.JP(_cpu);
+            DefaultInstructionSet.JP(_cpu);
 
             // Assert
             Assert.Equal(0x0003, _cpu.Registers.PC);
@@ -252,7 +250,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Sign = false;
 
             // Act
-            _instructionSet.JP(_cpu);
+            DefaultInstructionSet.JP(_cpu);
 
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);
@@ -268,7 +266,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Sign = false;
 
             // Act
-            _instructionSet.JM(_cpu);
+            DefaultInstructionSet.JM(_cpu);
 
             // Assert
             Assert.Equal(0x0003, _cpu.Registers.PC);
@@ -284,7 +282,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Flags.Sign = true;
 
             // Act
-            _instructionSet.JM(_cpu);
+            DefaultInstructionSet.JM(_cpu);
 
             // Assert
             Assert.Equal(0x0050, _cpu.Registers.PC);
@@ -297,7 +295,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.HL = 0x413E;
 
             // Act
-            _instructionSet.PCHL(_cpu);
+            DefaultInstructionSet.PCHL(_cpu);
 
             // Assert
             Assert.Equal(0x413E, _cpu.Registers.PC);

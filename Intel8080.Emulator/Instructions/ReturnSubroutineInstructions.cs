@@ -1,13 +1,13 @@
 namespace Intel8080.Emulator.Instructions
 {
-    public partial class DefaultInstructionSet : IInstructionSet
+    public static partial class DefaultInstructionSet
     {
-        public virtual void RET(CPU cpu)
+        public static void RET(CPU cpu)
         {
             cpu.Registers.PC = PopStack(cpu);
         }
 
-        public virtual void RZ(CPU cpu)
+        public static void RZ(CPU cpu)
         {
             if (cpu.Flags.Zero)
             {
@@ -17,7 +17,7 @@ namespace Intel8080.Emulator.Instructions
             }
         }
 
-        public virtual void RNZ(CPU cpu)
+        public static void RNZ(CPU cpu)
         {
             if (!cpu.Flags.Zero)
             {
@@ -27,7 +27,7 @@ namespace Intel8080.Emulator.Instructions
             }
         }
 
-        public virtual void RNC(CPU cpu)
+        public static void RNC(CPU cpu)
         {
             if (!cpu.Flags.Carry)
             {
@@ -37,7 +37,7 @@ namespace Intel8080.Emulator.Instructions
             }
         }
 
-        public virtual void RC(CPU cpu)
+        public static void RC(CPU cpu)
         {
             if (cpu.Flags.Carry)
             {
@@ -47,7 +47,7 @@ namespace Intel8080.Emulator.Instructions
             }
         }
 
-        public virtual void RPO(CPU cpu)
+        public static void RPO(CPU cpu)
         {
             if (!cpu.Flags.Parity)
             {
@@ -57,7 +57,7 @@ namespace Intel8080.Emulator.Instructions
             }
         }
 
-        public virtual void RPE(CPU cpu)
+        public static void RPE(CPU cpu)
         {
             if (cpu.Flags.Parity)
             {
@@ -67,7 +67,7 @@ namespace Intel8080.Emulator.Instructions
             }
         }
 
-        public virtual void RP(CPU cpu)
+        public static void RP(CPU cpu)
         {
             if (!cpu.Flags.Sign)
             {
@@ -77,7 +77,7 @@ namespace Intel8080.Emulator.Instructions
             }
         }
 
-        public virtual void RM(CPU cpu)
+        public static void RM(CPU cpu)
         {
             if (cpu.Flags.Sign)
             {

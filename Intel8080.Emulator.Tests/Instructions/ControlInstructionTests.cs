@@ -7,22 +7,20 @@ namespace Intel8080.Emulator.Tests.Instructions
     public class ControlInstructions
     {
         private readonly CPU _cpu;
-        private readonly IInstructionSet _instructionSet;
         private readonly Mock<IMemory> _memory;
 
         public ControlInstructions()
         {
             _memory = new Mock<IMemory>();
-            _instructionSet = new DefaultInstructionSet();
 
-            _cpu = new CPU(_memory.Object, 1, _instructionSet);
+            _cpu = new CPU(_memory.Object, 1);
         }
 
         [Fact]
         public void NOP_ShouldAffectOnlyPCAndCycles()
         {
             // Act
-            _instructionSet.NOP(_cpu);
+            DefaultInstructionSet.NOP(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -36,7 +34,7 @@ namespace Intel8080.Emulator.Tests.Instructions
         public void HLT_ShouldHaltCPU()
         {
             // Act
-            _instructionSet.HLT(_cpu);
+            DefaultInstructionSet.HLT(_cpu);
 
             // Assert
             Assert.True(_cpu.Halted);
@@ -51,7 +49,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Ports[0].In = () => { return 0x48; };
 
             // Act
-            _instructionSet.IN(_cpu);
+            DefaultInstructionSet.IN(_cpu);
 
             // Assert
             Assert.Equal(0x48, _cpu.Registers.A);
@@ -70,7 +68,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Ports[0].Out = (byte x) => { output = x; };
 
             // Act
-            _instructionSet.OUT(_cpu);
+            DefaultInstructionSet.OUT(_cpu);
 
             // Assert
             Assert.Equal(0x48, _cpu.Registers.A);
@@ -81,7 +79,7 @@ namespace Intel8080.Emulator.Tests.Instructions
         public void DI_ShouldDisableInterupts()
         {
             // Act
-            _instructionSet.DI(_cpu);
+            DefaultInstructionSet.DI(_cpu);
 
             // Assert
             Assert.False(_cpu.InterruptEnabled);
@@ -91,7 +89,7 @@ namespace Intel8080.Emulator.Tests.Instructions
         public void EI_ShouldEnableInterupts()
         {
             // Act
-            _instructionSet.EI(_cpu);
+            DefaultInstructionSet.EI(_cpu);
 
             // Assert
             Assert.True(_cpu.InterruptEnabled);

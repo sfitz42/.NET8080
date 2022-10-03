@@ -7,15 +7,13 @@ namespace Intel8080.Emulator.Tests.Instructions
     public class DirectAddressingInstructionTests
     {
         private readonly CPU _cpu;
-        private readonly IInstructionSet _instructionSet;
         private readonly IMemory _memory;
 
         public DirectAddressingInstructionTests()
         {
             _memory = new DefaultMemory(0x300);
-            _instructionSet = new DefaultInstructionSet();
 
-            _cpu = new CPU(_memory, _instructionSet);
+            _cpu = new CPU(_memory);
 
             _cpu.Registers.PC = 1;
         }
@@ -29,7 +27,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.A = 0x42;
 
             // Act
-            _instructionSet.STA(_cpu);
+            DefaultInstructionSet.STA(_cpu);
 
             // Assert
             Assert.Equal(0x42, _cpu.Registers.A);
@@ -50,7 +48,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _cpu.Registers.HL = 0xAE29;
 
             // Act
-            _instructionSet.SHLD(_cpu);
+            DefaultInstructionSet.SHLD(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -74,7 +72,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x25C] = 0x03;
 
             // Act
-            _instructionSet.LHLD(_cpu);
+            DefaultInstructionSet.LHLD(_cpu);
 
             // Assert
             Assert.Equal(0x00, _cpu.Registers.A);
@@ -94,7 +92,7 @@ namespace Intel8080.Emulator.Tests.Instructions
             _memory[0x25B] = 0x42;
 
             // Act
-            _instructionSet.LDA(_cpu);
+            DefaultInstructionSet.LDA(_cpu);
 
             // Assert
             Assert.Equal(0x42, _cpu.Registers.A);

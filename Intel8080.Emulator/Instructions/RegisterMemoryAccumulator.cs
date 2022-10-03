@@ -2,9 +2,9 @@ using System;
 
 namespace Intel8080.Emulator.Instructions
 {
-    public partial class DefaultInstructionSet : IInstructionSet
+    public static partial class DefaultInstructionSet
     {
-        private void ADD(CPU cpu, ref byte reg)
+        private static void ADD(CPU cpu, ref byte reg)
         {
             cpu.Flags.CalcAuxCarryFlag(cpu.Registers.A, reg);
 
@@ -22,7 +22,7 @@ namespace Intel8080.Emulator.Instructions
             cpu.Registers.A = resultByte;
         }
 
-        private void ADC(CPU cpu, ref byte reg)
+        private static void ADC(CPU cpu, ref byte reg)
         {
             var carry = cpu.Flags.Carry ? 1 : 0;
 
@@ -40,7 +40,7 @@ namespace Intel8080.Emulator.Instructions
             cpu.Registers.A = resultByte;
         }
 
-        private void SUB(CPU cpu, ref byte reg)
+        private static void SUB(CPU cpu, ref byte reg)
         {
             var data = (byte)~reg;
 
@@ -62,7 +62,7 @@ namespace Intel8080.Emulator.Instructions
             cpu.Flags.Carry = !cpu.Flags.Carry;
         }
 
-        private void SBB(CPU cpu, ref byte reg)
+        private static void SBB(CPU cpu, ref byte reg)
         {
             var data = (byte)~reg;
 
@@ -84,7 +84,7 @@ namespace Intel8080.Emulator.Instructions
             cpu.Flags.Carry = !cpu.Flags.Carry;
         }
 
-        private void ANA(CPU cpu, ref byte reg)
+        private static void ANA(CPU cpu, ref byte reg)
         {
             cpu.Flags.AuxiliaryCarry = ((cpu.Registers.A & 0x08) | (reg & 0x08)) != 0;
 
@@ -96,7 +96,7 @@ namespace Intel8080.Emulator.Instructions
             cpu.Flags.Carry = false;
         }
 
-        private void XRA(CPU cpu, ref byte reg)
+        private static void XRA(CPU cpu, ref byte reg)
         {
             cpu.Registers.A ^= reg;
 
@@ -107,7 +107,7 @@ namespace Intel8080.Emulator.Instructions
             cpu.Flags.AuxiliaryCarry = false;
         }
 
-        private void ORA(CPU cpu, ref byte reg)
+        private static void ORA(CPU cpu, ref byte reg)
         {
             cpu.Registers.A |= reg;
 
@@ -118,7 +118,7 @@ namespace Intel8080.Emulator.Instructions
             cpu.Flags.AuxiliaryCarry = false;
         }
 
-        private void CMP(CPU cpu, ref byte reg)
+        private static void CMP(CPU cpu, ref byte reg)
         {
             var data = (byte)~reg;
 
@@ -140,7 +140,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADD_B(CPU cpu)
+        public static void ADD_B(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.B);
         }
@@ -149,7 +149,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADD_C(CPU cpu)
+        public static void ADD_C(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.C);
         }
@@ -158,7 +158,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADD_D(CPU cpu)
+        public static void ADD_D(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.D);
         }
@@ -167,7 +167,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADD_E(CPU cpu)
+        public static void ADD_E(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.E);
         }
@@ -176,7 +176,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADD_H(CPU cpu)
+        public static void ADD_H(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.H);
         }
@@ -185,7 +185,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADD_L(CPU cpu)
+        public static void ADD_L(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.L);
         }
@@ -194,7 +194,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - S, Z, A, P, C
-        public virtual void ADD_M(CPU cpu)
+        public static void ADD_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -207,7 +207,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADD_A(CPU cpu)
+        public static void ADD_A(CPU cpu)
         {
             ADD(cpu, ref cpu.Registers.A);
         }
@@ -216,7 +216,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADC_B(CPU cpu)
+        public static void ADC_B(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.B);
         }
@@ -225,7 +225,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADC_C(CPU cpu)
+        public static void ADC_C(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.C);
         }
@@ -234,7 +234,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADC_D(CPU cpu)
+        public static void ADC_D(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.D);
         }
@@ -243,7 +243,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADC_E(CPU cpu)
+        public static void ADC_E(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.E);
         }
@@ -252,7 +252,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADC_H(CPU cpu)
+        public static void ADC_H(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.H);
         }
@@ -261,7 +261,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADC_L(CPU cpu)
+        public static void ADC_L(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.L);
         }
@@ -270,7 +270,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - S, Z, A, P, C
-        public virtual void ADC_M(CPU cpu)
+        public static void ADC_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -283,7 +283,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ADC_A(CPU cpu)
+        public static void ADC_A(CPU cpu)
         {
             ADC(cpu, ref cpu.Registers.A);
         }
@@ -292,7 +292,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SUB_B(CPU cpu)
+        public static void SUB_B(CPU cpu)
         {
             SUB(cpu, ref cpu.Registers.B);
         }
@@ -301,7 +301,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SUB_C(CPU cpu)
+        public static void SUB_C(CPU cpu)
         {
             SUB(cpu, ref cpu.Registers.C);
         }
@@ -310,7 +310,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SUB_D(CPU cpu)
+        public static void SUB_D(CPU cpu)
         {
             SUB(cpu, ref cpu.Registers.D);
         }
@@ -319,7 +319,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SUB_E(CPU cpu)
+        public static void SUB_E(CPU cpu)
         {
             SUB(cpu, ref cpu.Registers.E);
         }
@@ -328,7 +328,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SUB_H(CPU cpu)
+        public static void SUB_H(CPU cpu)
         {
             SUB(cpu, ref cpu.Registers.H);
         }
@@ -337,7 +337,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SUB_L(CPU cpu)
+        public static void SUB_L(CPU cpu)
         {
             SUB(cpu, ref cpu.Registers.L);
         }
@@ -346,7 +346,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - S, Z, A, P, C
-        public virtual void SUB_M(CPU cpu)
+        public static void SUB_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -359,7 +359,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SUB_A(CPU cpu)
+        public static void SUB_A(CPU cpu)
         {
             SUB(cpu, ref cpu.Registers.A);
         }
@@ -368,7 +368,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SBB_B(CPU cpu)
+        public static void SBB_B(CPU cpu)
         {
             SBB(cpu, ref cpu.Registers.B);
         }
@@ -377,7 +377,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SBB_C(CPU cpu)
+        public static void SBB_C(CPU cpu)
         {
             SBB(cpu, ref cpu.Registers.C);
         }
@@ -386,7 +386,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SBB_D(CPU cpu)
+        public static void SBB_D(CPU cpu)
         {
             SBB(cpu, ref cpu.Registers.D);
         }
@@ -395,7 +395,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SBB_E(CPU cpu)
+        public static void SBB_E(CPU cpu)
         {
             SBB(cpu, ref cpu.Registers.E);
         }
@@ -404,7 +404,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SBB_H(CPU cpu)
+        public static void SBB_H(CPU cpu)
         {
             SBB(cpu, ref cpu.Registers.H);
         }
@@ -413,7 +413,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SBB_L(CPU cpu)
+        public static void SBB_L(CPU cpu)
         {
             SBB(cpu, ref cpu.Registers.L);
         }
@@ -422,7 +422,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - S, Z, A, P, C
-        public virtual void SBB_M(CPU cpu)
+        public static void SBB_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
 
@@ -435,7 +435,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void SBB_A(CPU cpu)
+        public static void SBB_A(CPU cpu)
         {
             SBB(cpu, ref cpu.Registers.A);
         }
@@ -444,7 +444,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ANA_B(CPU cpu)
+        public static void ANA_B(CPU cpu)
         {
             ANA(cpu, ref cpu.Registers.B);
         }
@@ -453,7 +453,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ANA_C(CPU cpu)
+        public static void ANA_C(CPU cpu)
         {
             ANA(cpu, ref cpu.Registers.C);
         }
@@ -462,7 +462,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ANA_D(CPU cpu)
+        public static void ANA_D(CPU cpu)
         {
             ANA(cpu, ref cpu.Registers.D);
         }
@@ -471,7 +471,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ANA_E(CPU cpu)
+        public static void ANA_E(CPU cpu)
         {
             ANA(cpu, ref cpu.Registers.E);
         }
@@ -480,7 +480,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ANA_H(CPU cpu)
+        public static void ANA_H(CPU cpu)
         {
             ANA(cpu, ref cpu.Registers.H);
         }
@@ -489,7 +489,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ANA_L(CPU cpu)
+        public static void ANA_L(CPU cpu)
         {
             ANA(cpu, ref cpu.Registers.L);
         }
@@ -498,7 +498,7 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 7
         // Flags  - S, Z, A, P, C
-        public virtual void ANA_M(CPU cpu)
+        public static void ANA_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
             var val = cpu.Memory[location];
@@ -510,42 +510,42 @@ namespace Intel8080.Emulator.Instructions
         // Bytes  - 1
         // Cycles - 4
         // Flags  - S, Z, A, P, C
-        public virtual void ANA_A(CPU cpu)
+        public static void ANA_A(CPU cpu)
         {
             ANA(cpu, ref cpu.Registers.A);
         }
 
-        public virtual void XRA_B(CPU cpu)
+        public static void XRA_B(CPU cpu)
         {
             XRA(cpu, ref cpu.Registers.B);
         }
 
-        public virtual void XRA_C(CPU cpu)
+        public static void XRA_C(CPU cpu)
         {
             XRA(cpu, ref cpu.Registers.C);
         }
 
-        public virtual void XRA_D(CPU cpu)
+        public static void XRA_D(CPU cpu)
         {
             XRA(cpu, ref cpu.Registers.D);
         }
 
-        public virtual void XRA_E(CPU cpu)
+        public static void XRA_E(CPU cpu)
         {
             XRA(cpu, ref cpu.Registers.E);
         }
 
-        public virtual void XRA_H(CPU cpu)
+        public static void XRA_H(CPU cpu)
         {
             XRA(cpu, ref cpu.Registers.H);
         }
 
-        public virtual void XRA_L(CPU cpu)
+        public static void XRA_L(CPU cpu)
         {
             XRA(cpu, ref cpu.Registers.L);
         }
 
-        public virtual void XRA_M(CPU cpu)
+        public static void XRA_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
             var val = cpu.Memory[location];
@@ -553,42 +553,42 @@ namespace Intel8080.Emulator.Instructions
             XRA(cpu, ref val);
         }
 
-        public virtual void XRA_A(CPU cpu)
+        public static void XRA_A(CPU cpu)
         {
             XRA(cpu, ref cpu.Registers.A);
         }
 
-        public virtual void ORA_B(CPU cpu)
+        public static void ORA_B(CPU cpu)
         {
             ORA(cpu, ref cpu.Registers.B);
         }
 
-        public virtual void ORA_C(CPU cpu)
+        public static void ORA_C(CPU cpu)
         {
             ORA(cpu, ref cpu.Registers.C);
         }
 
-        public virtual void ORA_D(CPU cpu)
+        public static void ORA_D(CPU cpu)
         {
             ORA(cpu, ref cpu.Registers.D);
         }
 
-        public virtual void ORA_E(CPU cpu)
+        public static void ORA_E(CPU cpu)
         {
             ORA(cpu, ref cpu.Registers.E);
         }
 
-        public virtual void ORA_H(CPU cpu)
+        public static void ORA_H(CPU cpu)
         {
             ORA(cpu, ref cpu.Registers.H);
         }
 
-        public virtual void ORA_L(CPU cpu)
+        public static void ORA_L(CPU cpu)
         {
             ORA(cpu, ref cpu.Registers.L);
         }
 
-        public virtual void ORA_M(CPU cpu)
+        public static void ORA_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
             var val = cpu.Memory[location];
@@ -596,42 +596,42 @@ namespace Intel8080.Emulator.Instructions
             ORA(cpu, ref val);
         }
 
-        public virtual void ORA_A(CPU cpu)
+        public static void ORA_A(CPU cpu)
         {
             ORA(cpu, ref cpu.Registers.A);
         }
 
-        public virtual void CMP_B(CPU cpu)
+        public static void CMP_B(CPU cpu)
         {
             CMP(cpu, ref cpu.Registers.B);
         }
 
-        public virtual void CMP_C(CPU cpu)
+        public static void CMP_C(CPU cpu)
         {
             CMP(cpu, ref cpu.Registers.C);
         }
 
-        public virtual void CMP_D(CPU cpu)
+        public static void CMP_D(CPU cpu)
         {
             CMP(cpu, ref cpu.Registers.D);
         }
 
-        public virtual void CMP_E(CPU cpu)
+        public static void CMP_E(CPU cpu)
         {
             CMP(cpu, ref cpu.Registers.E);
         }
 
-        public virtual void CMP_H(CPU cpu)
+        public static void CMP_H(CPU cpu)
         {
             CMP(cpu, ref cpu.Registers.H);
         }
 
-        public virtual void CMP_L(CPU cpu)
+        public static void CMP_L(CPU cpu)
         {
             CMP(cpu, ref cpu.Registers.L);
         }
 
-        public virtual void CMP_M(CPU cpu)
+        public static void CMP_M(CPU cpu)
         {
             var location = GetUshort(cpu.Registers.H, cpu.Registers.L);
             var val = cpu.Memory[location];
@@ -639,7 +639,7 @@ namespace Intel8080.Emulator.Instructions
             CMP(cpu, ref val);
         }
 
-        public virtual void CMP_A(CPU cpu)
+        public static void CMP_A(CPU cpu)
         {
             CMP(cpu, ref cpu.Registers.A);
         }
