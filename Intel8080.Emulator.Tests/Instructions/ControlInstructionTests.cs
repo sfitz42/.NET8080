@@ -1,4 +1,5 @@
 using Intel8080.Emulator.Instructions;
+using Intel8080.Emulator.IO;
 using Moq;
 using Xunit;
 
@@ -13,7 +14,7 @@ namespace Intel8080.Emulator.Tests.Instructions
         {
             _memory = new Mock<IMemory>();
 
-            _cpu = new CPU(_memory.Object, 1);
+            _cpu = new CPU(_memory.Object);
         }
 
         [Fact]
@@ -46,7 +47,11 @@ namespace Intel8080.Emulator.Tests.Instructions
             // Arrange
             _memory.Setup(x => x[0x0000]).Returns(0x00);
 
-            _cpu.Ports[0].In = () => { return 0x48; };
+            var inputDevice = new Mock<IInputDevice>();
+
+            _cpu.IOController.AddDevice(inputDevice.Object, 0x00);
+
+            inputDevice.Setup(x => x.Read()).Returns(0x48);
 
             // Act
             DefaultInstructionSet.IN(_cpu);
@@ -63,16 +68,15 @@ namespace Intel8080.Emulator.Tests.Instructions
             
             _memory.Setup(x => x[0x0000]).Returns(0x00);
 
-            int output = 0;
+            var outputDevice = new Mock<IOutputDevice>();
 
-            _cpu.Ports[0].Out = (byte x) => { output = x; };
+            _cpu.IOController.AddDevice(outputDevice.Object, 0x00);
 
             // Act
             DefaultInstructionSet.OUT(_cpu);
 
             // Assert
-            Assert.Equal(0x48, _cpu.Registers.A);
-            Assert.Equal(0x48, output);
+            outputDevice.Verify(x => x.Write(_cpu.Registers.A), Times.Once);
         }
 
         [Fact]

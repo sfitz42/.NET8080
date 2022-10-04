@@ -1,4 +1,5 @@
 ﻿using Intel8080.Emulator;
+using Intel8080.TestRoms.IODevices;
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +9,8 @@ namespace Intel8080.TestRoms
     {
         private readonly CPU _cpu;
         private readonly MainMemory _memory;
-        private bool _testFinished = false;
+        private readonly TestCompletePort _testCompletePort;
+        private readonly TestOutputPort _textOutputPort;
 
         private readonly List<string> _testRoms = new List<string>()
         {
@@ -21,13 +23,13 @@ namespace Intel8080.TestRoms
         public TestSuite()
         {
             _memory = new MainMemory(0x10000);
-            _cpu = new CPU(_memory, 2);
+            _cpu = new CPU(_memory);
 
-            _cpu.Ports[0].In = () => 0;
-            _cpu.Ports[0].Out = Port_0_Out;
+            _testCompletePort = new TestCompletePort();
+            _textOutputPort = new TestOutputPort(_cpu);
 
-            _cpu.Ports[1].In = () => 0;
-            _cpu.Ports[1].Out = Port_1_Out;
+            _cpu.IOController.AddDevice(_testCompletePort, TestCompletePort.PortNo);
+            _cpu.IOController.AddDevice(_textOutputPort, TestOutputPort.PortNo);
         }
 
         public void RunTests()
@@ -55,7 +57,7 @@ namespace Intel8080.TestRoms
 
         private void RunTest()
         {
-            _testFinished = false;
+            _testCompletePort.TestComplete = false;
 
             _cpu.Registers.PC = 0x100;
 
@@ -66,34 +68,9 @@ namespace Intel8080.TestRoms
             _memory[0x0006] = 0x01;
             _memory[0x0007] = 0xC9;
 
-            while (!_testFinished)
+            while (!_testCompletePort.TestComplete)
             {
                 _cpu.Step();
-            }
-        }
-
-        private void Port_0_Out(byte data)
-        {
-            _testFinished = true;
-        }
-
-        private void Port_1_Out(byte data)
-        {
-            byte operation = _cpu.Registers.C;
-
-            if (operation == 2)
-            {
-                char c = (char)_cpu.Registers.E;
-
-                Console.Write(c);
-            }
-            else if (operation == 9)
-            {
-                ushort addr = (ushort)((_cpu.Registers.D << 8) | _cpu.Registers.E);
-                do
-                {
-                    Console.Write((char)_memory[addr++]);
-                } while (_memory[addr] != '$');
             }
         }
     }

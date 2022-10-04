@@ -141,5 +141,27 @@ namespace Intel8080.Emulator.Tests
             Assert.Equal(H, _registers.H);
             Assert.Equal(L, _registers.L);
         }
+
+        [Fact]
+        public void ClearRegistersShouldSetAllRegistersToZero()
+        {
+            // Arrange
+            _registers.A = 0xFF;
+            _registers.BC = 0xFFFF;
+            _registers.DE = 0xFFFF;
+            _registers.HL = 0xFFFF;
+            _registers.PC = 0xFFFF;
+            _registers.SP = 0xFFFF;
+
+            // Act
+            _registers.Clear();
+
+            Assert.Equal(0x00, _registers.A);
+            Assert.Equal(0x0000, _registers.BC);
+            Assert.Equal(0x0000, _registers.DE);
+            Assert.Equal(0x0000, _registers.HL);
+            Assert.Equal(0x0000, _registers.PC);
+            Assert.Equal(0x0000, _registers.SP);
+        }
     }
 }

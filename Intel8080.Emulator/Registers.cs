@@ -34,5 +34,15 @@ namespace Intel8080.Emulator
         
         [FieldOffset(9)]
         public ushort PC = 0x0000;
+
+        public void Clear()
+        {
+            A = 0x00;
+            BC = 0x0000;
+            DE = 0x0000;
+            HL = 0x0000;
+            PC = 0x0000;
+            SP = 0x0000;
+        }
     }
 }

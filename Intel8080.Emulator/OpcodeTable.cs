@@ -2,7 +2,7 @@ namespace Intel8080.Emulator
 {
     public static class OpcodeTable
     {
-        public static Opcode[] Opcodes;
+        public static readonly Opcode[] Opcodes;
 
         static OpcodeTable()
         {

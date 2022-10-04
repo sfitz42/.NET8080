@@ -22,16 +22,16 @@ namespace Intel8080.Emulator.Instructions
 
         public static void OUT(CPU cpu)
         {
-            var port = cpu.Ports[cpu.ReadNextByte()];
+            var device = cpu.IOController.GetOutputDevice(cpu.ReadNextByte());
 
-            port.Out(cpu.Registers.A);
+            device.Write(cpu.Registers.A);
         }
 
         public static void IN(CPU cpu)
         {
-            var port = cpu.Ports[cpu.ReadNextByte()];
+            var device = cpu.IOController.GetInputDevice(cpu.ReadNextByte());
 
-            cpu.Registers.A = port.In();
+            cpu.Registers.A = device.Read();
         }
 
         public static void DI(CPU cpu)

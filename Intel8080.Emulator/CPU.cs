@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Intel8080.Emulator.Instructions;
+using Intel8080.Emulator.IO;
 
 namespace Intel8080.Emulator
 {
@@ -10,9 +11,9 @@ namespace Intel8080.Emulator
 
         public Registers Registers { get; }
 
-        public Port[] Ports { get; } = null!;
-
         public Flags Flags { get; }
+
+        public IIOController IOController { get; }
 
         public long Cycles { get; set; } = 0;
 
@@ -24,19 +25,12 @@ namespace Intel8080.Emulator
 
         private byte? _interrupt = null;
 
-        public CPU(IMemory memory, int availablePorts)
-        {
-            Memory = memory;
-            Ports = Enumerable.Range(0, availablePorts).Select(p => new Port()).ToArray();
-            Registers = new Registers();
-            Flags = new Flags();
-        }
-
         public CPU(IMemory memory)
         {
             Memory = memory;
             Registers = new Registers();
             Flags = new Flags();
+            IOController = new DefaultIOController();
         }
 
         public void Run()
@@ -70,12 +64,7 @@ namespace Intel8080.Emulator
 
         public void Reset()
         {
-            Registers.BC = 0;
-            Registers.DE = 0;
-            Registers.HL = 0;
-            Registers.PC = 0;
-            Registers.SP = 0;
-
+            Registers.Clear();
             Flags.Clear();
         }
 
