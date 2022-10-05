@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intel8080.Emulator", "Intel8080.Emulator\Intel8080.Emulator.csproj", "{715AE8BC-708F-4676-85E5-67DFCB65E89B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intel8080.Tests", "Intel8080.Tests\Intel8080.Tests.csproj", "{CF853D69-8852-4C2A-92C4-3FE4891AA0A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intel8080.Emulator.Tests", "Intel8080.Emulator.Tests\Intel8080.Emulator.Tests.csproj", "{CF853D69-8852-4C2A-92C4-3FE4891AA0A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intel8080.TestRoms", "Intel8080.TestRoms\Intel8080.TestRoms.csproj", "{EB875E27-D472-480F-BBC5-D086711B7775}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +26,9 @@ Global
 		{CF853D69-8852-4C2A-92C4-3FE4891AA0A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF853D69-8852-4C2A-92C4-3FE4891AA0A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF853D69-8852-4C2A-92C4-3FE4891AA0A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB875E27-D472-480F-BBC5-D086711B7775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB875E27-D472-480F-BBC5-D086711B7775}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB875E27-D472-480F-BBC5-D086711B7775}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB875E27-D472-480F-BBC5-D086711B7775}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
