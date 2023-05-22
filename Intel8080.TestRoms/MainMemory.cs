@@ -21,5 +21,10 @@ namespace Intel8080.TestRoms
                 fs.Read(_memory, offset, (int) fs.Length);
             }
         }
+
+        public byte[] Copy()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

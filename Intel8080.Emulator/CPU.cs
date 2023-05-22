@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Intel8080.Emulator.Instructions;
 using Intel8080.Emulator.IO;
 
@@ -18,6 +17,8 @@ namespace Intel8080.Emulator
         public long Cycles { get; set; } = 0;
 
         public bool Halted { get; set; }
+
+        public bool Paused { get; set; }
 
         public bool InterruptEnabled { get; set; } = false;
 
@@ -71,6 +72,19 @@ namespace Intel8080.Emulator
         public void RaiseInterrupt(byte opcode)
         {
             _interrupt = opcode;
+        }
+
+        public State GetState() => new State(this);
+
+        public void SetState(State state)
+        {
+            Registers.SetValues(state.Registers);
+
+            Flags.F = state.Flags;
+
+            Cycles = state.Cycles;
+            Halted = state.Halted;
+            InterruptEnabled = state.InterruptEnabled;
         }
 
         internal byte ReadByte(int address)

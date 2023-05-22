@@ -44,5 +44,15 @@ namespace Intel8080.Emulator
             PC = 0x0000;
             SP = 0x0000;
         }
+
+        public void SetValues(Registers registers)
+        {
+            A = registers.A;
+            BC = registers.BC;
+            DE = registers.DE;
+            HL = registers.HL;
+            PC = registers.PC;
+            SP = registers.SP;
+        }
     }
 }

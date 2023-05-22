@@ -10,5 +10,14 @@ namespace Intel8080.Emulator
         {
             _memory = new byte[size];
         }
+
+        public byte[] Copy()
+        {
+            var copy = new byte[_memory.Length + 1];
+
+            _memory.CopyTo(copy, 0);
+
+            return copy;
+        }
     }
 }
